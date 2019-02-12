@@ -1,6 +1,5 @@
 import React from 'react';
-import {Card, Button, Confirm} from 'semantic-ui-react';
-import Layout from '../components/Layout';
+import Layout from '../components/commons/Layout';
 import {Link} from '../routes';
 
 export default class CampaignIndex extends React.Component {
