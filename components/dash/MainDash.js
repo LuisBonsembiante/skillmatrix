@@ -9,6 +9,10 @@ class MainDash extends Component {
 
     }
 
+     handleItemClick(e, {name}) {
+         this.setState({activeItem: name})
+     }
+
 
     renderCards() {
 
@@ -29,13 +33,14 @@ class MainDash extends Component {
 
         ];
 
+
         return <Card.Group items={items}/>
     }
 
     render() {
 
 
-        const handleItemClick = (e, {name}) => this.setState({activeitem: name})
+
 
         return (
             <div>
