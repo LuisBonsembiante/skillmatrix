@@ -12,7 +12,7 @@ export default class RequestRow extends React.Component {
     }
     onApprove = async () => {
 
-        this.setState({ loading: true });
+        this.setState({loading: true});
 
         const campaign = Campaign(this.props.address);
 
@@ -21,19 +21,19 @@ export default class RequestRow extends React.Component {
             await campaign.methods.approveRequest(this.props.id).send({
                 from: accounts[0]
             });
-        }catch(e){
+        } catch (e) {
 
         }
 
 
-        this.setState({ loading: false });
+        this.setState({loading: false});
 
         Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
     };
 
     onFinalize = async () => {
 
-        this.setState({ loading: true });
+        this.setState({loading: true});
 
         const campaign = Campaign(this.props.address);
 
@@ -42,12 +42,12 @@ export default class RequestRow extends React.Component {
             await campaign.methods.finalizeRequest(this.props.id).send({
                 from: accounts[0]
             });
-        }catch(e){
+        } catch (e) {
 
         }
 
 
-        this.setState({ loading: false });
+        this.setState({loading: false});
 
         Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
     };
@@ -65,7 +65,7 @@ export default class RequestRow extends React.Component {
 
                 <Cell>{id}</Cell>
                 <Cell>{request.description}</Cell>
-                <Cell>{web3.utils.fromWei(request.value,'ether')}</Cell>
+                <Cell>{web3.utils.fromWei(request.value, 'ether')}</Cell>
                 <Cell>{request.recipient}</Cell>
                 <Cell>
                     {request.approvalCount}/{approversCount}
