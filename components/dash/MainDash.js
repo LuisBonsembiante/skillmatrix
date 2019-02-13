@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Menu, Segment, Label, Search, Divider} from 'semantic-ui-react';
+import {Menu, Segment, Label, Search, Divider, Transition} from 'semantic-ui-react';
 import {Link} from '../../routes';
 import _ from 'lodash'
 import Cards from "./Cards";
@@ -16,19 +16,20 @@ class MainDash extends Component {
         value: '' // Value of the search Field
     };
 
-     handleItemClick = (e, {name}) => {
+    handleItemClick = (e, {name}) => {
         this.setState({activeItem: name})
     };
+
 
     componentDidMount() {
         this.props.skillsFetch();
     }
 
 
-    handleResultSelect = (e, { result }) => this.setState({ value: result.title });
-    resetComponent = () => this.setState({ isLoading: false, results: [], value: '' });
-    handleSearchChange = (e, { value }) => {
-        this.setState({ isLoading: true, value });
+    handleResultSelect = (e, {result}) => this.setState({value: result.title});
+    resetComponent = () => this.setState({isLoading: false, results: [], value: ''});
+    handleSearchChange = (e, {value}) => {
+        this.setState({isLoading: true, value});
 
         setTimeout(() => {
             if (this.state.value.length < 1) return this.resetComponent();
@@ -45,25 +46,27 @@ class MainDash extends Component {
 
     render() {
         const {isLoading, results, value, activeItem} = this.state;
-        const resultRenderer = ({ title }) => <Label content={title} />;
-        console.log("next verga");
-        console.log(this.props);
+        const resultRenderer = ({title}) => <Label content={title}/>;
+
         return (
             <div>
                 <ProfileInfo/>
-                <Divider />
+                <Divider/>
                 <Menu attached='top' pointing secondary pagination>
-                    <MenuItems items={this.props.skills} activeItem={activeItem} handleItemClick={this.handleItemClick}/>
+                    <MenuItems
+                        items={this.props.skills}
+                        activeItem={activeItem}
+                        handleItemClick={this.handleItemClick}
+                    />
                     <Menu.Menu position='right'>
                         <Menu.Item>
                             <Search
                                 loading={isLoading}
                                 onResultSelect={this.handleResultSelect}
-                                onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
+                                onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
                                 results={results}
                                 resultRenderer={resultRenderer}
                                 value={value}
-
                             />
                         </Menu.Item>
                     </Menu.Menu>
@@ -81,7 +84,7 @@ class MainDash extends Component {
 const mapStateToProps = state => {
 
     const skills = _.map(state.fireBase.skills, (val, uid) => {
-        return {...val, key:uid}; // {shift: 'Monday', name:'s', id:'1j2j34'};
+        return {...val, key: uid}; // {shift: 'Monday', name:'s', id:'1j2j34'};
     });
 
     return {
@@ -89,7 +92,7 @@ const mapStateToProps = state => {
     };
 };
 
-export default  connect(mapStateToProps, {skillsFetch})(MainDash);
+export default connect(mapStateToProps, {skillsFetch})(MainDash);
 
 
 
