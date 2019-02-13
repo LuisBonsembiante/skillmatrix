@@ -4,8 +4,14 @@ import {Link} from '../../routes';
 import _ from 'lodash'
 import Cards from "./Cards";
 import MenuItems from "./MenuItems";
+import {connect} from 'react-redux';
+import {skillsFetch} from "../../redux/actions";
 
 class MainDash extends Component {
+
+
+
+
 
     state = {
         activeItem: 'JavaScript', // TODO Set the first one for default
@@ -16,6 +22,10 @@ class MainDash extends Component {
      handleItemClick = (e, {name}) => {
         this.setState({activeItem: name})
     };
+
+    componentDidMount() {
+        this.props.skillsFetch();
+    }
 
 
     handleResultSelect = (e, { result }) => this.setState({ value: result.title });
@@ -39,11 +49,12 @@ class MainDash extends Component {
     render() {
         const {isLoading, results, value, activeItem} = this.state;
         const resultRenderer = ({ title }) => <Label content={title} />;
-
+        console.log("next verga");
+        console.log(this.props);
         return (
             <div>
                 <Menu attached='top' tabular>
-                    <MenuItems activeItem={activeItem} handleItemClick={this.handleItemClick}/>
+                    <MenuItems items={this.props.skills} activeItem={activeItem} handleItemClick={this.handleItemClick}/>
                     <Menu.Menu position='right'>
                         <Menu.Item>
                             <Search
@@ -53,7 +64,7 @@ class MainDash extends Component {
                                 results={results}
                                 resultRenderer={resultRenderer}
                                 value={value}
-                                {...this.props}
+
                             />
                         </Menu.Item>
                     </Menu.Menu>
@@ -68,6 +79,18 @@ class MainDash extends Component {
 
 }
 
-export default MainDash;
+const mapStateToProps = state => {
+
+    const skills = _.map(state.fireBase.skills, (val, uid) => {
+        return {...val, key:uid}; // {shift: 'Monday', name:'s', id:'1j2j34'};
+    });
+
+    return {
+        skills
+    };
+};
+
+export default  connect(mapStateToProps, {skillsFetch})(MainDash);
+
 
 

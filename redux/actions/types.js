@@ -12,5 +12,6 @@ export const FETCH_TECHNOLOGIES= 'fetch_technologies';
 export const SKILL_CREATE= 'skill_technologies';
 export const TECHNOLOGIES_CREATE= 'technologies_create';
 export const FETCH_SKILLS= 'fetch_skills';
+export const INIT_FIRE_BASE= 'init_fire_base';
 
 

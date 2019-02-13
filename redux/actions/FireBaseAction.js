@@ -1,4 +1,8 @@
-import {FETCH_TECHNOLOGIES, SKILL_CREATE, TECHNOLOGIES_CREATE} from "./types";
+import {SKILL_CREATE, TECHNOLOGIES_CREATE, INIT_FIRE_BASE} from "./types";
+//import firebase from '@firebase/app';
+import firebase from '../../firebase'
+import {apiKey, authDomain, databaseURL, messagingSenderId, projectId, storageBucket} from "../../env";
+
 
 export const skillCreate = ({name, description}) => {
     const {currentUser} = firebase.auth();
@@ -13,7 +17,7 @@ export const skillCreate = ({name, description}) => {
 
 };
 
-export const  technologiesCreate = ({name, description,uid}) => {
+export const technologiesCreate = ({name, description, uid}) => {
     const {currentUser} = firebase.auth();
     return (dispatch) => {
         firebase.database().ref(`/skills/${uid}/technologies`)

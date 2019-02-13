@@ -2,23 +2,13 @@ import App, {Container} from 'next/app'
 import React from 'react'
 import withReduxStore from '../lib/with-redux-store'
 import {Provider} from 'react-redux'
-import firebase from '@firebase/app'
+import firebase from 'firebase/app';
 import {apiKey, authDomain, databaseURL, messagingSenderId, projectId, storageBucket} from "../env";
+import 'firebase/firestore';
 
 class SkillMatrix extends App {
 
     componentDidMount() {
-
-        let config = {
-            apiKey ,
-            authDomain,
-            databaseURL,
-            projectId,
-            storageBucket,
-            messagingSenderId
-        };
-        firebase.initializeApp(config);
-
 
     }
 

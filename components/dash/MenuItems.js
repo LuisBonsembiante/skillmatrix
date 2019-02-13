@@ -10,9 +10,10 @@ const _menuItems = (props) => {
         {name: 'Java'}
     ]; // TODO get this from Redux
 
+
     return (
         <>
-            {items.map((item, index) =>
+            {props.items.map((item, index) =>
                 <Menu.Item
                     key={item + index}
                     name={item.name}
@@ -23,8 +24,10 @@ const _menuItems = (props) => {
     )
 };
 
-function mapStateToProps(state) {
-    return {}
-}
+
+const mapStateToProps = state => {
+    return {};
+};
+
 
 export default connect(mapStateToProps, {})(_menuItems);
