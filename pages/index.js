@@ -1,6 +1,8 @@
 import React from 'react';
 import Layout from '../components/commons/Layout';
 import {Link} from '../routes';
+import withAuth from "../components/utils/withAuth";
+import {connect} from "react-redux";
 
 class SkillmatrixIndex extends React.Component {
 
@@ -32,4 +34,8 @@ class SkillmatrixIndex extends React.Component {
     }
 }
 
-export default connect()(SkillmatrixIndex)
+const mapStateToProps = (state) => {
+    return {...state};
+};
+
+export default connect(mapStateToProps)(withAuth(SkillmatrixIndex))

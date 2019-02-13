@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Header} from "semantic-ui-react";
+import {Router} from '../../routes';
 
 export default function withAuth(AuthComponent) {
 
@@ -13,7 +14,7 @@ export default function withAuth(AuthComponent) {
 
         componentDidMount () {
             if (!this.props.user) {
-                this.props.url.replaceTo('/')
+                Router.replaceRoute('/')
             }
             this.setState({ isLoading: false })
         }

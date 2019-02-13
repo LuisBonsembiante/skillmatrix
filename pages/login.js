@@ -2,13 +2,12 @@ import React from 'react';
 import Layout from '../components/commons/Layout';
 import {Link} from '../routes';
 import Login from "../components/auth/Login";
+import {connect} from "react-redux";
 
-export default class LoginIndex extends React.Component {
-
-
+class LoginIndex extends React.Component {
 
     // Initial PROPS
-    static async getInitialProps() {
+    static async getInitialProps({ reduxStore, req }) {
 
         return {};
     }
@@ -28,3 +27,9 @@ export default class LoginIndex extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {...state};
+};
+
+export default connect(mapStateToProps, {})(LoginIndex)

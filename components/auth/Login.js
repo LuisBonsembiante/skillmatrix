@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {Button, Form, Grid, Header, Segment} from "semantic-ui-react";
 import {Link} from '../../routes';
+import {connect} from "react-redux";
+import {loginUser} from "../../store";
 
-export default (props) => {
+const _login = (props) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -31,16 +33,20 @@ export default (props) => {
                             onChange={(event) => setPassword(event.target.value)}
                         />
 
-                        <Link href="/index">
-                            <Button color="blue" fluid size="large"
-                                    onClick={() => console.log(email, password)}>
-                                Login
-                            </Button>
-                        </Link>
+                        <Button color="blue" fluid size="large"
+                                onClick={() => props.loginUser(email, password)}>
+                            Login
+                        </Button>
 
                     </Form>
                 </Segment>
             </Grid.Column>
         </Grid>
     );
+};
+
+function mapStateToProps(state) {
+    return {...state}
 }
+
+export default connect(mapStateToProps, {loginUser})(_login);

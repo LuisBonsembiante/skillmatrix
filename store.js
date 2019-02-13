@@ -1,6 +1,7 @@
 import {createStore, applyMiddleware} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
+import {Router} from "./routes";
 
 
 export const actionTypes = {
@@ -8,7 +9,7 @@ export const actionTypes = {
     LOGIN_USER_FAILED: 'login_user_failed',
     LOGIN_USER: 'login_user',
     LOGOUT_USER: 'logout_user',
-}
+};
 
 const INITIAL_STATE = {user: null, error: '', loading: false};
 
@@ -34,6 +35,8 @@ export const reducer = (state = INITIAL_STATE, action) => {
 export const loginUser = ({email, password}) => {
     return (dispatch) => {
         dispatch({type: actionTypes.LOGIN_USER});
+        // TODO Refactor this
+        dispatch(loginUserSuccess({name: email, rol: 'admin'}))
     };
 };
 
@@ -46,11 +49,14 @@ export const logoutUser = () => {
 
 };
 
-const loginUserSucces = (dispatch, user) => {
-    dispatch({
-        type: actionTypes.LOGIN_USER_SUCCESS,
-        payload: user
-    });
+const loginUserSuccess = (user) => {
+    return (dispatch) =>{
+        dispatch({
+            type: actionTypes.LOGIN_USER_SUCCESS,
+            payload: user
+        });
+        Router.pushRoute('/index')
+    };
 };
 
 export function initializeStore(initialState = INITIAL_STATE) {

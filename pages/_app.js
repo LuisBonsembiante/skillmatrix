@@ -16,4 +16,4 @@ class SkillMatrix extends App {
   }
 }
 
-export default withReduxStore(MyApp)
+export default withReduxStore(SkillMatrix)
