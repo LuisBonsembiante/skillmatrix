@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Layout from '../components/commons/Layout';
 import {Link} from '../routes';
 import withAuth from "../components/utils/withAuth";
 import {connect} from "react-redux";
+import MainDash from '../components/dash/MainDash'
 
-class SkillmatrixIndex extends React.Component {
-
+class SkillmatrixIndex extends Component {
 
 
     // Initial PROPS
@@ -15,6 +15,8 @@ class SkillmatrixIndex extends React.Component {
     }
 
     render() {
+
+
         return (
 
             <Layout>
@@ -24,7 +26,7 @@ class SkillmatrixIndex extends React.Component {
                         href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
                     />
 
-                    <h3>Home</h3>
+                <MainDash/>
 
                 </div>
 
