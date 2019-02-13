@@ -1,12 +1,11 @@
-import { LOGIN_USER_SUCCESS, LOGOUT_USER} from "./types";
-import history from '../../components/commons/history';
-import {actionTypes} from "../../store";
+import {LOGIN_USER, LOGIN_USER_SUCCESS, LOGOUT_USER} from "./types";
+
 import {Router} from "../../routes";
 
 
 export const loginUser = ({email, password}) => {
     return (dispatch) => {
-        dispatch({type: actionTypes.LOGIN_USER});
+        dispatch({type: LOGIN_USER});
         // TODO Refactor this
         dispatch(loginUserSuccess({name: email, rol: 'admin'}))
     };
@@ -18,7 +17,7 @@ export const logoutUser = () => {
         dispatch({
             type: LOGOUT_USER
         });
-        history.push('/');
+        Router.pushRoute('/index')
     }
 
 };
