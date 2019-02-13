@@ -9,9 +9,7 @@ class MainDash extends Component {
 
     }
 
-     handleItemClick(e, {name}) {
-         this.setState({activeItem: name})
-     }
+
 
 
     renderCards() {
@@ -40,16 +38,18 @@ class MainDash extends Component {
     render() {
 
 
-
+        const handleItemClick = (e, {name}) => {
+            this.setState({activeItem: name})
+        }
 
         return (
             <div>
                 <Menu attached='top' tabular>
-                    <Menu.Item name='JavaScript' active={this.state.activeItem === 'JavaScript'} onClick={this.handleItemClick}/>
+                    <Menu.Item name='JavaScript' active={this.state.activeItem === 'JavaScript'} onClick={handleItemClick}/>
                     <Menu.Item
                         name='Java'
                         active={this.state.activeItem === 'Java'}
-                        onClick={this.handleItemClick}
+                        onClick={handleItemClick}
                     />
                     <Menu.Menu position='right'>
                         <Menu.Item>
