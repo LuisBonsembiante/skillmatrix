@@ -1,4 +1,4 @@
-import {SKILL_CREATE, TECHNOLOGIES_CREATE, INIT_FIRE_BASE} from "./types";
+import {SKILL_CREATE, TECHNOLOGIES_CREATE, INIT_FIRE_BASE, FETCH_SKILLS} from "./types";
 //import firebase from '@firebase/app';
 import firebase from '../../firebase'
 import {apiKey, authDomain, databaseURL, messagingSenderId, projectId, storageBucket} from "../../env";

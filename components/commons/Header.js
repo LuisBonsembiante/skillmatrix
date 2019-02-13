@@ -1,12 +1,17 @@
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
 import { Link } from '../../routes';
+import {connect} from "react-redux";
+import {skillCreate} from "../../redux/actions";
 
-export default (props) => {
+const _header  =  (props) => {
     //state = {}
 
 
    // handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+    const onClick = () => {
+         props.skillCreate( {name:'Java', description:'dfasdfasdf'} );
+    }
 
     return (
         <Menu style={{ marginTop: '10px' }}>
@@ -19,13 +24,17 @@ export default (props) => {
                     <a className="item">Skill</a>
                 </Link>
 
-                <Link route="/index/new">
-                    <a className="item">+</a>
-                </Link>
+
+                    <a className="item" onClick={onClick}>+</a>
+               
             </Menu.Menu>
         </Menu>
     );
 }
 
 
+const  mapStateToProps = (state) => {
+    return {}
+}
 
+export default connect(mapStateToProps, {skillCreate})(_header);

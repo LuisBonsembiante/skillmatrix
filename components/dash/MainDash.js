@@ -53,8 +53,6 @@ class MainDash extends Component {
                 <ProfileInfo/>
                 <Divider />
                 <Menu attached='top' pointing secondary pagination>
-                    <MenuItems activeItem={activeItem} handleItemClick={this.handleItemClick}/>
-                <Menu attached='top' tabular>
                     <MenuItems items={this.props.skills} activeItem={activeItem} handleItemClick={this.handleItemClick}/>
                     <Menu.Menu position='right'>
                         <Menu.Item>

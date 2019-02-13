@@ -34,14 +34,13 @@ const _menuItems = (props) => {
     // TODO Do better implementation of arrows - Fixed position
     return (
         <>
-            {props.items.map((item, index) =>
             {(start > 0) && (
                 <Menu.Item name='more' onClick={() => moveItems(-1)}>
                     <Label color='teal'>{'+ ' + (start)}</Label>
                     <Icon name='arrow left'/>
                 </Menu.Item>
             )}
-            {_.slice(items, 0 + start, LENGTH_TO_SHOW + end).map((item, index) =>
+            {_.slice(props.items, 0 + start, LENGTH_TO_SHOW + end).map((item, index) =>
                 <Menu.Item
                     key={item + index}
                     name={item.name}
