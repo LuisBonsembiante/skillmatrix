@@ -2,14 +2,15 @@ import React from 'react';
 import Layout from '../components/commons/Layout';
 import {Link} from '../routes';
 
-export default class CampaignIndex extends React.Component {
+class SkillmatrixIndex extends React.Component {
 
 
 
     // Initial PROPS
-    static async getInitialProps() {
+    static getInitialProps ({ reduxStore, req }) {
+        const isServer = !!req
 
-        return {};
+        return {}
     }
 
     render() {
@@ -30,3 +31,5 @@ export default class CampaignIndex extends React.Component {
         );
     }
 }
+
+export default connect()(SkillmatrixIndex)
