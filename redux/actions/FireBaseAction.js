@@ -1,4 +1,4 @@
-import {SKILL_CREATE, TECHNOLOGIES_CREATE, INIT_FIRE_BASE, FETCH_SKILLS} from "./types";
+import {SKILL_CREATE, TECHNOLOGIES_CREATE, INIT_FIRE_BASE, FETCH_SKILLS, START_TRANSACTION} from "./types";
 //import firebase from '@firebase/app';
 import firebase from '../../firebase'
 import {apiKey, authDomain, databaseURL, messagingSenderId, projectId, storageBucket} from "../../env";
@@ -33,8 +33,10 @@ export const technologiesCreate = ({name, description, uid}) => {
 export const skillsFetch = () => {
     const {currentUser} = firebase.auth();
     return (dispatch) => {
+        dispatch({type: START_TRANSACTION});
         firebase.database().ref(`/skills`)
             .on('value', snapshot => {
+
                 dispatch({type: FETCH_SKILLS, payload: snapshot.val()})
             });
     };

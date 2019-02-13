@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Menu, Segment, Label, Search, Divider} from 'semantic-ui-react';
+import {Menu, Segment, Label, Search, Divider,  Dimmer, Loader} from 'semantic-ui-react';
 import {Link} from '../../routes';
 import _ from 'lodash'
 import Cards from "./Cards";
@@ -70,7 +70,12 @@ class MainDash extends Component {
                 </Menu>
 
                 <Segment attached='bottom'>
-                    <Cards skillSelected={activeItem}/>
+
+                        <Dimmer active={this.props.loading}>
+                            <Loader />
+                        </Dimmer>
+
+                        <Cards skillSelected={activeItem}/>
                 </Segment>
             </div>
         );
@@ -85,7 +90,8 @@ const mapStateToProps = state => {
     });
 
     return {
-        skills
+        skills,
+        loading: state.fireBase.loading
     };
 };
 
