@@ -4,7 +4,6 @@ import {Link} from '../../routes';
 import {connect} from "react-redux";
 import {loginUser} from "../../redux/actions";
 
-
 const _login = (props) => {
 
     const [email, setEmail] = useState('');

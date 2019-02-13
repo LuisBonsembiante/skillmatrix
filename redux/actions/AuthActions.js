@@ -1,9 +1,8 @@
 import {LOGIN_USER, LOGIN_USER_SUCCESS, LOGOUT_USER} from "./types";
-
 import {Router} from "../../routes";
 
 
-export const loginUser = ({email, password}) => {
+export const loginUser = (email, password) => {
     return (dispatch) => {
         dispatch({type: LOGIN_USER});
         // TODO Refactor this
@@ -17,7 +16,7 @@ export const logoutUser = () => {
         dispatch({
             type: LOGOUT_USER
         });
-        Router.pushRoute('/index')
+        Router.replaceRoute('/')
     }
 
 };
