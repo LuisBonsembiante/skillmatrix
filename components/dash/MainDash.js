@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Menu, Segment, Card, Label, Search} from 'semantic-ui-react';
+import {Menu, Segment, Label, Search, Divider} from 'semantic-ui-react';
 import {Link} from '../../routes';
 import _ from 'lodash'
 import Cards from "./Cards";
 import MenuItems from "./MenuItems";
+import ProfileInfo from "./ProfileInfo";
 
 class MainDash extends Component {
 
@@ -31,7 +32,7 @@ class MainDash extends Component {
 
             this.setState({
                 isLoading: false,
-                results: _.filter(source, isMatch),
+                results: _.filter(source, isMatch), // TODO Map source with redux
             })
         }, 300)
     };
@@ -42,7 +43,9 @@ class MainDash extends Component {
 
         return (
             <div>
-                <Menu attached='top' tabular>
+                <ProfileInfo/>
+                <Divider />
+                <Menu attached='top' pointing secondary pagination>
                     <MenuItems activeItem={activeItem} handleItemClick={this.handleItemClick}/>
                     <Menu.Menu position='right'>
                         <Menu.Item>
