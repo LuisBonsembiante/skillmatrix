@@ -1,69 +1,66 @@
-import React, {Component, useState} from 'react';
-import {Input, Menu, Segment, Card} from 'semantic-ui-react';
+import React, {Component} from 'react';
+import {Menu, Segment, Card, Label, Search} from 'semantic-ui-react';
 import {Link} from '../../routes';
+import _ from 'lodash'
+import Cards from "./Cards";
+import MenuItems from "./MenuItems";
 
 class MainDash extends Component {
 
     state = {
-        activeItem: ''
-
-    }
-
+        activeItem: 'JavaScript', // TODO Set the first one for default
+        isLoading: false,
+        value: '' // Value of the search Field
+    };
 
      handleItemClick = (e, {name}) => {
         this.setState({activeItem: name})
-    }
-
-    renderCards() {
+    };
 
 
-        const items = [
-            {
-                header: 'Angular Js',
-                meta: 'Addres of Manager',
-                description: 'The manager created this campaign and can create request to withdraw money',
-                style: {overflowWrap: 'break-word'}
-            },
-            {
-                header: 'React Js',
-                meta: 'Minimum Contribution (wei)',
-                description: 'You must contribute at least this much wei',
-                style: {overflowWrap: 'break-word'}
-            }
+    handleResultSelect = (e, { result }) => this.setState({ value: result.title });
+    resetComponent = () => this.setState({ isLoading: false, results: [], value: '' });
+    handleSearchChange = (e, { value }) => {
+        this.setState({ isLoading: true, value });
 
-        ];
+        setTimeout(() => {
+            if (this.state.value.length < 1) return this.resetComponent();
 
+            const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
+            const isMatch = result => re.test(result.title);
 
-        return <Card.Group items={items}/>
-    }
+            this.setState({
+                isLoading: false,
+                results: _.filter(source, isMatch),
+            })
+        }, 300)
+    };
 
     render() {
-
-
-
+        const {isLoading, results, value, activeItem} = this.state;
+        const resultRenderer = ({ title }) => <Label content={title} />;
 
         return (
             <div>
                 <Menu attached='top' tabular>
-                    <Menu.Item name='JavaScript' active={this.state.activeItem === 'JavaScript'} onClick={this.handleItemClick}/>
-                    <Menu.Item
-                        name='Java'
-                        active={this.state.activeItem === 'Java'}
-                        onClick={this.handleItemClick}
-                    />
+                    <MenuItems activeItem={activeItem} handleItemClick={this.handleItemClick}/>
                     <Menu.Menu position='right'>
                         <Menu.Item>
-                            <Input
-                                transparent
-                                icon={{name: 'search', link: true}}
-                                placeholder='Search users...'
+                            <Search
+                                loading={isLoading}
+                                onResultSelect={this.handleResultSelect}
+                                onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
+                                results={results}
+                                resultRenderer={resultRenderer}
+                                value={value}
+                                {...this.props}
                             />
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu>
 
                 <Segment attached='bottom'>
-                    {this.renderCards()}
+                    <Cards skillSelected={activeItem}/>
                 </Segment>
             </div>
         );
