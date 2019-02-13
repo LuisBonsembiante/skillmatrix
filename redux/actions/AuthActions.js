@@ -1,5 +1,4 @@
 import { LOGIN_USER_SUCCESS, LOGOUT_USER} from "./types";
-import history from '../../components/commons/history';
 import {actionTypes} from "../../store";
 import {Router} from "../../routes";
 
@@ -18,7 +17,7 @@ export const logoutUser = () => {
         dispatch({
             type: LOGOUT_USER
         });
-        history.push('/');
+        Router.replaceRoute('/')
     }
 
 };

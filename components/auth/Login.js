@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, Form, Grid, Header, Segment} from "semantic-ui-react";
 import {Link} from '../../routes';
 import {connect} from "react-redux";
-import {loginUser} from "../../store";
+import {loginUser} from "../../redux/actions";
 
 const _login = (props) => {
 
