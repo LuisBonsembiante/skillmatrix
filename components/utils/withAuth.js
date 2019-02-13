@@ -13,7 +13,7 @@ export default function withAuth(AuthComponent) {
         }
 
         componentDidMount () {
-            if (!this.props.user) {
+            if (!this.props.auth.user && !this.props.user) {
                 Router.replaceRoute('/')
             }
             this.setState({ isLoading: false })
