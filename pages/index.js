@@ -10,7 +10,6 @@ class SkillmatrixIndex extends React.Component {
 
     // Initial PROPS
     static getInitialProps ({ reduxStore, req }) {
-        const isServer = !!req
 
         return {}
     }
