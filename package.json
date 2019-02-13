@@ -19,7 +19,11 @@
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.85.0"
+    "semantic-ui-react": "^0.85.0",
+    "react-redux": "^5.0.1",
+    "redux": "^3.6.0",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.1.0"
   },
   "author": "",
   "license": "ISC"
