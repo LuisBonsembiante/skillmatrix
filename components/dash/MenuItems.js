@@ -12,7 +12,7 @@ const _menuItems = (props) => {
 
     const LENGTH_TO_SHOW = 7; // Cant of menu items to show
     const moveItems = (cant) => {
-        if (items.length > LENGTH_TO_SHOW) {
+        if (items.length > LENGTH_TO_SHOW && (start + cant > 0)) {
             setEnd(end + cant);
             setStart(start + cant);
         }
@@ -21,7 +21,7 @@ const _menuItems = (props) => {
     // TODO Do better implementation of arrows - Fixed position
     return (
         <>
-            <Menu.Item name='more' onClick={() => moveItems(-1)} disabled={items.length < LENGTH_TO_SHOW }>
+            <Menu.Item name='more' onClick={() => moveItems(-1)} disabled={items.length < LENGTH_TO_SHOW && start > 0}>
                 {start > 0 && <Label color='teal'>{'+ ' + (start)}</Label>}
                 <Icon name='arrow left'/>
             </Menu.Item>
