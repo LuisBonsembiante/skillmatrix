@@ -6,7 +6,7 @@ export const loginUser = (email, password) => {
     return (dispatch) => {
         dispatch({type: LOGIN_USER});
         // TODO Refactor this
-        // dispatch(loginUserSuccess({name: email, rol: 'admin'}))
+        dispatch(loginUserSuccess({name: email, rol: 'admin'}))
     };
 };
 

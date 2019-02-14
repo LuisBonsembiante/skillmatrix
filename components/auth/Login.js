@@ -76,15 +76,20 @@ const _login = (props) => {
 
                         <br/>
 
-                        <Button
-                            icon='github' labelPosition='left' color='black' onClick={handlerGitHubLogin}
-                            label={{as: 'button', basic: true, content: 'Login with'}}
-                        />
-
-                        <Button
-                            icon='google' labelPosition='left' color='red' onClick={handlerGoogleLogin}
-                            label={{as: 'button', basic: true, content: 'Login with'}}
-                        />
+                        <Grid centered columns={3}>
+                            <Grid.Column>
+                                <Button
+                                    icon='github' labelPosition='left' color='black' onClick={handlerGitHubLogin}
+                                    label={{as: 'button', basic: true, content: 'Login with'}}
+                                />
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Button
+                                    icon='google' labelPosition='left' color='red' onClick={handlerGoogleLogin}
+                                    label={{as: 'button', basic: true, content: 'Login with'}}
+                                />
+                            </Grid.Column>
+                        </Grid>
                     </Form>
                 </Segment>
             </Grid.Column>
