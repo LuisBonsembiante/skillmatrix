@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Accordion, Button, Form, Icon, Input, Modal, Table, Grid} from 'semantic-ui-react';
+import {Accordion, Button, Form, Icon, Input, Modal, Table, Grid, Message} from 'semantic-ui-react';
 import {Router} from "../../routes";
 import {technologiesCreate} from "../../redux/actions";
 import {connect} from "react-redux";
@@ -13,6 +13,7 @@ class TechRow extends Component {
         new: false,
         description: '',
         name: '',
+        tag: '',
         open: false
     }
 
@@ -21,16 +22,16 @@ class TechRow extends Component {
         <Modal open={this.state.open} onClose={() => this.setState({open: false})}>
             <Modal.Header>Add Techno to {this.props.skill.name}</Modal.Header>
             <Modal.Content>
-                <Form onSubmit={this.onAdd}>
+                <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>
                     <Form.Group widths={3}>
-                        <Form.Field>
+                        <Form.Field required>
                             <label>Name</label>
                             <Input
 
                                 onChange={event => this.setState({name: event.target.value})}
                             />
                         </Form.Field>
-                        <Form.Field>
+                        <Form.Field required>
                             <label>Description</label>
                             <Input
 
@@ -38,6 +39,15 @@ class TechRow extends Component {
                             />
                         </Form.Field>
                     </Form.Group>
+                    <Form.Group widths={2}>
+                        <Form.Field required>
+                            <label>Tag</label>
+                            <Input
+                                onChange={event => this.setState({tag: event.target.value})}
+                            />
+                        </Form.Field>
+                    </Form.Group>
+                    <Message error header="Oops!" content={this.state.errorMessage} />
                 </Form>
             </Modal.Content>
             <Modal.Actions>
@@ -54,12 +64,18 @@ class TechRow extends Component {
 
     onAdd = () => {
 
+        if(this.state.description.length === 0 || this.state.name.length === 0 || this.state.tag.length === 0){
+            this.setState({errorMessage: 'Complete the fields'});
+            return;
+        }
+
         this.setState({loading: true});
 
 
         this.props.technologiesCreate({
             name: this.state.name,
             description: this.state.description,
+            tag:this.state.tag,
             uid: this.props.skill.key
         })
 
@@ -111,6 +127,7 @@ class TechRow extends Component {
                                         <Table.HeaderCell>ID</Table.HeaderCell>
                                         <Table.HeaderCell>Name</Table.HeaderCell>
                                         <Table.HeaderCell>Description</Table.HeaderCell>
+                                        <Table.HeaderCell>Tag</Table.HeaderCell>
                                         <Table.HeaderCell>Edit</Table.HeaderCell>
                                         <Table.HeaderCell>Delete</Table.HeaderCell>
                                     </Table.Row>
@@ -125,6 +142,7 @@ class TechRow extends Component {
                                                     <Table.Cell>0</Table.Cell>
                                                     <Table.Cell>{tech.name}</Table.Cell>
                                                     <Table.Cell>{tech.description}</Table.Cell>
+                                                    <Table.Cell>{tech.tag}</Table.Cell>
                                                     <Table.Cell> <Icon name='edit'/></Table.Cell>
                                                     <Table.Cell> <Icon name='delete'/></Table.Cell>
                                                 </Table.Row>

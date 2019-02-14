@@ -17,11 +17,11 @@ export const skillCreate = ({name, description}) => {
 
 };
 
-export const technologiesCreate = ({name, description, uid}) => {
+export const technologiesCreate = ({name, description, tag, uid}) => {
     const {currentUser} = firebase.auth();
     return (dispatch) => {
         firebase.database().ref(`/skills/${uid}/technologies`)
-            .push({name, description})
+            .push({name, description, tag})
             .then(() => {
                 dispatch({type: TECHNOLOGIES_CREATE});
 
