@@ -24,7 +24,6 @@ class SkillModal extends Component {
         this.setState({open: this.props.open})
     }
 
-    component
 
     onAdd = () => {
         if(this.state.description.length === 0 || this.state.name.length === 0){
@@ -46,7 +45,7 @@ class SkillModal extends Component {
 
     render() {
         return (
-            <Modal open={this.state.open} onClose={() =>{ this.props.onClose()}}>
+            <Modal open={this.state.open} onClose={() =>{  this.setState({errorMessage: ''}); this.props.onClose();}}>
                 <Modal.Header>Add new Skill</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Accordion, Button, Form, Icon, Input, Modal, Table, Grid, Message} from 'semantic-ui-react';
 import {Router} from "../../routes";
-import {technologiesCreate} from "../../redux/actions";
+import {technologiesCreate, technologiesDelete} from "../../redux/actions";
 import {connect} from "react-redux";
+import _ from "lodash";
 
 class TechRow extends Component {
 
@@ -104,6 +105,23 @@ class TechRow extends Component {
         //Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
     };
 
+
+    delete = (key) => {
+
+        this.setState({loading: true});
+console.log('dfasd')
+        console.log(console.log(this.props.skill.key))
+        this.props.technologiesDelete({
+
+            uid: this.props.skill.key,
+            tuid:key
+        })
+
+        this.setState({loading: false});
+
+        //Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
+    };
+
     panels = [{
         key: 'panelTech',
         title: 'Techs',
@@ -124,7 +142,6 @@ class TechRow extends Component {
                             <Table>
                                 <Table.Header>
                                     <Table.Row>
-                                        <Table.HeaderCell>ID</Table.HeaderCell>
                                         <Table.HeaderCell>Name</Table.HeaderCell>
                                         <Table.HeaderCell>Description</Table.HeaderCell>
                                         <Table.HeaderCell>Tag</Table.HeaderCell>
@@ -134,17 +151,20 @@ class TechRow extends Component {
                                 </Table.Header>
                                 <Table.Body>
                                     {
-                                        Object.values(this.props.skill.technologies || {}).map((tech, index) => {
+                                       _.map(this.props.skill.technologies,(val, uid) => {
 
                                             return (
 
-                                                <Table.Row key={index}>
-                                                    <Table.Cell>0</Table.Cell>
-                                                    <Table.Cell>{tech.name}</Table.Cell>
-                                                    <Table.Cell>{tech.description}</Table.Cell>
-                                                    <Table.Cell>{tech.tag}</Table.Cell>
+                                                <Table.Row key={uid}>
+                                                    <Table.Cell>{val.name}</Table.Cell>
+                                                    <Table.Cell>{val.description}</Table.Cell>
+                                                    <Table.Cell>{val.tag}</Table.Cell>
                                                     <Table.Cell> <Icon name='edit'/></Table.Cell>
-                                                    <Table.Cell> <Icon name='delete'/></Table.Cell>
+                                                    <Table.Cell>
+                                                        <Button icon   loading={this.state.loading} onClick={() => this.delete(uid)}>
+                                                            <Icon name='delete'/>
+                                                        </Button>
+                                                    </Table.Cell>
                                                 </Table.Row>
 
                                             );
@@ -223,4 +243,4 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, {technologiesCreate})(TechRow);
+export default connect(mapStateToProps, {technologiesCreate, technologiesDelete})(TechRow);
