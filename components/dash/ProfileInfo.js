@@ -1,10 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Button, Form, Grid, Image} from "semantic-ui-react";
+import {getLargeImage} from "../utils/imagesManager";
 
 const _profileInfo = (props) => {
 
-    const defaultImage = 'static/images/avatar/large/elyse.png';
     return (
         <>
             <h1>Profile Info</h1>
@@ -14,7 +14,7 @@ const _profileInfo = (props) => {
                 <Grid columns={2}>
                     <Grid.Row stretched>
                         <Grid.Column width={6}>
-                            <Image src={props.user.photoURL || defaultImage} size='medium' circular/>
+                            <Image src={props.user.photoURL || getLargeImage()} size='medium' circular/>
                         </Grid.Column>
                         <Grid.Column width={9}>
                             <Form.Field disabled={true}>
