@@ -15,9 +15,7 @@ const _header = (props) => {
 
 
     const handleItemClick = (e, {name}) => Router.pushRoute(ROUTES[name.toLowerCase()]);
-    const onClick = () => {
-        props.skillCreate({name: 'Java', description: 'dfasdfasdf'});
-    };
+
 
     return (
         <Menu style={{marginTop: '10px'}} size='small'>
@@ -28,7 +26,9 @@ const _header = (props) => {
                 <Menu.Item active={ROUTES.skills === props.router.asPath}
                            onClick={handleItemClick} name='Skills' />
 
-                <a className="item" onClick={onClick}>+</a>
+                <Link route="/skill/index">
+                    <a className="item">+</a>
+                </Link>
             </Menu.Menu>
         </Menu>
     );
