@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import { Card} from 'semantic-ui-react';
+import {Card, Icon} from 'semantic-ui-react';
 
 
 const _cards = (props) => {
@@ -21,7 +21,25 @@ const _cards = (props) => {
     ]; // TODO Get this items from Redux
 
     return (
-        <Card.Group items={items}/>
+        <Card.Group itemsPerRow={4}>
+            {items.map((item) =>
+                <Card>
+                    <Card.Content>
+                        <Card.Header>{item.header}</Card.Header>
+                        <Card.Meta>
+                            <span className='date'>{item.meta}</span>
+                        </Card.Meta>
+                        <Card.Description>{item.description}</Card.Description>
+                    </Card.Content>
+                    <Card.Content extra>
+                        <a>
+                            <Icon name='user' />
+                            22 Friends
+                        </a>
+                    </Card.Content>
+                </Card>
+            )}
+        </Card.Group>
     )
 };
 
