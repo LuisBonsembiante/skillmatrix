@@ -109,8 +109,7 @@ class TechRow extends Component {
     delete = (key) => {
 
         this.setState({loading: true});
-console.log('dfasd')
-        console.log(console.log(this.props.skill.key))
+
         this.props.technologiesDelete({
 
             uid: this.props.skill.key,
@@ -145,8 +144,7 @@ console.log('dfasd')
                                         <Table.HeaderCell>Name</Table.HeaderCell>
                                         <Table.HeaderCell>Description</Table.HeaderCell>
                                         <Table.HeaderCell>Tag</Table.HeaderCell>
-                                        <Table.HeaderCell>Edit</Table.HeaderCell>
-                                        <Table.HeaderCell>Delete</Table.HeaderCell>
+                                        <Table.HeaderCell textAlign='right'>Options</Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Header>
                                 <Table.Body>
@@ -159,12 +157,13 @@ console.log('dfasd')
                                                     <Table.Cell>{val.name}</Table.Cell>
                                                     <Table.Cell>{val.description}</Table.Cell>
                                                     <Table.Cell>{val.tag}</Table.Cell>
-                                                    <Table.Cell> <Icon name='edit'/></Table.Cell>
-                                                    <Table.Cell>
-                                                        <Button icon   loading={this.state.loading} onClick={() => this.delete(uid)}>
-                                                            <Icon name='delete'/>
-                                                        </Button>
-                                                    </Table.Cell>
+                                                    <Table.Cell textAlign='right'>
+                                                        <Button.Group>
+                                                            <Button  basic icon="edit"  loading={this.state.loading}></Button>
+                                                            <Button.Or />
+                                                            <Button positive icon="delete"   loading={this.state.loading} onClick={() => this.delete(uid)}/>
+                                                        </Button.Group>
+                                                     </Table.Cell>
                                                 </Table.Row>
 
                                             );
