@@ -27,7 +27,7 @@ const _header = (props) => {
                            onClick={handleItemClick} name='Skills' />
 
                 <Link route="/skill/index">
-                    <a className="item" onClick={onClick}>+</a>
+                    <a className="item">+</a>
                 </Link>
             </Menu.Menu>
         </Menu>
