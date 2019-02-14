@@ -1,8 +1,8 @@
 const routes = require('next-routes')();
 
 routes
-    .add('/', '/login')
-    .add('/index', '/index')
+    .add('/', '/index')
+    .add('/login', '/login');
 // .add('/root/:dimaic', '/root/view')
 
 

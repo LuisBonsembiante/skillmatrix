@@ -4,10 +4,10 @@ import {
     PASSWORD_CHANGED,
     LOGIN_USER_FAILED,
     LOGIN_USER,
-    LOGOUT_USER
+    LOGOUT_USER, LOGIN_WITH_GITHUB, LOGIN_WITH_GOOGLE
 } from '../actions/types'
 
-const INITIAL_STATE = { user: null, error:'', loading: false};
+const INITIAL_STATE = { user: null, error:'', loading: false, gitHubToken: null, googleToken: null};
 
 export default (state = INITIAL_STATE, action) => {
 
@@ -20,6 +20,10 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, loading: true, error:''};
         case LOGIN_USER_SUCCESS:
             return {...state,...INITIAL_STATE, user: action.payload};
+        case LOGIN_WITH_GITHUB:
+            return {...state, error:'', user: action.payload.user, gitHubToken: action.payload.token};
+        case LOGIN_WITH_GOOGLE:
+            return {...state, error:'', user: action.payload.user, googleToken: action.payload.token};
         case LOGIN_USER_FAILED:
             return {...state, error: 'Authentication Failed.', loading: false};
         case LOGOUT_USER:
