@@ -4,7 +4,7 @@ import {Button, Form, Grid, Image} from "semantic-ui-react";
 
 const _profileInfo = (props) => {
 
-    const defaultImage = 'assets/images/avatar/large/elyse.png';
+    const defaultImage = 'static/images/avatar/large/elyse.png';
     return (
         <>
             <h1>Profile Info</h1>
@@ -17,12 +17,11 @@ const _profileInfo = (props) => {
                             <Image src={props.user.photoURL || defaultImage} size='medium' circular/>
                         </Grid.Column>
                         <Grid.Column width={9}>
-                            <Form.Field>
+                            <Form.Field disabled={true}>
                                 <label>Email</label>
                                 <input value={props.user.email}
                                        placeholder='First Name'
-                                       onChange={() => {
-                                       }}/>
+                                       onChange={() => {}}/>
                             </Form.Field>
 
                             <Form.Group widths='equal'>
@@ -40,7 +39,7 @@ const _profileInfo = (props) => {
                                 </datalist>
                             </Form.Group>
 
-                            <Button color='blue'>Save</Button>
+                            <Button color='blue' basic loading={props.loading}>Save</Button>
                         </Grid.Column>
                         <br/>
                     </Grid.Row>

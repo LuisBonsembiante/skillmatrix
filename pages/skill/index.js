@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Table} from 'semantic-ui-react';
+import {Button, Grid, Label, Table} from 'semantic-ui-react';
 import Layout from '../../components/commons/Layout';
 import {Link} from '../../routes';
 import TechRow from '../../components/dash/TechRow';
@@ -36,21 +36,30 @@ class SkillsIndex extends Component {
                         <Button primary  floated="right" style={{ marginBottom: 10 }}>Create Skill</Button>
                     </a>
                 </Link>
-                <Table>
-                    <Header>
-                        <Row>
-                            <HeaderCell>ID</HeaderCell>
-                            <HeaderCell>Name</HeaderCell>
-                            <HeaderCell>Description</HeaderCell>
-                            <HeaderCell>Techs</HeaderCell>
-                            <HeaderCell>Options</HeaderCell>
-                        </Row>
-                    </Header>
-                    <Body>
-                         {this.renderRow()}
-                    </Body>
-                </Table>
-                <div>Found {this.props.skills.length} skills.</div>
+                <Grid centered celled columns='equal'>
+                    <Grid.Row color='grey' columns={5}>
+                        <Grid.Column textAlign='center'  width={2}>
+                            <h3>ID</h3>
+                        </Grid.Column>
+                        <Grid.Column textAlign='center' width={3}>
+                            <h3>Name</h3>
+                        </Grid.Column>
+                        <Grid.Column textAlign='center'>
+                            <h3>Description</h3>
+                        </Grid.Column>
+                        <Grid.Column textAlign='center'  width={2}>
+                            <h3>Edit</h3>
+                        </Grid.Column>
+                        <Grid.Column textAlign='center'  width={2}>
+                            <h3>Delete</h3>
+                        </Grid.Column>
+                    </Grid.Row>
+                    {this.renderRow()}
+                </Grid>
+                <Label color='teal'>
+                    Found Skills:
+                    <Label.Detail>{this.props.skills.length}</Label.Detail>
+                </Label>
             </Layout>
         );
     }

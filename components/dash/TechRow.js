@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Accordion, Button, Form, Icon, Input, Modal, Table} from 'semantic-ui-react';
+import {Accordion, Button, Form, Icon, Input, Modal, Table, Grid} from 'semantic-ui-react';
 import {Router} from "../../routes";
 import {technologiesCreate} from "../../redux/actions";
 import {connect} from "react-redux";
@@ -91,56 +91,54 @@ class TechRow extends Component {
     panels = [{
         key: 'panelTech',
         title: 'Techs',
-        content: { content: this.dataTech }
+        content: {content: this.dataTech}
     }];
 
 
-    dataTech =
-
-        (
-            <Table>
-                <Table.Header>
-                    <Table.Row>
-                        <Table.HeaderCell>ID</Table.HeaderCell>
-                        <Table.HeaderCell>Name</Table.HeaderCell>
-                        <Table.HeaderCell>Description</Table.HeaderCell>
-                        <Table.HeaderCell>Edit</Table.HeaderCell>
-                        <Table.HeaderCell>Delete</Table.HeaderCell>
-                    </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                    {
-                        Object.values(this.props.skill.technologies || {}).map((tech, index) => {
-
-                            return (
-
-                                <Table.Row key={index}>
-                                    <Table.Cell>0</Table.Cell>
-                                    <Table.Cell>{tech.name}</Table.Cell>
-                                    <Table.Cell>{tech.description}</Table.Cell>
-                                    <Table.Cell> <Icon name='edit'/></Table.Cell>
-                                    <Table.Cell> <Icon name='delete'/></Table.Cell>
-                                </Table.Row>
-
-                            );
-                        })
-                    }
-
-                </Table.Body>
-            </Table>
-        );
-
-
-
+    dataTech = (<h1>Hola</h1>);
 
 
     renderTech() {
 
         return (
-            <Table.Row>
-                <Accordion.Accordion panels={this.panels}>
-                </Accordion.Accordion>
-            </Table.Row>
+            <Grid.Row>
+                <Grid.Column>
+                    <Accordion.Accordion>
+                        <Accordion.Content>
+                            <Table>
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.HeaderCell>ID</Table.HeaderCell>
+                                        <Table.HeaderCell>Name</Table.HeaderCell>
+                                        <Table.HeaderCell>Description</Table.HeaderCell>
+                                        <Table.HeaderCell>Edit</Table.HeaderCell>
+                                        <Table.HeaderCell>Delete</Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
+                                <Table.Body>
+                                    {
+                                        Object.values(this.props.skill.technologies || {}).map((tech, index) => {
+
+                                            return (
+
+                                                <Table.Row key={index}>
+                                                    <Table.Cell>0</Table.Cell>
+                                                    <Table.Cell>{tech.name}</Table.Cell>
+                                                    <Table.Cell>{tech.description}</Table.Cell>
+                                                    <Table.Cell> <Icon name='edit'/></Table.Cell>
+                                                    <Table.Cell> <Icon name='delete'/></Table.Cell>
+                                                </Table.Row>
+
+                                            );
+                                        })
+                                    }
+
+                                </Table.Body>
+                            </Table>
+                        </Accordion.Content>
+                    </Accordion.Accordion>
+                </Grid.Column>
+            </Grid.Row>
         );
 
     }
@@ -156,7 +154,10 @@ class TechRow extends Component {
 
         );
     }
-
+    onClickHandler = () => {
+        const {expand} = this.state;
+        this.setState({expand: !expand})
+    }
 
     render() {
         const {Row, Cell} = Table;
@@ -164,26 +165,30 @@ class TechRow extends Component {
 
         return (
             <>
-                <Row onClick={() => this.setState({expand: !this.state.expand})}>
-                    <Cell>{id}</Cell>
-                    <Cell>{skill.name}</Cell>
-                    <Cell>{skill.description}}</Cell>
-                    <Cell>
+                <Grid.Row columns='equal' stretched onClick={this.onClickHandler} >
+                    <Grid.Column width={2}>
+                        <p>{id}</p>
+                    </Grid.Column>
+                    <Grid.Column width={3}>
+                        <p>{skill.name}</p>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <p>{skill.description}</p>
+                    </Grid.Column>
+                    <Grid.Column width={2}>
                         <Button loading={this.state.loading} color="green" basic
                                 onClick={(() => this.setState({open: true}))}>
                             Add
                         </Button>
-                    </Cell>
-                    <Cell>
+                    </Grid.Column>
+                    <Grid.Column width={2}>
                         <Button loading={this.state.loading} color="teal" basic onClick={this.onFinalize}>
                             Edit
                         </Button>
-                    </Cell>
-                </Row>
-
+                    </Grid.Column>
+                </Grid.Row>
                 {this.state.expand && this.props.skill.technologies && this.renderTech()}
                 {this.modalNewSkill()}
-
             </>
         );
     }
