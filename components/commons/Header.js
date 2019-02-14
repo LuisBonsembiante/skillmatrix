@@ -10,7 +10,7 @@ const _header  =  (props) => {
 
    // handleItemClick = (e, { name }) => this.setState({ activeItem: name });
     const onClick = () => {
-         props.skillCreate( {name:'Java', description:'dfasdfasdf'} );
+        // props.skillCreate( {name:'Java', description:'dfasdfasdf'} );
     }
 
     return (
@@ -23,10 +23,10 @@ const _header  =  (props) => {
                 <Link route="/index">
                     <a className="item">Skill</a>
                 </Link>
-
-
+                <Link route="/skill/index">
                     <a className="item" onClick={onClick}>+</a>
-               
+                </Link>
+
             </Menu.Menu>
         </Menu>
     );
