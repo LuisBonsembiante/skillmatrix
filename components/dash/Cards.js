@@ -22,8 +22,8 @@ const _cards = (props) => {
 
     return (
         <Card.Group itemsPerRow={4}>
-            {items.map((item) =>
-                <Card>
+            {items.map((item, index) =>
+                <Card key={item + index}>
                     <Card.Content>
                         <Card.Header>{item.header}</Card.Header>
                         <Card.Meta>

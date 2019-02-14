@@ -13,7 +13,7 @@ export default function withAuth(AuthComponent) {
         }
 
         componentDidMount () {
-            if ((!this.props.auth || !this.props.auth.user) && !this.props.user) {
+            if ((!this.props.auth || !this.props.auth.user.uid) && (!this.props.user || !this.props.user.uid)) {
                 Router.replaceRoute('/login')
             }
             this.setState({ isLoading: false })

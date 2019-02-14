@@ -7,7 +7,7 @@ import {
     LOGOUT_USER, LOGIN_WITH_GITHUB, LOGIN_WITH_GOOGLE
 } from '../actions/types'
 
-const INITIAL_STATE = { user: null, error:'', loading: false, gitHubToken: null, googleToken: null};
+const INITIAL_STATE = { user: {email: '', displayName: '', photoURL: ''}, error:'', loading: false, gitHubToken: null, googleToken: null};
 
 export default (state = INITIAL_STATE, action) => {
 

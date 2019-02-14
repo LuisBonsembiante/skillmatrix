@@ -72,7 +72,7 @@ class MainDash extends Component {
                     </Menu.Menu>
                 </Menu>
 
-                <Segment attached='bottom'>
+                <Segment attached='bottom' style={{marginLeft: 0}}>
                         <Dimmer active={this.props.loading}>
                             <Loader />
                         </Dimmer>
