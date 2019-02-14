@@ -1,4 +1,4 @@
-import {LOGIN_USER, LOGIN_USER_SUCCESS, LOGOUT_USER} from "./types";
+import {LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_WITH_GITHUB, LOGIN_WITH_GOOGLE, LOGOUT_USER} from "./types";
 import {Router} from "../../routes";
 
 
@@ -11,12 +11,26 @@ export const loginUser = (email, password) => {
 };
 
 
+export const loginWithGitHub = (token, user) => {
+    return (dispatch) => {
+        dispatch({type: LOGIN_WITH_GITHUB, payload: {token, user}});
+        Router.pushRoute('/')
+    };
+};
+
+export const loginWithGoogle = (token, user) => {
+    return (dispatch) => {
+        dispatch({type: LOGIN_WITH_GOOGLE, payload: {token, user}});
+        Router.pushRoute('/')
+    };
+};
+
 export const logoutUser = () => {
     return (dispatch) => {
         dispatch({
             type: LOGOUT_USER
         });
-        Router.replaceRoute('/')
+        Router.replaceRoute('/login')
     }
 
 };
@@ -26,7 +40,7 @@ const loginUserSuccess = (user) => {
             type: LOGIN_USER_SUCCESS,
             payload: user
         });
-        Router.pushRoute('/index')
+        Router.pushRoute('/')
     };
 };
 

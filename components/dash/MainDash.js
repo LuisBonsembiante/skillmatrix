@@ -25,27 +25,28 @@ class MainDash extends Component {
     }
 
 
-    handleResultSelect = (e, {result}) => this.setState({value: result.title});
+    handleResultSelect = (e, {result}) => this.setState({activeItem: result.name, value: result.name});
     resetComponent = () => this.setState({isLoading: false, results: [], value: ''});
     handleSearchChange = (e, {value}) => {
+        const {skills} = this.props;
         this.setState({isLoading: true, value});
 
         setTimeout(() => {
             if (this.state.value.length < 1) return this.resetComponent();
 
             const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
-            const isMatch = result => re.test(result.title);
+            const isMatch = result => re.test(result.name);
 
             this.setState({
                 isLoading: false,
-                results: _.filter(source, isMatch), // TODO Map source with redux
+                results: _.filter(skills, isMatch),
             })
         }, 300)
     };
 
     render() {
         const {isLoading, results, value, activeItem} = this.state;
-        const resultRenderer = ({title}) => <Label content={title}/>;
+        const resultRenderer = ({name}) => <Label content={name} color='blue' onClick={this.handleItemClick}/>;
 
         return (
             <div>
@@ -86,7 +87,7 @@ class MainDash extends Component {
 const mapStateToProps = state => {
 
     const skills = _.map(state.fireBase.skills, (val, uid) => {
-        return {...val, key: uid}; // {shift: 'Monday', name:'s', id:'1j2j34'};
+        return {...val, key: uid, title: ''}; // {shift: 'Monday', name:'s', id:'1j2j34'};
     });
 
     return {
