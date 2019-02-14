@@ -30,7 +30,7 @@ export const logoutUser = () => {
         dispatch({
             type: LOGOUT_USER
         });
-        Router.replaceRoute('/login')
+        Router.pushRoute('/login')
     }
 
 };
