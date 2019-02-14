@@ -6,8 +6,13 @@ import TechRow from '../../components/dash/TechRow';
 import {connect} from "react-redux";
 import withAuth from "../../components/utils/withAuth";
 import _ from "lodash";
+import SkillModal from '../../components/admin/modals/SkillModal';
 
 class SkillsIndex extends Component {
+
+    state = {
+        openModalNewSkill: false
+    }
 
     static async getInitialProps(props) {
           return {};
@@ -23,6 +28,10 @@ class SkillsIndex extends Component {
         });
     }
 
+    renderModalNewSkill = () => {
+        return (<SkillModal open={this.state.openModalNewSkill} onClose={ () => this.setState({openModalNewSkill: false})}/>);
+    }
+
     render() {
 
         const {Header, Row, HeaderCell, Body} = Table;
@@ -31,11 +40,11 @@ class SkillsIndex extends Component {
             <Layout>
                 <h3>Skills</h3>
 
-                <Link route={`/skills/new`}>
-                    <a>
-                        <Button primary  floated="right" style={{ marginBottom: 10 }}>Create Skill</Button>
-                    </a>
-                </Link>
+
+
+                <Button primary  floated="right" onClick={() => this.setState({openModalNewSkill: true})} style={{ marginBottom: 10 }}>Create Skill</Button>
+
+
                 <Grid centered celled columns='equal'>
                     <Grid.Row color='grey' columns={5}>
                         <Grid.Column textAlign='center'  width={2}>
@@ -60,6 +69,8 @@ class SkillsIndex extends Component {
                     Found Skills:
                     <Label.Detail>{this.props.skills.length}</Label.Detail>
                 </Label>
+
+                {this.state.openModalNewSkill && this.renderModalNewSkill()}
             </Layout>
         );
     }

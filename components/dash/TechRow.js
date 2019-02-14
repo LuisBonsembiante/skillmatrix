@@ -19,7 +19,7 @@ class TechRow extends Component {
 
     modalNewSkill = () => (
         <Modal open={this.state.open} onClose={() => this.setState({open: false})}>
-            <Modal.Header>Add Techno</Modal.Header>
+            <Modal.Header>Add Techno to {this.props.skill.name}</Modal.Header>
             <Modal.Content>
                 <Form onSubmit={this.onAdd}>
                     <Form.Group widths={3}>
