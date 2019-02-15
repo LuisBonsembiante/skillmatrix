@@ -14,7 +14,7 @@ class TechRow extends Component {
         new: false,
         description: '',
         name: '',
-        tag: '',
+        meta: '',
         open: false
     }
 
@@ -42,9 +42,9 @@ class TechRow extends Component {
                     </Form.Group>
                     <Form.Group widths={2}>
                         <Form.Field required>
-                            <label>Tag</label>
+                            <label>Meta</label>
                             <Input
-                                onChange={event => this.setState({tag: event.target.value})}
+                                onChange={event => this.setState({meta: event.target.value})}
                             />
                         </Form.Field>
                     </Form.Group>
@@ -65,7 +65,7 @@ class TechRow extends Component {
 
     onAdd = () => {
 
-        if(this.state.description.length === 0 || this.state.name.length === 0 || this.state.tag.length === 0){
+        if(this.state.description.length === 0 || this.state.name.length === 0 || this.state.meta.length === 0){
             this.setState({errorMessage: 'Complete the fields'});
             return;
         }
@@ -76,7 +76,7 @@ class TechRow extends Component {
         this.props.technologiesCreate({
             name: this.state.name,
             description: this.state.description,
-            tag:this.state.tag,
+            meta:this.state.meta,
             uid: this.props.skill.key
         })
 
@@ -143,7 +143,7 @@ class TechRow extends Component {
                                     <Table.Row>
                                         <Table.HeaderCell>Name</Table.HeaderCell>
                                         <Table.HeaderCell>Description</Table.HeaderCell>
-                                        <Table.HeaderCell>Tag</Table.HeaderCell>
+                                        <Table.HeaderCell>Meta</Table.HeaderCell>
                                         <Table.HeaderCell textAlign='right'>Options</Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Header>
@@ -156,7 +156,7 @@ class TechRow extends Component {
                                                 <Table.Row key={uid}>
                                                     <Table.Cell>{val.name}</Table.Cell>
                                                     <Table.Cell>{val.description}</Table.Cell>
-                                                    <Table.Cell>{val.tag}</Table.Cell>
+                                                    <Table.Cell>{val.meta}</Table.Cell>
                                                     <Table.Cell textAlign='right'>
                                                         <Button.Group>
                                                             <Button  basic icon="edit"  loading={this.state.loading}></Button>
