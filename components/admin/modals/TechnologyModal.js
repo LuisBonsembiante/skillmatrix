@@ -39,7 +39,7 @@ class TechnologyModal extends Component {
             return;
         }
 
-        this.setState({loading: true, open: false});
+        this.setState({loading: false, open: false, errorMessage:''});
 
 
         this.props.technologiesCreate({
@@ -55,7 +55,7 @@ class TechnologyModal extends Component {
 
     render(){
         return (
-            <Modal open={this.state.open} onClose={() =>{ console.log('close'); this.setState({errorMessage: ''}); this.props.onClose();}}>
+            <Modal closeIcon open={this.state.open} onClose={() =>{ console.log('close'); this.setState({errorMessage: ''}); this.props.onClose();}}>
                 <Modal.Header>Add Techno to {this.state.skillName}</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>

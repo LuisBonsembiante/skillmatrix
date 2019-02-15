@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Accordion, Button, Form, Icon, Input, Modal, Table, Message} from 'semantic-ui-react';
+import {Accordion, Button, Form, Icon, Input, Table, Modal, Message} from 'semantic-ui-react';
 import {Router} from "../../../routes";
 import {skillCreate, skillUpdate} from "../../../redux/actions";
 import {connect} from "react-redux";
+import ModalDefault from './Modal';
 
 class SkillModal extends Component {
 
@@ -11,8 +12,8 @@ class SkillModal extends Component {
         loading: false,
         expand: false,
         new: false,
-        description: '',
-        name: '',
+        description: this.props.description || '',
+        name: this.props.name || '',
         open: false,
         openForUpdate: false,
         uid: null,
@@ -21,15 +22,16 @@ class SkillModal extends Component {
 
     componentWillMount() {
 
-        this.setState({open: this.props.open, name:this.props.name , description:this.props.description, technologies:this.props.technologies,uid: this.props.uid, openForUpdate: this.props.openForUpdate})
+        this.setState({open: this.props.open, name:this.props.name || '' , description:this.props.description || '', technologies:this.props.technologies,uid: this.props.uid, openForUpdate: this.props.openForUpdate})
     }
 
     componentWillReceiveProps(){
-        this.setState({open: this.props.open, name:this.props.name , description:this.props.description, technologies:this.props.technologies,uid: this.props.uid, openForUpdate: this.props.openForUpdate})
+        this.setState({open: this.props.open, name:this.props.name || '' , description:this.props.description || '', technologies:this.props.technologies,uid: this.props.uid, openForUpdate: this.props.openForUpdate})
     }
 
 
     onAdd = () => {
+        console.log(this.state)
         if(this.state.description.length === 0 || this.state.name.length === 0){
             this.setState({errorMessage: 'Complete the fields'});
             return;
@@ -56,6 +58,9 @@ class SkillModal extends Component {
 
         this.setState({loading: false, open: false, openForUpdate: false});
 
+        this.props.onClose();
+
+
     };
 
     renderUI() {
@@ -73,7 +78,7 @@ class SkillModal extends Component {
 
     render() {
         return (
-            <Modal open={this.state.open || this.state.openForUpdate} onClose={() =>{  this.setState({errorMessage: ''}); this.props.onClose();}}>
+            <ModalDefault  open={this.state.open || this.state.openForUpdate} onClose={() =>{ console.log('dfadsf');  this.setState({errorMessage: '', open: false}); this.props.onClose();}}>
                 <Modal.Header>{this.state.uid ? `Modify skill ${this.state.name}`:'Add new Skill'}</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>
@@ -107,7 +112,7 @@ class SkillModal extends Component {
                         Close
                     </Button>
                 </Modal.Actions>
-            </Modal>
+            </ModalDefault>
             );
 
     }
