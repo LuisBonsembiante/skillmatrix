@@ -48,11 +48,11 @@ export const skillDelete = ({uid}) => {
 
 };
 
-export const technologiesCreate = ({name, description, tag, uid}) => {
+export const technologiesCreate = ({name, description, meta, uid}) => {
     const {currentUser} = firebase.auth();
     return (dispatch) => {
         firebase.database().ref(`/skills/${uid}/technologies`)
-            .push({name, description, tag})
+            .push({name, description, meta})
             .then(() => {
                 dispatch({type: TECHNOLOGIES_CREATE});
 
