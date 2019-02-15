@@ -67,7 +67,7 @@ const _profileInfo = (props) => {
 const mapStateToProps = state => {
     return {
         ...state.auth,
-        loading: state.auth.loading || state.fireBase.loading,
+        loading: state.auth.loading || !!state.fireBase.loading,
         userData: state.fireBase.userData
     }
 };
