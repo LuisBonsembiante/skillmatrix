@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Accordion, Button, Form, Icon, Input, Modal, Table, Grid, Message} from 'semantic-ui-react';
+import {Accordion, Button, Form, Grid, Table} from 'semantic-ui-react';
 import {Router} from "../../routes";
 import {technologiesCreate, technologiesDelete} from "../../redux/actions";
 import {connect} from "react-redux";
 import _ from "lodash";
 import SkillModal from '../admin/modals/SkillModal';
+import TechnologyModal from "../admin/modals/TechnologyModal";
 
 class TechRow extends Component {
 
@@ -16,95 +17,19 @@ class TechRow extends Component {
         description: '',
         name: '',
         meta: '',
-        open: false,
-        openModalUpdateSkill: false
+        openModalUpdateSkill: false,
+        openModalTechnology: false
     }
 
 
-    modalNewSkill = () => (
-        <Modal open={this.state.open} onClose={() => this.setState({open: false})}>
-            <Modal.Header>Add Techno to {this.props.skill.name}</Modal.Header>
-            <Modal.Content>
-                <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>
-                    <Form.Group widths={3}>
-                        <Form.Field required>
-                            <label>Name</label>
-                            <Input
-                                onChange={event => this.setState({name: event.target.value})}
-                            />
-                        </Form.Field>
-                        <Form.Field required>
-                            <label>Description</label>
-                            <Input
-                                onChange={event => this.setState({description: event.target.value})}
-                            />
-                        </Form.Field>
-                    </Form.Group>
-                    <Form.Group widths={2}>
-                        <Form.Field required>
-                            <label>Meta</label>
-                            <Input
-                                onChange={event => this.setState({meta: event.target.value})}
-                            />
-                        </Form.Field>
-                    </Form.Group>
-                    <Message error header="Oops!" content={this.state.errorMessage}/>
-                </Form>
-            </Modal.Content>
-            <Modal.Actions>
-                <Button loading={this.state.loading} color="teal" primary onClick={() => this.onAdd()}>
-                    Add
-                </Button>
-                <Button loading={this.state.loading} color="green" primary onClick={() => this.setState({open: false})}>
-                    Close
-                </Button>
-            </Modal.Actions>
-        </Modal>
-    )
+    modalNewTechnology = () => {
 
+        return (
+            <TechnologyModal open={this.state.openModalTechnology} skillKey={this.props.skill.key} skillName={this.props.skill.name}
+                             onClose={() => this.setState({openModalTechnology: false})}/>
+        );
+    }
 
-    onAdd = () => {
-
-        if (this.state.description.length === 0 || this.state.name.length === 0 || this.state.meta.length === 0) {
-            this.setState({errorMessage: 'Complete the fields'});
-            return;
-        }
-
-        this.setState({loading: true});
-
-
-        this.props.technologiesCreate({
-            name: this.state.name,
-            description: this.state.description,
-            meta: this.state.meta,
-            uid: this.props.skill.key
-        })
-
-        this.setState({loading: false, open: false});
-
-        //Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
-    };
-
-    onApprove = async () => {
-
-        this.setState({loading: true});
-
-
-        this.setState({loading: false});
-
-        //Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
-    };
-
-    onFinalize = async () => {
-
-        this.setState({loading: true});
-
-        this.setState({openModalNewSkill: true});
-
-        this.setState({loading: false});
-
-        //Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
-    };
 
 
     delete = (key) => {
@@ -117,8 +42,6 @@ class TechRow extends Component {
         })
 
         this.setState({loading: false});
-
-        //Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
     };
 
     panels = [{
@@ -127,8 +50,6 @@ class TechRow extends Component {
         content: {content: this.dataTech}
     }];
 
-
-    dataTech = (<h1>Hola</h1>);
 
 
     renderTech() {
@@ -185,9 +106,11 @@ class TechRow extends Component {
 
     renderModalUpdateSkill = () => {
         return (
-            <SkillModal open={this.state.openModalUpdateSkill} uid={this.props.skill.key} name={this.props.skill.name}
+            <SkillModal openForUpdate={this.state.openModalUpdateSkill} uid={this.props.skill.key}
+                        name={this.props.skill.name}
                         description={this.props.skill.description} technologies={this.props.skill.technologies}
-                        onClose={() => this.setState({openModalUpdateSkill: false})}/>);
+                        onClose={() => this.setState({openModalUpdateSkill: false})}/>
+        );
     }
 
     addTech() {
@@ -204,7 +127,7 @@ class TechRow extends Component {
 
     onClickHandler = (event) => {
         const {expand} = this.state;
-        this.setState({expand: !expand, openModalUpdateSkill: false})
+        this.setState({expand: !expand, openModalUpdateSkill: false, openModalTechnology: false})
     }
 
     render() {
@@ -215,10 +138,10 @@ class TechRow extends Component {
             <>
                 <Grid.Row columns='equal' stretched>
                     <Grid.Column width={1}>
-                        <Button loading={this.state.loading} basic
-                                onClick={(event) => this.onClickHandler(event)}>
+                        <p loading={this.state.loading} basic
+                           onClick={(event) => this.onClickHandler(event)}>
                             {this.props.skill.technologies ? '+' : '-'}
-                        </Button>
+                        </p>
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <p>{id}</p>
@@ -231,20 +154,20 @@ class TechRow extends Component {
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <Button loading={this.state.loading} color="green" basic
-                                onClick={(() => this.setState({open: true}))}>
+                                onClick={(() => this.setState({openModalTechnology: true, openModalUpdateSkill: false}))}>
                             Add
                         </Button>
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <Button loading={this.state.loading} color="teal" basic
-                                onClick={() => this.setState({openModalUpdateSkill: true})}>
+                                onClick={() => this.setState({openModalUpdateSkill: true, openModalTechnology: false})}>
                             Edit
                         </Button>
                     </Grid.Column>
                 </Grid.Row>
                 {this.state.expand && this.props.skill.technologies && this.renderTech()}
-                {this.state.open && this.modalNewSkill()}
                 {this.state.openModalUpdateSkill && this.renderModalUpdateSkill()}
+                {this.state.openModalTechnology && this.modalNewTechnology()}
             </>
         );
     }
