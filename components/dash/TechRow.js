@@ -18,7 +18,6 @@ class TechRow extends Component {
         meta: '',
         open: false,
         openModalUpdateSkill: false
-
     }
 
 
@@ -31,14 +30,12 @@ class TechRow extends Component {
                         <Form.Field required>
                             <label>Name</label>
                             <Input
-
                                 onChange={event => this.setState({name: event.target.value})}
                             />
                         </Form.Field>
                         <Form.Field required>
                             <label>Description</label>
                             <Input
-
                                 onChange={event => this.setState({description: event.target.value})}
                             />
                         </Form.Field>
@@ -51,7 +48,7 @@ class TechRow extends Component {
                             />
                         </Form.Field>
                     </Form.Group>
-                    <Message error header="Oops!" content={this.state.errorMessage} />
+                    <Message error header="Oops!" content={this.state.errorMessage}/>
                 </Form>
             </Modal.Content>
             <Modal.Actions>
@@ -68,7 +65,7 @@ class TechRow extends Component {
 
     onAdd = () => {
 
-        if(this.state.description.length === 0 || this.state.name.length === 0 || this.state.meta.length === 0){
+        if (this.state.description.length === 0 || this.state.name.length === 0 || this.state.meta.length === 0) {
             this.setState({errorMessage: 'Complete the fields'});
             return;
         }
@@ -79,7 +76,7 @@ class TechRow extends Component {
         this.props.technologiesCreate({
             name: this.state.name,
             description: this.state.description,
-            meta:this.state.meta,
+            meta: this.state.meta,
             uid: this.props.skill.key
         })
 
@@ -116,7 +113,7 @@ class TechRow extends Component {
 
         this.props.technologiesDelete({
             uid: this.props.skill.key,
-            tuid:key
+            tuid: key
         })
 
         this.setState({loading: false});
@@ -152,7 +149,7 @@ class TechRow extends Component {
                                 </Table.Header>
                                 <Table.Body>
                                     {
-                                       _.map(this.props.skill.technologies,(val, uid) => {
+                                        _.map(this.props.skill.technologies, (val, uid) => {
 
                                             return (
 
@@ -163,12 +160,13 @@ class TechRow extends Component {
                                                     <Table.Cell textAlign='right'>
                                                         <Button.Group>
                                                             <Button color='blue' icon="edit"
-                                                                     loading={this.state.loading}/>
-                                                            <Button.Or />
+                                                                    loading={this.state.loading}/>
+                                                            <Button.Or/>
                                                             <Button color='red' icon="trash alternate outline"
-                                                                    loading={this.state.loading} onClick={() => this.delete(uid)}/>
+                                                                    loading={this.state.loading}
+                                                                    onClick={() => this.delete(uid)}/>
                                                         </Button.Group>
-                                                     </Table.Cell>
+                                                    </Table.Cell>
                                                 </Table.Row>
 
                                             );
@@ -186,9 +184,10 @@ class TechRow extends Component {
     }
 
     renderModalUpdateSkill = () => {
-          return (<SkillModal open={this.state.openModalUpdateSkill} uid={this.props.skill.key} name={this.props.skill.name}
-                              description={this.props.skill.description} technologies={this.props.skill.technologies}
-                            onClose={ () => this.setState({openModalUpdateSkill: false})}/>);
+        return (
+            <SkillModal open={this.state.openModalUpdateSkill} uid={this.props.skill.key} name={this.props.skill.name}
+                        description={this.props.skill.description} technologies={this.props.skill.technologies}
+                        onClose={() => this.setState({openModalUpdateSkill: false})}/>);
     }
 
     addTech() {
@@ -202,10 +201,10 @@ class TechRow extends Component {
 
         );
     }
+
     onClickHandler = (event) => {
-        event.stopPropagation();
         const {expand} = this.state;
-        this.setState({expand: !expand})
+        this.setState({expand: !expand, openModalUpdateSkill: false})
     }
 
     render() {
@@ -214,9 +213,12 @@ class TechRow extends Component {
 
         return (
             <>
-                <Grid.Row columns='equal' stretched >
-                    <Grid.Column width={1}  onClick={(event) => this.onClickHandler(event)}>
-                        <p>{this.props.skill.technologies ? '+':'-'}</p>
+                <Grid.Row columns='equal' stretched>
+                    <Grid.Column width={1}>
+                        <Button loading={this.state.loading} basic
+                                onClick={(event) => this.onClickHandler(event)}>
+                            {this.props.skill.technologies ? '+' : '-'}
+                        </Button>
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <p>{id}</p>
@@ -234,14 +236,15 @@ class TechRow extends Component {
                         </Button>
                     </Grid.Column>
                     <Grid.Column width={2}>
-                        <Button loading={this.state.loading} color="teal" basic onClick={ (event) => {event.stopPropagation(); this.setState({openModalUpdateSkill: true})}}>
+                        <Button loading={this.state.loading} color="teal" basic
+                                onClick={() => this.setState({openModalUpdateSkill: true})}>
                             Edit
                         </Button>
                     </Grid.Column>
                 </Grid.Row>
                 {this.state.expand && this.props.skill.technologies && this.renderTech()}
-                {this.modalNewSkill()}
-                {this.renderModalUpdateSkill()}
+                {this.state.open && this.modalNewSkill()}
+                {this.state.openModalUpdateSkill && this.renderModalUpdateSkill()}
             </>
         );
     }
