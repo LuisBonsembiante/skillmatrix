@@ -5,7 +5,7 @@ import _ from 'lodash'
 import Cards from "./Cards";
 import MenuItems from "./MenuItems";
 import {connect} from 'react-redux';
-import {skillsFetch} from "../../redux/actions";
+import {skillsFetch, userDataFetch} from "../../redux/actions";
 import ProfileInfo from "./ProfileInfo";
 
 class MainDash extends Component {
@@ -22,6 +22,7 @@ class MainDash extends Component {
 
     componentDidMount() {
         this.props.skillsFetch();
+        this.props.userDataFetch()
     }
 
 
@@ -96,7 +97,7 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {skillsFetch})(MainDash);
+export default connect(mapStateToProps, {skillsFetch, userDataFetch})(MainDash);
 
 
 

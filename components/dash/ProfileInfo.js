@@ -2,8 +2,20 @@ import React from "react";
 import {connect} from "react-redux";
 import {Button, Form, Grid, Image} from "semantic-ui-react";
 import {getLargeImage} from "../utils/imagesManager";
+import {userDataUpdate} from "../../redux/actions";
 
 const _profileInfo = (props) => {
+
+    const updateUserData = () =>  {
+        const data = {
+            name: props.user.displayName || 'No named', // TODO get data from input
+            position: 'Master of BlockChain', // TODO add input for that
+            yearsOfExperience: 98788, // TODO map this with dropdown
+            email: props.user.email,
+        };
+
+        props.userDataUpdate(data);
+    };
 
     return (
         <>
@@ -39,7 +51,10 @@ const _profileInfo = (props) => {
                                 </datalist>
                             </Form.Group>
 
-                            <Button color='blue' basic loading={props.loading}>Save</Button>
+                            <Button color='blue' basic loading={props.loading}
+                                    onClick={updateUserData}>
+                                Save
+                            </Button>
                         </Grid.Column>
                         <br/>
                     </Grid.Row>
@@ -50,7 +65,11 @@ const _profileInfo = (props) => {
 };
 
 const mapStateToProps = state => {
-    return {...state.auth}
+    return {
+        ...state.auth,
+        loading: state.auth.loading || state.fireBase.loading,
+        userData: state.fireBase.userData
+    }
 };
 
-export default connect(mapStateToProps, {})(_profileInfo);
+export default connect(mapStateToProps, {userDataUpdate})(_profileInfo);
