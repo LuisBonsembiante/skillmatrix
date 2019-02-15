@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Card, Dropdown, Icon, Label, Popup} from 'semantic-ui-react';
 import {getSmallImage} from "../utils/imagesManager";
 import _ from "lodash";
+import {userTechnologyUpdate} from "../../redux/actions";
 
 class Cards extends Component {
 
@@ -16,22 +17,15 @@ class Cards extends Component {
     }
 
     getSkillTechnologies = (skillSelected) => {
-        const {skills} = this.props;
+        const {skills, userTechnologyData} = this.props;
 
         const _skillSelected = _.find(skills, ['name', skillSelected]);
 
         const _technologies = (_skillSelected && _skillSelected.technologies)
-            ? Object.values(_skillSelected.technologies).map(
-                (item, index) => {
-                    return { // TODO get the real user information an put the approve state into technologies
-                        ...item,
-                        validated: !(index % 2),
-                        validator: {
-                            name: 'Helen',
-                            position: 'Co-Worker'
-                        },
-                        levelOfKnowledge: {}
-                    }
+            ? _.map(_skillSelected.technologies,
+                (item, uid) => {
+                    if (userTechnologyData[uid]) return {...item, uid, ...userTechnologyData[uid]};
+                    return {...item, uid, levelOfKnowledge: {}}
                 })
             : [{name: '', meta: '', description: 'Technologies not found'}];
 
@@ -40,20 +34,31 @@ class Cards extends Component {
 
     componentWillReceiveProps(nextProps, nextContext) {
         const {skillSelected} = this.props;
-        if(skillSelected !== nextProps.skillSelected) {
+        if (skillSelected !== nextProps.skillSelected) {
             this.getSkillTechnologies(nextProps.skillSelected);
         }
     }
 
     onOptionClick = (index, value) => {
-        this.setState((state) => {return {
-            ...state,
-            technologies: state.technologies.map(
-                (content, i) => i === index
-                    ? {...content, levelOfKnowledge: value}
-                    : content
-            )
-        }});
+        const {technologies} = this.state;
+        this.setState((state) => {
+            return {
+                ...state,
+                technologies: state.technologies.map(
+                    (content, i) => i === index
+                        ? {...content, levelOfKnowledge: value}
+                        : content
+                )
+            }
+        });
+        this.props.userTechnologyUpdate(
+            {
+                validated: technologies[index].validated,
+                validator: technologies[index].validator,
+                levelOfKnowledge: value
+            }
+            , technologies[index].uid
+        )
     };
 
     render() {
@@ -131,8 +136,9 @@ function mapStateToProps(state) {
 
     return {
         skills,
-        loading: state.fireBase.loading
+        loading: state.fireBase.loading,
+        userTechnologyData: state.fireBase.userData ? state.fireBase.userData.technologies : {}
     };
 }
 
-export default connect(mapStateToProps, {})(Cards);
+export default connect(mapStateToProps, {userTechnologyUpdate: userTechnologyUpdate})(Cards);

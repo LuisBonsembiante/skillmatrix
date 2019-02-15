@@ -1,6 +1,13 @@
-import {FETCH_TECHNOLOGIES, INIT_FIRE_BASE, FETCH_SKILLS, START_TRANSACTION, SKILL_UPDATE} from "../actions/types";
+import {
+    FETCH_TECHNOLOGIES,
+    INIT_FIRE_BASE,
+    FETCH_SKILLS,
+    START_TRANSACTION,
+    SKILL_UPDATE,
+    FETCH_USER_DATA, UPDATE_USER_DATA
+} from "../actions/types";
 
-const INITIAL_STATE = { skills: null, error:'', loading: false, instance: null};
+const INITIAL_STATE = { skills: null, error:'', loading: false, instance: null, userData: null};
 
 export default (state = INITIAL_STATE, action) => {
 
@@ -14,7 +21,11 @@ export default (state = INITIAL_STATE, action) => {
         case INIT_FIRE_BASE:
             return {...state, instance: action.payload};
         case FETCH_TECHNOLOGIES:
-            return {...state, technologies: action.payload};
+            return {...state, loading: false, technologies: action.payload};
+        case FETCH_USER_DATA:
+            return {...state,  loading: false, userData: action.payload};
+        case UPDATE_USER_DATA:
+            return {...state, loading: false};
         default:
             return state;
     }
