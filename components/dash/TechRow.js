@@ -162,9 +162,11 @@ class TechRow extends Component {
                                                     <Table.Cell>{val.meta}</Table.Cell>
                                                     <Table.Cell textAlign='right'>
                                                         <Button.Group>
-                                                            <Button  basic icon="edit"  loading={this.state.loading}></Button>
+                                                            <Button color='blue' icon="edit"
+                                                                     loading={this.state.loading}/>
                                                             <Button.Or />
-                                                            <Button positive icon="delete"   loading={this.state.loading} onClick={() => this.delete(uid)}/>
+                                                            <Button color='red' icon="trash alternate outline"
+                                                                    loading={this.state.loading} onClick={() => this.delete(uid)}/>
                                                         </Button.Group>
                                                      </Table.Cell>
                                                 </Table.Row>
