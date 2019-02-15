@@ -14,17 +14,18 @@ class SkillModal extends Component {
         description: '',
         name: '',
         open: false,
+        openForUpdate: false,
         uid: null,
         technologies: {}
     }
 
     componentWillMount() {
 
-        this.setState({open: this.props.open, name:this.props.name , description:this.props.description, technologies:this.props.technologies,uid: this.props.uid})
+        this.setState({open: this.props.open, name:this.props.name , description:this.props.description, technologies:this.props.technologies,uid: this.props.uid, openForUpdate: this.props.openForUpdate})
     }
 
     componentWillReceiveProps(){
-        this.setState({open: this.props.open, name:this.props.name , description:this.props.description, technologies:this.props.technologies,uid: this.props.uid})
+        this.setState({open: this.props.open, name:this.props.name , description:this.props.description, technologies:this.props.technologies,uid: this.props.uid, openForUpdate: this.props.openForUpdate})
     }
 
 
@@ -33,7 +34,7 @@ class SkillModal extends Component {
             this.setState({errorMessage: 'Complete the fields'});
             return;
         }
-        this.setState({loading: true, open: false});
+        this.setState({loading: true, open: false, openForUpdate: false});
 
 
         if(this.state.uid){
@@ -53,7 +54,7 @@ class SkillModal extends Component {
 
 
 
-        this.setState({loading: false, open: false});
+        this.setState({loading: false, open: false, openForUpdate: false});
 
     };
 
@@ -72,7 +73,7 @@ class SkillModal extends Component {
 
     render() {
         return (
-            <Modal open={this.state.open} onClose={() =>{  this.setState({errorMessage: ''}); this.props.onClose();}}>
+            <Modal open={this.state.open || this.state.openForUpdate} onClose={() =>{  this.setState({errorMessage: ''}); this.props.onClose();}}>
                 <Modal.Header>{this.state.uid ? `Modify skill ${this.state.name}`:'Add new Skill'}</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>
@@ -102,7 +103,7 @@ class SkillModal extends Component {
                     <Button loading={this.state.loading} color="teal" primary onClick={() => {this.onAdd();}}>
                         {this.state.uid ? `Modify`:'Add'}
                     </Button>
-                    <Button loading={this.state.loading} color="green" primary onClick={() => this.setState({open: false})}>
+                    <Button loading={this.state.loading} color="green" primary onClick={() => this.setState({open: false, openForUpdate: false })}>
                         Close
                     </Button>
                 </Modal.Actions>
