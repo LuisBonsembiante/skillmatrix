@@ -22,35 +22,24 @@ class TechRow extends Component {
     }
 
 
-    modalNewTechnology = () => {
-
-        return (
-            <TechnologyModal open={this.state.openModalTechnology} skillKey={this.props.skill.key} skillName={this.props.skill.name}
-                             onClose={() => this.setState({openModalTechnology: false})}/>
-        );
-    }
-
-
-
     delete = (key) => {
 
-        this.setState({loading: true});
+        this.setState({loading: true,openModalUpdateSkill: false, openModalTechnology: false});
 
         this.props.technologiesDelete({
             uid: this.props.skill.key,
             tuid: key
         })
 
-        this.setState({loading: false});
+        this.setState({loading: false,openModalUpdateSkill: false, openModalTechnology: false});
     };
 
-    panels = [{
-        key: 'panelTech',
-        title: 'Techs',
-        content: {content: this.dataTech}
-    }];
 
 
+    onClickHandler = (event) => {
+        const {expand} = this.state;
+        this.setState({expand: !expand, openModalUpdateSkill: false, openModalTechnology: false})
+    }
 
     renderTech() {
 
@@ -109,26 +98,18 @@ class TechRow extends Component {
             <SkillModal openForUpdate={this.state.openModalUpdateSkill} uid={this.props.skill.key}
                         name={this.props.skill.name}
                         description={this.props.skill.description} technologies={this.props.skill.technologies}
-                        onClose={() => this.setState({openModalUpdateSkill: false})}/>
+                        onClose={() => this.setState({ openModalUpdateSkill: false, openModalTechnology: false})}/>
         );
     }
 
-    addTech() {
-        const {Row, Cell} = Table;
+    modalNewTechnology = () => {
+
         return (
-            <Table.Row>
-                <Accordion as={Form.Field}>
-                    <Accordion.Content content={this.techForm}/>
-                </Accordion>
-            </Table.Row>
-
+            <TechnologyModal open={this.state.openModalTechnology} skillKey={this.props.skill.key} skillName={this.props.skill.name}
+                             onClose={() => this.setState({ openModalUpdateSkill: false, openModalTechnology: false})}/>
         );
     }
 
-    onClickHandler = (event) => {
-        const {expand} = this.state;
-        this.setState({expand: !expand, openModalUpdateSkill: false, openModalTechnology: false})
-    }
 
     render() {
         const {Row, Cell} = Table;
@@ -138,7 +119,7 @@ class TechRow extends Component {
             <>
                 <Grid.Row columns='equal' stretched>
                     <Grid.Column width={1}>
-                        <p loading={this.state.loading} basic
+                        <p
                            onClick={(event) => this.onClickHandler(event)}>
                             {this.props.skill.technologies ? '+' : '-'}
                         </p>

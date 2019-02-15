@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Accordion, Button, Form, Icon, Input, Modal, Table, Message} from 'semantic-ui-react';
+import {Button, Form, Input, Message, Modal} from 'semantic-ui-react';
 import {Router} from "../../../routes";
 import {technologiesCreate} from "../../../redux/actions";
 import {connect} from "react-redux";
@@ -40,7 +40,7 @@ class TechnologyModal extends Component {
         }
 
         this.setState({loading: true, open: false});
-        console.log(this.state.skillKey)
+
 
         this.props.technologiesCreate({
             name: this.state.name,
@@ -49,14 +49,13 @@ class TechnologyModal extends Component {
             uid: this.state.skillKey
         })
 
-        this.setState({loading: false, open: false});
-
-        //Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
+        this.setState({loading: false, open: false, errorMessage:''});
+        this.props.onClose();
     };
 
     render(){
         return (
-            <Modal open={this.state.open} onClose={() =>{  this.setState({errorMessage: ''}); this.props.onClose();}}>
+            <Modal open={this.state.open} onClose={() =>{ console.log('close'); this.setState({errorMessage: ''}); this.props.onClose();}}>
                 <Modal.Header>Add Techno to {this.state.skillName}</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>
