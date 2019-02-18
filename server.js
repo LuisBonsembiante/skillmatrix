@@ -1,25 +1,6 @@
 // server.js
 const {createServer} = require('http');
 const next = require('next')
-// const admin = require("firebase-admin");
-//
-// try {
-//     var config = {
-//         apiKey: "AIzaSyAbWTIcgRWEJQivARnkKhRFlMRnbpeXlwc",
-//         authDomain: "skill-matrix-b30f5.firebaseapp.com",
-//         databaseURL: "https://skill-matrix-b30f5.firebaseio.com",
-//         projectId: "skill-matrix-b30f5",
-//         storageBucket: "skill-matrix-b30f5.appspot.com",
-//         messagingSenderId: "154488837778"
-//     };
-//     admin.initializeApp(config);
-// } catch (err) {
-//     // we skip the "already exists" message which is
-//     // not an actual error when we're hot-reloading
-//     if (!/already exists/.test(err.message)) {
-//         console.error('Firebase initialization error', err.stack)
-//     }
-// }
 
 module.exports = async (req, res) => {
     const idToken = req.headers["x-test-token"];
@@ -46,8 +27,8 @@ const handler = routes.getRequestHandler(app);
 
 // Without express
 app.prepare().then(() => {
-    createServer(handler).listen(3000 , (err) => {
+    createServer(handler).listen(8000 , (err) => {
        if(err) throw err;
-       console.log('Ready on localost:3000');
+       console.log('Ready on localost:8000');
     });
 })
