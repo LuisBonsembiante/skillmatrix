@@ -13,10 +13,9 @@ class ModalDefault extends Component {
         this.setState({open: this.props.open});
     }
 
-    componentWillReceiveProps(){
+    componentWillReceiveProps(nextProp){
 
-
-        this.setState({open: this.props.open})
+        this.setState({open: nextProp.open})
     }
 
 
@@ -25,12 +24,10 @@ class ModalDefault extends Component {
             <Modal  inverted={true} open={this.state.open}
                     onUnmount={ () =>
                     {this.setState({open: false});
-                        console.log('close pop')
                         this.props.onClose();
                     }}
                     onClose={() => {
                 this.setState({open: false});
-                console.log('close pop')
                 this.props.onClose();
             }}>
                 {this.props.children}

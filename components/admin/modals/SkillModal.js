@@ -78,7 +78,7 @@ class SkillModal extends Component {
 
     render() {
         return (
-            <ModalDefault  open={this.state.open || this.state.openForUpdate} onClose={() =>{ console.log('dfadsf');  this.setState({errorMessage: '', open: false}); this.props.onClose();}}>
+            <ModalDefault  open={this.state.open || this.state.openForUpdate} onClose={() =>{ this.setState({errorMessage: '', open: false}); this.props.onClose();}}>
                 <Modal.Header>{this.state.uid ? `Modify skill ${this.state.name}`:'Add new Skill'}</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>
@@ -108,7 +108,7 @@ class SkillModal extends Component {
                     <Button loading={this.state.loading} color="teal" primary onClick={() => {this.onAdd();}}>
                         {this.state.uid ? `Modify`:'Add'}
                     </Button>
-                    <Button loading={this.state.loading} color="green" primary onClick={() => this.setState({open: false, openForUpdate: false })}>
+                    <Button loading={this.state.loading} color="green" primary onClick={() =>  this.setState({loading: false, open: false, openForUpdate: false})}>
                         Close
                     </Button>
                 </Modal.Actions>
