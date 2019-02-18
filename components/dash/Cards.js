@@ -53,8 +53,8 @@ class Cards extends Component {
         });
         this.props.userTechnologyUpdate(
             {
-                validated: technologies[index].validated,
-                validator: technologies[index].validator,
+                validated: technologies[index].validated || false,
+                validator: technologies[index].validator || {name: 'Not assigned', position: '', uid: ''},
                 levelOfKnowledge: value
             }
             , technologies[index].uid
@@ -65,7 +65,7 @@ class Cards extends Component {
         const {technologies} = this.state;
 
         return (
-            <Card.Group itemsPerRow={4}>
+            <Card.Group itemsPerRow={3}>
                 {technologies.map((item, index) =>
                     <Card key={item + index}>
                         <Card.Content>

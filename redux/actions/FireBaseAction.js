@@ -81,7 +81,7 @@ export const skillsFetch = () => {
         dispatch({type: START_TRANSACTION});
         firebase.database().ref(`/skills`)
             .on('value', snapshot => {
-                dispatch({type: FETCH_SKILLS, payload: snapshot.val()})
+                dispatch({type: FETCH_SKILLS, payload: snapshot.val()});
                 dispatch({type: END_TRANSACTION})
             });
     };
@@ -109,6 +109,9 @@ export const userTechnologyUpdate = (technology, tuid) => {
             .set(technology)
             .then(() => {
                 dispatch({type: UPDATE_USER_DATA});
+            })
+            .catch((error) => {
+                console.log(error);
             })
     }
 };
