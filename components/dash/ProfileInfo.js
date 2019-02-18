@@ -52,7 +52,7 @@ const _profileInfo = (props) => {
 
                             <Form.Group widths='equal'>
                                 <Form.Input
-                                    fluid label='Name'
+                                    fluid label='Display Name'
                                     placeholder='First & Last Name'
                                     type='text'
                                     value={displayName}
