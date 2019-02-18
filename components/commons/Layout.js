@@ -14,6 +14,7 @@ export default (props) => {
                         rel="stylesheet"
                         href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"
                     />
+                    <link rel="icon" type="image/x-icon" href="../../static/favicon.ico" />
                 </Head>
                 {!hideHeader && <Header/>}
                 {hideHeader && <br/>}
