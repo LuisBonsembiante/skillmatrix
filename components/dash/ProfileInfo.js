@@ -1,102 +1,118 @@
-import React, {useState} from "react";
+import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Button, Form, Grid, Image} from "semantic-ui-react";
 import {getLargeImage} from "../utils/imagesManager";
 import {userDataUpdate} from "../../redux/actions";
 
-const _profileInfo = (props) => {
+class _profileInfo extends Component {
 
-    const {userData, user} = props;
-    // console.log(props);
-    const [position, setPosition] = useState(userData ? userData.position : '');
-    const [yearsOfExperience, setYearsOfExperience] = useState(userData ? userData.yearsOfExperience : undefined);
-    const [displayName, setDisplayName] = useState(userData ? userData.name : props.user.displayName);
-
-    const updateUserData = () => {
-        const data = {
-            name: displayName, // TODO get data from input
-            position: position || 'Master of BlockChain', // TODO add input for that
-            yearsOfExperience: yearsOfExperience, // TODO map this with dropdown
-            email: props.user.email,
-        };
-
-        props.userDataUpdate(data);
+    state = {
+        displayName: this.props.userData ? this.props.userData.name || '' : this.props.user.displayName || '',
+        position: this.props.userData ? this.props.userData.position : '',
+        yearsOfExperience: this.props.userData ? this.props.userData.yearsOfExperience : '',
+        email: this.props.user.email,
     };
 
-    const positionItems = () => {
+    componentWillReceiveProps(nextProps, nextContext) {
+        const {userData} = this.props;
+        if(nextProps.userData && (!userData || userData.position !== nextProps.userData.position)) {
+            this.setState({
+                displayName: nextProps.userData ? nextProps.userData.name || undefined : nextProps.user.displayName || undefined,
+                position: nextProps.userData ? nextProps.userData.position : '',
+                yearsOfExperience: nextProps.userData ? nextProps.userData.yearsOfExperience : undefined,
+                email: nextProps.user.email,
+            })
+        }
+    }
+
+    updateUserData() {
+        const {displayName, position, yearsOfExperience, email} = this.state;
+        this.props.userDataUpdate({displayName, position, yearsOfExperience, email});
+    };
+
+    positionItems() {
         const positions = ['Front-End Dev', 'Back-End Dev', 'Full-Stack Dev', 'QA'];
         return positions.map((position, index) => (
             <option value={position} key={position + index}/>
         ));
     };
 
-    return (
-        <>
-            <h1>Profile Info</h1>
-            <br/>
-            <br/>
-            <Form className='attached fluid'>
-                <Grid columns={2}>
-                    <Grid.Row stretched>
-                        <Grid.Column width={6}>
-                            <Image src={props.user.photoURL || getLargeImage()} size='medium' circular/>
-                        </Grid.Column>
-                        <Grid.Column width={9}>
-                            <Form.Field disabled={true}>
-                                <label>Email</label>
-                                <input value={props.user.email}
-                                       placeholder='First Name'
-                                       onChange={() => {
-                                       }}/>
-                            </Form.Field>
 
-                            <Form.Group widths='equal'>
-                                <Form.Input
-                                    fluid label='Display Name'
-                                    placeholder='First & Last Name'
-                                    type='text'
-                                    value={displayName}
-                                    onChange={(e, {value}) => setDisplayName(value)}
-                                />
-                            </Form.Group>
 
-                            <Form.Group widths='equal'>
-                                <Form.Input
-                                    label='Position'
-                                    list='position'
-                                    placeholder='Position'
-                                    type='text'
-                                    value={position}
-                                    onChange={(e, {value}) => setPosition(value)}
-                                />
-                                <datalist id='position'>
-                                    {positionItems()}
-                                </datalist>
-                                <Form.Input
-                                    label='Experience'
-                                    list='experience'
-                                    placeholder='Years of experience...'
-                                    value={yearsOfExperience}
-                                    onChange={(e, {value}) => setYearsOfExperience(value)}
-                                />
-                                <datalist id='experience'>
-                                    <option value='1 Year'/>
-                                    <option value='5+ Years'/>
-                                    <option value='10+ Years'/>
-                                </datalist>
-                            </Form.Group>
+    setDisplayName(value) {this.setState({displayName: value});}
+    setPosition(value) {this.setState({position: value});}
+    setYearsOfExperience(value) {this.setState({yearsOfExperience: value});}
 
-                            <Button color='blue' basic loading={props.loading}
-                                    onClick={updateUserData}>
-                                Save
-                            </Button>
-                        </Grid.Column>
-                        <br/>
-                    </Grid.Row>
-                </Grid>
-            </Form>
-        </>
-    )
+    render() {
+        const {displayName, position, yearsOfExperience } = this.state;
+        return (
+            <>
+                <h1>Profile Info</h1>
+                <br/>
+                <br/>
+                <Form className='attached fluid'>
+                    <Grid columns={2}>
+                        <Grid.Row stretched>
+                            <Grid.Column width={6}>
+                                <Image src={this.props.user.photoURL || getLargeImage()} size='medium' circular/>
+                            </Grid.Column>
+                            <Grid.Column width={9}>
+                                <Form.Field disabled={true}>
+                                    <label>Email</label>
+                                    <input value={this.props.user.email}
+                                           placeholder='First Name'
+                                           onChange={() => {
+                                           }}/>
+                                </Form.Field>
+
+                                <Form.Group widths='equal'>
+                                    <Form.Input
+                                        fluid label='Display Name'
+                                        placeholder='First & Last Name'
+                                        type='text'
+                                        value={displayName}
+                                        onChange={(e, {value}) => this.setDisplayName(value)}
+                                    />
+                                </Form.Group>
+
+                                <Form.Group widths='equal'>
+                                    <Form.Input
+                                        label='Position'
+                                        list='position'
+                                        placeholder='Position'
+                                        type='text'
+                                        value={position}
+                                        onChange={(e, {value}) => this.setPosition(value)}
+                                    />
+                                    <datalist id='position'>
+                                        {this.positionItems()}
+                                    </datalist>
+                                    <Form.Input
+                                        label='Experience'
+                                        list='experience'
+                                        placeholder='Years of experience...'
+                                        value={yearsOfExperience}
+                                        onChange={(e, {value}) => this.setYearsOfExperience(value)}
+                                    />
+                                    <datalist id='experience'>
+                                        <option value='1 Year'/>
+                                        <option value='5+ Years'/>
+                                        <option value='10+ Years'/>
+                                    </datalist>
+                                </Form.Group>
+
+                                <Button color='blue' basic loading={this.props.loading}
+                                        onClick={this.updateUserData}>
+                                    Save
+                                </Button>
+                            </Grid.Column>
+                            <br/>
+                        </Grid.Row>
+                    </Grid>
+                </Form>
+            </>
+        )
+    }
 };
 
 const mapStateToProps = state => {
