@@ -3,7 +3,7 @@ import {Button, Form, Input, Message, Modal} from 'semantic-ui-react';
 import {Router} from "../../../routes";
 import {technologiesCreate} from "../../../redux/actions";
 import {connect} from "react-redux";
-
+import ModalDefault from './Modal';
 
 class TechnologyModal extends Component {
 
@@ -55,7 +55,7 @@ class TechnologyModal extends Component {
 
     render(){
         return (
-            <Modal closeIcon open={this.state.open} onClose={() =>{ console.log('close'); this.setState({errorMessage: ''}); this.props.onClose();}}>
+            <ModalDefault closeIcon open={this.state.open} onClose={() =>{ console.log('close'); this.setState({errorMessage: ''}); this.props.onClose();}}>
                 <Modal.Header>Add Techno to {this.state.skillName}</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>
@@ -93,7 +93,7 @@ class TechnologyModal extends Component {
                         Close
                     </Button>
                 </Modal.Actions>
-            </Modal>
+            </ModalDefault>
         )
     }
 }
