@@ -7,7 +7,8 @@
     "test": "mocha",
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js",
+    "now-build": "next build"
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.55",
@@ -16,7 +17,7 @@
     "fs-extra": "^7.0.1",
     "lodash": "^4.17.11",
     "mocha": "^5.2.0",
-    "next": "^7.0.2",
+    "next": "^8.0.0-canary.15",
     "next-routes": "^1.4.2",
     "now": "^14.0.0",
     "react": "^16.8.1",
