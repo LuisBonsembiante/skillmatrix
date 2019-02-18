@@ -122,7 +122,7 @@ export const userDataUpdate = (data) => {
     return (dispatch) => {
         dispatch({type: START_TRANSACTION});
         firebase.database().ref(`/users/${currentUser.uid}`)
-            .set(data)
+            .update(data)
             .then(() => {
                 dispatch({type: UPDATE_USER_DATA});
             })

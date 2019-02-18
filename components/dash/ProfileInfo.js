@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Button, Form, Grid, Image} from "semantic-ui-react";
 import {getLargeImage} from "../utils/imagesManager";
@@ -6,15 +6,28 @@ import {userDataUpdate} from "../../redux/actions";
 
 const _profileInfo = (props) => {
 
-    const updateUserData = () =>  {
+    const {userData} = props;
+    // console.log(props);
+    const [position, setPosition] = useState(userData ? userData.position : '');
+    const [yearsOfExperience, setYearsOfExperience] = useState(userData ? userData.yearsOfExperience : undefined);
+
+
+    const updateUserData = () => {
         const data = {
             name: props.user.displayName || 'No named', // TODO get data from input
-            position: 'Master of BlockChain', // TODO add input for that
-            yearsOfExperience: 98788, // TODO map this with dropdown
+            position: position || 'Master of BlockChain', // TODO add input for that
+            yearsOfExperience: yearsOfExperience, // TODO map this with dropdown
             email: props.user.email,
         };
 
         props.userDataUpdate(data);
+    };
+
+    const positionItems = () => {
+        const positions = ['Front-End Dev', 'Back-End Dev', 'Full-Stack Dev', 'QA'];
+        return positions.map((position, index) => (
+            <option value={position} key={position + index}/>
+        ));
     };
 
     return (
@@ -33,17 +46,33 @@ const _profileInfo = (props) => {
                                 <label>Email</label>
                                 <input value={props.user.email}
                                        placeholder='First Name'
-                                       onChange={() => {}}/>
+                                       onChange={() => {
+                                       }}/>
                             </Form.Field>
 
                             <Form.Group widths='equal'>
-                                <Form.Input fluid label='First Name' placeholder='First Name' type='text'/>
-                                <Form.Input fluid label='Last Name' placeholder='Last Name' type='text'/>
+                                <Form.Input fluid label='Name' placeholder='First & Last Name' type='text'/>
                             </Form.Group>
 
                             <Form.Group widths='equal'>
-                                <Form.Input label='Position' placeholder='Position' type='text'/>
-                                <Form.Input label='Experience' list='experience' placeholder='Years of experience...'/>
+                                <Form.Input
+                                    label='Position'
+                                    list='position'
+                                    placeholder='Position'
+                                    type='text'
+                                    value={position}
+                                    onChange={(e, {value}) => setPosition(value)}
+                                />
+                                <datalist id='position'>
+                                    {positionItems()}
+                                </datalist>
+                                <Form.Input
+                                    label='Experience'
+                                    list='experience'
+                                    placeholder='Years of experience...'
+                                    value={yearsOfExperience}
+                                    onChange={(e, {value}) => setYearsOfExperience(value)}
+                                />
                                 <datalist id='experience'>
                                     <option value='1 Year'/>
                                     <option value='5+ Years'/>

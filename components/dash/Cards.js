@@ -137,7 +137,7 @@ function mapStateToProps(state) {
     return {
         skills,
         loading: state.fireBase.loading,
-        userTechnologyData: state.fireBase.userData ? state.fireBase.userData.technologies : {}
+        userTechnologyData: state.fireBase.userData ? state.fireBase.userData.technologies || {} : {}
     };
 }
 
