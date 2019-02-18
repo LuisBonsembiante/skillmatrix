@@ -12,7 +12,7 @@ const _menuItems = (props) => {
 
     const LENGTH_TO_SHOW = 7; // Cant of menu items to show
     const moveItems = (cant) => {
-        if (items.length > LENGTH_TO_SHOW && (start + cant > 0)) {
+        if (items.length > LENGTH_TO_SHOW && (start + cant >= 0)) {
             setEnd(end + cant);
             setStart(start + cant);
         }
@@ -21,7 +21,7 @@ const _menuItems = (props) => {
     // TODO Do better implementation of arrows - Fixed position
     return (
         <>
-            <Menu.Item name='more' onClick={() => moveItems(-1)} disabled={items.length < LENGTH_TO_SHOW && start > 0}>
+            <Menu.Item name='more' className="left" onClick={() => moveItems(-1)} disabled={items.length <= LENGTH_TO_SHOW || start === 0}>
                 {start > 0 && <Label color='teal'>{'+ ' + (start)}</Label>}
                 <Icon name='arrow left'/>
             </Menu.Item>
@@ -32,7 +32,7 @@ const _menuItems = (props) => {
                     active={props.activeItem === item.name}
                     onClick={props.handleItemClick}/>
             )}
-            <Menu.Item name='more' onClick={() => moveItems(1)} disabled={items.length < LENGTH_TO_SHOW}>
+            <Menu.Item name='more'className="right" onClick={() => moveItems(1)} disabled={items.length - end <= LENGTH_TO_SHOW}>
                 <Icon name='arrow right'/>
                 {((end + LENGTH_TO_SHOW) < items.length) &&
                 <Label color='teal'>{'+ ' + (items.length - LENGTH_TO_SHOW - end)}</Label>

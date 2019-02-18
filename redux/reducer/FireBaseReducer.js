@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE, action) => {
         case START_TRANSACTION:
             return {...state, loading: state.loading + 1};
         case END_TRANSACTION:
-            return {...state, loading: state.loading - 1};
+            return {...state, loading: state.loading <= 0 ? 0 :state.loading - 1};
         case FETCH_SKILLS:
             return {...state, skills: action.payload};
         case INIT_FIRE_BASE:
