@@ -6,15 +6,15 @@ import {userDataUpdate} from "../../redux/actions";
 
 const _profileInfo = (props) => {
 
-    const {userData} = props;
+    const {userData, user} = props;
     // console.log(props);
     const [position, setPosition] = useState(userData ? userData.position : '');
     const [yearsOfExperience, setYearsOfExperience] = useState(userData ? userData.yearsOfExperience : undefined);
-
+    const [displayName, setDisplayName] = useState(userData ? userData.name : props.user.displayName);
 
     const updateUserData = () => {
         const data = {
-            name: props.user.displayName || 'No named', // TODO get data from input
+            name: displayName, // TODO get data from input
             position: position || 'Master of BlockChain', // TODO add input for that
             yearsOfExperience: yearsOfExperience, // TODO map this with dropdown
             email: props.user.email,
@@ -51,7 +51,13 @@ const _profileInfo = (props) => {
                             </Form.Field>
 
                             <Form.Group widths='equal'>
-                                <Form.Input fluid label='Name' placeholder='First & Last Name' type='text'/>
+                                <Form.Input
+                                    fluid label='Name'
+                                    placeholder='First & Last Name'
+                                    type='text'
+                                    value={displayName}
+                                    onChange={(e, {value}) => setDisplayName(value)}
+                                />
                             </Form.Group>
 
                             <Form.Group widths='equal'>
