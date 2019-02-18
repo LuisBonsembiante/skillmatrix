@@ -8,7 +8,7 @@ export default (props) => {
 
     return (
         <>
-            <Container style={{minHeight: '96vh'}}>
+            <Container style={{minHeight: '94vh'}}>
                 <Head>
                     <link
                         rel="stylesheet"
@@ -22,7 +22,7 @@ export default (props) => {
             </Container>
             {!hideHeader &&
             <Container>
-                <div style={{float: 'right'}}>
+                <div style={{float: 'right', marginTop: '2vh'}}>
                     <Label color='teal'> Created by: </Label>
                     <Label as='a' target="_blank" href='https://github.com/FedeMadoery' basic image>
                         <img src='https://avatars0.githubusercontent.com/u/21246763?s=460&v=4'/>

@@ -65,7 +65,7 @@ class Cards extends Component {
         const {technologies} = this.state;
 
         return (
-            <Card.Group itemsPerRow={3}>
+            <Card.Group itemsPerRow={3} stackable>
                 {technologies.map((item, index) =>
                     <Card key={item + index}>
                         <Card.Content>
