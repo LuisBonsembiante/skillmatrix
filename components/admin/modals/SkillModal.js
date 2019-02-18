@@ -43,7 +43,6 @@ class SkillModal extends Component {
             this.props.skillUpdate({
                 name: this.state.name,
                 description: this.state.description,
-                technologies: this.props.technologies,
                 uid: this.state.uid
             })
 

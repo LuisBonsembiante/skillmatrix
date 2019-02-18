@@ -23,10 +23,14 @@ class TechnologyModal extends Component {
         technologies: {}
     }
 
+
+
     componentWillMount() {
 
         this.setState({open: this.props.open, skillName:this.props.skillName, skillKey: this.props.skillKey})
     }
+
+
 
     componentWillReceiveProps(){
         this.setState({open: this.props.open, skillName:this.props.skillName, skillKey: this.props.skillKey})

@@ -28,11 +28,11 @@ export const skillCreate = ({name, description}) => {
 
 };
 
-export const skillUpdate = ({name, description, technologies, uid}) => {
+export const skillUpdate = ({name, description, uid}) => {
     const {currentUser} = firebase.auth();
     return (dispatch) => {
         firebase.database().ref(`/skills/${uid}`)
-            .set({name, description, technologies})
+            .update({name, description})
             .then(() => {
                 dispatch({type: SKILL_CREATE});
 
@@ -106,7 +106,7 @@ export const userTechnologyUpdate = (technology, tuid) => {
     if (!currentUser) return {type: EMPTY_ACTION};
     return (dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/technologies/${tuid}`)
-            .set(technology)
+            .update(technology)
             .then(() => {
                 dispatch({type: UPDATE_USER_DATA});
             })
