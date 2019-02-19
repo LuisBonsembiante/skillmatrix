@@ -7,10 +7,6 @@
       "use": "@now/node-server"
     },
     {
-      "src": "next.config.js",
-      "use": "@now/next"
-    },
-    {
       "src": "static/*",
       "use": "@now/static"
     }
