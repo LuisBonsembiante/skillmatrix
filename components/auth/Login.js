@@ -3,7 +3,7 @@ import {Button, Form, Grid, Header, Message, Segment, TransitionablePortal} from
 import {Link} from '../../routes';
 import {connect} from "react-redux";
 import {loginUser, loginWithGitHub, loginWithGoogle} from "../../redux/actions";
-import firebase from 'firebase';
+import { firebase } from '@firebase/app';
 
 const _login = (props) => {
 

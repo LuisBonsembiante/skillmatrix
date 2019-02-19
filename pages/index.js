@@ -8,11 +8,6 @@ import MainDash from '../components/dash/MainDash'
 class SkillmatrixIndex extends Component {
 
 
-    // Initial PROPS
-    static getInitialProps ({ reduxStore, req }) {
-
-        return {}
-    }
 
     render() {
 

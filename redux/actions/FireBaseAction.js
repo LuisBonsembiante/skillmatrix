@@ -7,6 +7,7 @@ import {
     FETCH_USER_DATA, UPDATE_USER_DATA, EMPTY_ACTION, END_TRANSACTION
 } from "./types";
 import firebase from '../../firebase'
+import "firebase/auth"
 
 export const skillUpdates = ({prop, value}) => {
     return {

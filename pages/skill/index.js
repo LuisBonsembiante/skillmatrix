@@ -14,9 +14,7 @@ class SkillsIndex extends Component {
         openModalNewSkill: false
     }
 
-    static async getInitialProps(props) {
-          return {};
-    }
+
 
     renderRow() {
         return this.props.skills.map((skill, index) => {
