@@ -8,7 +8,7 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "now-build": "next build"
+    "now-build": "next build && next export -o dist"
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.55",
