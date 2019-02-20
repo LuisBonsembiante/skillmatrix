@@ -15,7 +15,7 @@ export const loginUser = (email, password) => {
 export const loginWithGitHub = (token, user) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_GITHUB, payload: {token, user}});
-        userDataUpdate({email: user.email});
+        userDataUpdate({email: user.email, photoURL: user.photoURL});
         Router.pushRoute('/')
     };
 };
@@ -23,7 +23,7 @@ export const loginWithGitHub = (token, user) => {
 export const loginWithGoogle = (token, user) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_GOOGLE, payload: {token, user}});
-        userDataUpdate({email: user.email});
+        userDataUpdate({email: user.email, photoURL: user.photoURL});
         Router.pushRoute('/')
     };
 };
