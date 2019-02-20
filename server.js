@@ -3,7 +3,7 @@ const {createServer} = require('http');
 const next = require('next')
 
 const app = next({
-    dev: false
+    dev: true
 
 });
 
