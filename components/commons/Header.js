@@ -10,7 +10,7 @@ const _header = (props) => {
 
     const ROUTES = {
         home: '/index',
-        skills: '/skills'
+        employees: '/employees'
     };
 
 
@@ -23,14 +23,14 @@ const _header = (props) => {
                        onClick={handleItemClick} name='Home' />
 
             <Menu.Menu position="right">
-                <Menu.Item active={ROUTES.skills === props.router.asPath}
-                           onClick={handleItemClick} name='Skills' />
+                <Menu.Item active={ROUTES.employees === props.router.asPath}
+                           onClick={handleItemClick} name='Employees' />
 
                 <Link route="/skill/index">
                     <a className="item">+</a>
                 </Link>
 
-                <Menu.Item active={ROUTES.skills === props.router.asPath}
+                <Menu.Item active={ROUTES.employess === props.router.asPath}
                            onClick={props.logoutUser} >
                     Logout
                     <Icon name='user secret'></Icon>

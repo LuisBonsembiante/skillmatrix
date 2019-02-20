@@ -6,11 +6,6 @@ import {connect} from "react-redux";
 
 class LoginIndex extends React.Component {
 
-    // Initial PROPS
-    static async getInitialProps({ reduxStore, req }) {
-
-        return {};
-    }
 
     render() {
         return (
