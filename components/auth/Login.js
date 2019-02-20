@@ -51,6 +51,22 @@ const _login = (props) => {
                 <Header as="h2" textAlign="center">
                     Login
                 </Header>
+
+                <TransitionablePortal onClose={() => showAlert(false)} open={alert}
+                                      transition={{animation: 'fly up', duration: 500}}>
+                    <Grid centered columns={1} style={{position: 'absolute', top: '50%', left: '26.5%'}}>
+                        <Grid.Column>
+                            <Segment color='red'>
+                                <Message warning>
+                                    <Message.Header>We're sorry we can't do that</Message.Header>
+                                    <p>{error.errorCode}</p>
+                                    <p>{error.errorMessage}</p>
+                                </Message>
+                            </Segment>
+                        </Grid.Column>
+                    </Grid>
+                </TransitionablePortal>
+
                 <Segment>
                     <Form size="large">
                         <Form.Input
@@ -93,22 +109,6 @@ const _login = (props) => {
                     </Form>
                 </Segment>
             </Grid.Column>
-
-
-            <TransitionablePortal onClose={() => showAlert(false)} open={alert}
-                                  transition={{animation: 'fly up', duration: 500}}>
-                <Grid centered columns={2}>
-                    <Grid.Column>
-                        <Segment color='red'>
-                            <Message warning>
-                                <Message.Header>We're sorry we can't do that</Message.Header>
-                                <p>{error.errorCode}</p>
-                                <p>{error.errorMessage}</p>
-                            </Message>
-                        </Segment>
-                    </Grid.Column>
-                </Grid>
-            </TransitionablePortal>
 
         </Grid>
     );
