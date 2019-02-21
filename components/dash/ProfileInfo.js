@@ -17,7 +17,7 @@ class _profileInfo extends Component {
         const {userData} = this.props;
         if(nextProps.userData && (!userData || userData.position !== nextProps.userData.position)) {
             this.setState({
-                displayName: nextProps.userData ? nextProps.userData.name || undefined : nextProps.user.displayName || undefined,
+                displayName: nextProps.userData ? nextProps.userData.name || '' : nextProps.user.displayName || '',
                 position: nextProps.userData ? nextProps.userData.position : '',
                 yearsOfExperience: nextProps.userData ? nextProps.userData.yearsOfExperience : undefined,
                 email: nextProps.user.email,
@@ -102,7 +102,7 @@ class _profileInfo extends Component {
                                 </Form.Group>
 
                                 <Button color='blue' basic loading={this.props.loading}
-                                        onClick={this.updateUserData}>
+                                        onClick={() => this.updateUserData()}>
                                     Save
                                 </Button>
                             </Grid.Column>

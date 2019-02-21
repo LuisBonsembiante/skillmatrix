@@ -4,7 +4,7 @@ import {
     FETCH_SKILLS,
     START_TRANSACTION,
     SKILL_UPDATE,
-    FETCH_USER_DATA, UPDATE_USER_DATA, EMPTY_ACTION, END_TRANSACTION
+    FETCH_USER_DATA, UPDATE_USER_DATA, EMPTY_ACTION, END_TRANSACTION, CLEAN_DATA
 } from "./types";
 import firebase from '../../firebase'
 import "firebase/auth"
