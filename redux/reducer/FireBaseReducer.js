@@ -4,10 +4,11 @@ import {
     FETCH_SKILLS,
     START_TRANSACTION,
     SKILL_UPDATE,
+    FETCH_USERS,
     FETCH_USER_DATA, UPDATE_USER_DATA, END_TRANSACTION
 } from "../actions/types";
 
-const INITIAL_STATE = {skills: null, error: '', loading: 0, instance: null, userData: null};
+const INITIAL_STATE = {skills: null, error: '', loading: 0, instance: null, userData: null, users: null};
 
 export default (state = INITIAL_STATE, action) => {
 
@@ -20,6 +21,8 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, loading: state.loading <= 0 ? 0 :state.loading - 1};
         case FETCH_SKILLS:
             return {...state, skills: action.payload};
+        case FETCH_USERS:
+            return {...state, users: action.payload};
         case INIT_FIRE_BASE:
             return {...state, instance: action.payload};
         case FETCH_TECHNOLOGIES:

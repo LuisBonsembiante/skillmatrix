@@ -4,6 +4,7 @@ import {
     FETCH_SKILLS,
     START_TRANSACTION,
     SKILL_UPDATE,
+    FETCH_USERS,
     FETCH_USER_DATA, UPDATE_USER_DATA, EMPTY_ACTION, END_TRANSACTION
 } from "./types";
 import firebase from '../../firebase'
@@ -130,5 +131,19 @@ export const userDataUpdate = (data) => {
             .finally(() => {
                 dispatch({type: END_TRANSACTION});
             });
+    }
+};
+
+export const usersFetch = () => {
+    const {currentUser} = firebase.auth();
+    if (!currentUser) return {type: EMPTY_ACTION};
+    return (dispatch) => {
+        dispatch({type: START_TRANSACTION});
+        firebase.database().ref(`/users`)
+            .on('value', snapshot => {
+                dispatch({type: FETCH_USERS, payload: snapshot.val()});
+                dispatch({type: END_TRANSACTION})
+            });
+
     }
 };

@@ -114,16 +114,9 @@ class EmployeesIndex extends Component {
                             skillSelected={activeItem}/>
                         }
                     </Segment>
-                    <Grid centered columns={2}>
-                        <Grid.Column>
-                            <Button fluid basic loading={loading} color='blue' onClick={() => this.searchEmployees()}>
-                                Search Employees
-                            </Button>
-                        </Grid.Column>
-                    </Grid>
-
+                    
                     <Divider/>
-                    <EmployeesData/>
+                    <EmployeesData selectedTechs={this.state.selectedTechs}/>
 
                 </div>
 

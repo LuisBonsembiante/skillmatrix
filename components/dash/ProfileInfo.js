@@ -7,7 +7,7 @@ import {userDataUpdate} from "../../redux/actions";
 class _profileInfo extends Component {
 
     state = {
-        displayName: this.props.userData ? this.props.userData.name || '' : this.props.user.displayName || '',
+        displayName: this.props.userData ? this.props.userData.displayName || '' : this.props.user.displayName || '',
         position: this.props.userData ? this.props.userData.position : '',
         yearsOfExperience: this.props.userData ? this.props.userData.yearsOfExperience : '',
         email: this.props.user.email,
@@ -17,7 +17,7 @@ class _profileInfo extends Component {
         const {userData} = this.props;
         if(nextProps.userData && (!userData || userData.position !== nextProps.userData.position)) {
             this.setState({
-                displayName: nextProps.userData ? nextProps.userData.name || undefined : nextProps.user.displayName || undefined,
+                displayName: nextProps.userData ? nextProps.userData.displayName || undefined : nextProps.user.displayName || undefined,
                 position: nextProps.userData ? nextProps.userData.position : '',
                 yearsOfExperience: nextProps.userData ? nextProps.userData.yearsOfExperience : undefined,
                 email: nextProps.user.email,
@@ -25,7 +25,9 @@ class _profileInfo extends Component {
         }
     }
 
-    updateUserData() {
+    updateUserData  = () =>  {
+        console.log(this.state)
+        debugger;
         const {displayName, position, yearsOfExperience, email} = this.state;
         this.props.userDataUpdate({displayName, position, yearsOfExperience, email});
     };
@@ -102,7 +104,7 @@ class _profileInfo extends Component {
                                 </Form.Group>
 
                                 <Button color='blue' basic loading={this.props.loading}
-                                        onClick={this.updateUserData}>
+                                        onClick={() => this.updateUserData()}>
                                     Save
                                 </Button>
                             </Grid.Column>
