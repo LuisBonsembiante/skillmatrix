@@ -22,5 +22,6 @@ export const FETCH_USER_DATA = 'fetch_user_data';
 export const UPDATE_USER_DATA = 'update_user_data';
 export const EMPTY_ACTION = 'empty_action';
 export const FETCH_USERS = 'fetch_users';
+export const CLEAN_DATA = 'clean_data';
 
 

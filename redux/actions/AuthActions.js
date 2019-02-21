@@ -1,6 +1,6 @@
-import {LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_WITH_GITHUB, LOGIN_WITH_GOOGLE, LOGOUT_USER} from "./types";
+import {CLEAN_DATA, LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_WITH_GITHUB, LOGIN_WITH_GOOGLE, LOGOUT_USER} from "./types";
 import {Router} from "../../routes";
-import {userDataUpdate} from "./FireBaseAction";
+import {cleanData, userDataUpdate} from "./FireBaseAction";
 
 
 export const loginUser = (email, password) => {
@@ -30,15 +30,14 @@ export const loginWithGoogle = (token, user) => {
 
 export const logoutUser = () => {
     return (dispatch) => {
-        dispatch({
-            type: LOGOUT_USER
-        });
+        dispatch({type: LOGOUT_USER});
+        dispatch({type: CLEAN_DATA});
         Router.pushRoute('/login')
     }
 
 };
 const loginUserSuccess = (user) => {
-    return (dispatch) =>{
+    return (dispatch) => {
         dispatch({
             type: LOGIN_USER_SUCCESS,
             payload: user

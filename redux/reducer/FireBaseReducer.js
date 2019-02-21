@@ -5,7 +5,7 @@ import {
     START_TRANSACTION,
     SKILL_UPDATE,
     FETCH_USERS,
-    FETCH_USER_DATA, UPDATE_USER_DATA, END_TRANSACTION
+    FETCH_USER_DATA, UPDATE_USER_DATA, END_TRANSACTION, CLEAN_DATA
 } from "../actions/types";
 
 const INITIAL_STATE = {skills: null, error: '', loading: 0, instance: null, userData: null, users: null};
@@ -31,6 +31,8 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, userData: action.payload};
         case UPDATE_USER_DATA:
             return {...state};
+        case CLEAN_DATA:
+            return INITIAL_STATE;
         default:
             return state;
     }
