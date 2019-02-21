@@ -114,7 +114,7 @@ class EmployeesIndex extends Component {
                             skillSelected={activeItem}/>
                         }
                     </Segment>
-                    
+
                     <Divider/>
                     <EmployeesData selectedTechs={this.state.selectedTechs}/>
 
