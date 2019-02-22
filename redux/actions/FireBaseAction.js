@@ -17,6 +17,7 @@ import firebase from '../../firebase'
 import "firebase/auth"
 
 export const skillUpdates = ({prop, value}) => {
+    debugger
     return {
         type: SKILL_UPDATE,
         payload: {prop, value}

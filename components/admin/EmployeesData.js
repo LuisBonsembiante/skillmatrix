@@ -32,7 +32,12 @@ class EmployeesData extends Component {
 
     techLabel(uid, user) {
         const {technologies} = this.props;
-        const techs = _.extend.apply(null, technologies);
+        debugger
+        let techCopy = Object.assign({},technologies)
+        let techs = {};
+        technologies.map((val, index) => {
+            techs = {...techs, ...val};
+        });
         const tech = user.technologies[uid];
         if (!tech) return null;
         return (
@@ -40,7 +45,7 @@ class EmployeesData extends Component {
                 <Divider/>
                 <Label as='a' color={tech.levelOfKnowledge.color} key={uid}>
                     {techs[uid].name}
-                    <Label.Detail>{tech.levelOfKnowledge.text}</Label.Detail>
+                    <Label.Detail>{tech.levelOfKnowledge.text}</Label.Detail>o
                 </Label>
             </>
         )

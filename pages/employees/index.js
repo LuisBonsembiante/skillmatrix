@@ -21,6 +21,7 @@ class EmployeesIndex extends Component {
 
 
     handleItemClick = (e, {name}) => {
+
         this.setState({activeItem: name})
     };
 
@@ -109,6 +110,7 @@ class EmployeesIndex extends Component {
                         </Dimmer>
                         {!this.props.loading &&
                         <TechnologiesCards
+                            skills={this.props.skills}
                             skillSelected={activeItem}
                         />
                         }

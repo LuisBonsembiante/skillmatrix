@@ -39,7 +39,9 @@ class TechnologiesCards extends Component {
         this.setState({technologies: _technologies})
     };
 
+
     componentWillReceiveProps(nextProps, nextContext) {
+
         const {skillSelected} = this.props;
         if (skillSelected !== nextProps.skillSelected) {
             this.getSkillTechnologies(nextProps.skillSelected, nextProps.selectedTechs);
@@ -47,6 +49,7 @@ class TechnologiesCards extends Component {
     }
 
     onClickCard(index) {
+
         const {technologies} = this.state;
         const {onRemoveTechToSearch, onSelectTechToSearch} = this.props;
         const flag = !!technologies[index].cardProps; // If have the prop, is a removeClick
@@ -56,7 +59,7 @@ class TechnologiesCards extends Component {
                 : t
         });
         this.setState({technologies: newtechs});
-        // flag = true is remove action - flag = false is addAction
+        // // flag = true is remove action - flag = false is addAction
         flag
             ? onRemoveTechToSearch(technologies[index].uid) :
             onSelectTechToSearch(technologies[index].uid)
@@ -89,12 +92,12 @@ class TechnologiesCards extends Component {
 };
 
 function mapStateToProps(state) {
+
     const skills = _.map(state.fireBase.skills, (val, uid) => {
         return {...val, key: uid, title: ''}; // {shift: 'Monday', name:'s', id:'1j2j34'};
     });
 
     return {
-        skills,
         loading: state.fireBase.loading,
         userTechnologyData: state.fireBase.userData ? state.fireBase.userData.technologies || {} : {},
         selectedTechs: state.fireBase.selectTechToSearch
