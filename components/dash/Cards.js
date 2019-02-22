@@ -82,26 +82,38 @@ class Cards extends Component {
                                       floating labeled button basic
                                       value={item.levelOfKnowledge.value}>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item label={{color: 'green', empty: true, circular: true}}
-                                                   text='I want to learn this' value={0}
+                                    <Dropdown.Item label={{color: 'red', empty: true, circular: true}}
+                                                   text='No conoce' value={0}
                                                    onClick={(e, {text, value, label}) =>
                                                        this.onOptionClick(index, {text, value, color: label.color})
                                                    }
                                     />
                                     <Dropdown.Item label={{color: 'teal', empty: true, circular: true}}
-                                                   text='Basic' value={1}
+                                                   text='Escuchó nombrar' value={1}
                                                    onClick={(e, {text, value, label}) =>
                                                        this.onOptionClick(index, {text, value, color: label.color})
                                                    }
                                     />
                                     <Dropdown.Item label={{color: 'blue', empty: true, circular: true}}
-                                                   text='Intermediate' value={2}
+                                                   text='Lo ha visto' value={2}
                                                    onClick={(e, {text, value, label}) =>
                                                        this.onOptionClick(index, {text, value, color: label.color})
                                                    }
                                     />
                                     <Dropdown.Item label={{color: 'violet', empty: true, circular: true}}
-                                                   text='Advanced' value={3}
+                                                   text='Lo usó' value={3}
+                                                   onClick={(e, {text, value, label}) =>
+                                                       this.onOptionClick(index, {text, value, color: label.color})
+                                                   }
+                                    />
+                                    <Dropdown.Item label={{color: 'orange', empty: true, circular: true}}
+                                                   text='Lo conoce bien' value={4}
+                                                   onClick={(e, {text, value, label}) =>
+                                                       this.onOptionClick(index, {text, value, color: label.color})
+                                                   }
+                                    />
+                                    <Dropdown.Item label={{color: 'green', empty: true, circular: true}}
+                                                   text='Experto' value={5}
                                                    onClick={(e, {text, value, label}) =>
                                                        this.onOptionClick(index, {text, value, color: label.color})
                                                    }
