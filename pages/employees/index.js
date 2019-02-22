@@ -49,26 +49,6 @@ class EmployeesIndex extends Component {
         }, 300)
     };
 
-    /*onSelectTech(techUID) {
-        const {selectedTechs} = this.state;
-        let newSelectedTechs = [...selectedTechs, techUID];
-        console.log('rompio');
-        console.log(this.props)
-        this.setState({selectedTechs: newSelectedTechs});
-    }
-
-    onRemoveTech(techUID) {
-        const {selectedTechs} = this.state;
-        let newSelectedTechs = [...selectedTechs];
-        newSelectedTechs.splice(selectedTechs.findIndex((uid) => uid === techUID), 1);
-        this.setState({selectedTechs: newSelectedTechs});
-    }*/
-
-    searchEmployees() {
-        const {selectedTechs} = this.state;
-
-        console.log(selectedTechs)
-    }
 
     render() {
 

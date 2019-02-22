@@ -31,7 +31,6 @@ class SkillModal extends Component {
 
 
     onAdd = () => {
-        console.log(this.state)
         if(this.state.description.length === 0 || this.state.name.length === 0){
             this.setState({errorMessage: 'Complete the fields'});
             return;

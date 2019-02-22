@@ -41,7 +41,6 @@ class Cards extends Component {
 
     onOptionClick = (index, value) => {
         const {technologies} = this.state;
-        console.log(value)
         this.setState((state) => {
             return {
                 ...state,

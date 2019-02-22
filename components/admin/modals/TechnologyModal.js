@@ -59,7 +59,7 @@ class TechnologyModal extends Component {
 
     render(){
         return (
-            <ModalDefault closeIcon open={this.state.open} onClose={() =>{ console.log('close'); this.setState({errorMessage: ''}); this.props.onClose();}}>
+            <ModalDefault closeIcon open={this.state.open} onClose={() =>{ this.setState({errorMessage: ''}); this.props.onClose();}}>
                 <Modal.Header>Add Techno to {this.state.skillName}</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>

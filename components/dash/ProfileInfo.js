@@ -26,7 +26,6 @@ class _profileInfo extends Component {
     }
 
     updateUserData  = () =>  {
-        console.log(this.state);
         const {displayName, position, yearsOfExperience, email} = this.state;
         const {photoURL} = this.props.user;
         this.props.userDataUpdate({displayName, position, yearsOfExperience, email, photoURL});
