@@ -41,12 +41,22 @@ class Cards extends Component {
 
     onOptionClick = (index, value) => {
         const {technologies} = this.state;
+        console.log(value)
         this.setState((state) => {
             return {
                 ...state,
                 technologies: state.technologies.map(
                     (content, i) => i === index
-                        ? {...content, levelOfKnowledge: value}
+                        ? {
+                            ...content,
+                            levelOfKnowledge: value,
+                            validated: technologies[index].validated || false,
+                            validator:
+                            //If value is -1, no validator needed - Else assign a validator of that tech or 'Not assigned'
+                                value.value === -1
+                                    ? null
+                                    : technologies[index].validator || {name: 'Not assigned', position: '', uid: ''},
+                        }
                         : content
                 )
             }
@@ -54,12 +64,35 @@ class Cards extends Component {
         this.props.userTechnologyUpdate(
             {
                 validated: technologies[index].validated || false,
-                validator: technologies[index].validator || {name: 'Not assigned', position: '', uid: ''},
+                validator:
+                    value.value === -1
+                        ? null
+                        : technologies[index].validator || {name: 'Not assigned', position: '', uid: ''},
                 levelOfKnowledge: value
             }
             , technologies[index].uid
         )
     };
+
+    levelOfKnowledgeItems(technologyIndex) {
+        const items = [
+            {text: 'Level of knowledge', value: -1, color: 'grey'},
+            {text: 'No conoce', value: 0, color: 'red'},
+            {text: 'Escuchó nombrar', value: 1, color: 'teal'},
+            {text: 'Lo ha visto', value: 2, color: 'blue'},
+            {text: 'Lo usó', value: 3, color: 'violet'},
+            {text: 'Lo conoce bien', value: 4, color: 'orange'},
+            {text: 'Experto', value: 5, color: 'green'}
+        ];
+        return items.map((item, index) =>
+            <Dropdown.Item label={{color: item.color, empty: true, circular: true}}
+                           text={item.text} value={item.value} key={item + index}
+                           onClick={(e, {text, value, label}) =>
+                               this.onOptionClick(technologyIndex, {text, value, color: label.color})
+                           }
+            />
+        )
+    }
 
     render() {
         const {technologies} = this.state;
@@ -82,48 +115,7 @@ class Cards extends Component {
                                       floating labeled button basic
                                       value={item.levelOfKnowledge.value}>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item clearable label={{color: 'grey', empty: true, circular: true}}
-                                                   text='Level of knowledge' value={item.levelOfKnowledge.value}
-                                                   onClick={(e, {text, value, label}) =>
-                                                       this.onOptionClick(index, {text, value, color: label.color})
-                                                   }
-                                    />
-                                    <Dropdown.Item label={{color: 'red', empty: true, circular: true}}
-                                                   text='No conoce' value={1}
-                                                   onClick={(e, {text, value, label}) =>
-                                                       this.onOptionClick(index, {text, value, color: label.color})
-                                                   }
-                                    />
-                                    <Dropdown.Item label={{color: 'teal', empty: true, circular: true}}
-                                                   text='Escuchó nombrar' value={2}
-                                                   onClick={(e, {text, value, label}) =>
-                                                       this.onOptionClick(index, {text, value, color: label.color})
-                                                   }
-                                    />
-                                    <Dropdown.Item label={{color: 'blue', empty: true, circular: true}}
-                                                   text='Lo ha visto' value={3}
-                                                   onClick={(e, {text, value, label}) =>
-                                                       this.onOptionClick(index, {text, value, color: label.color})
-                                                   }
-                                    />
-                                    <Dropdown.Item label={{color: 'violet', empty: true, circular: true}}
-                                                   text='Lo usó' value={4}
-                                                   onClick={(e, {text, value, label}) =>
-                                                       this.onOptionClick(index, {text, value, color: label.color})
-                                                   }
-                                    />
-                                    <Dropdown.Item label={{color: 'orange', empty: true, circular: true}}
-                                                   text='Lo conoce bien' value={5}
-                                                   onClick={(e, {text, value, label}) =>
-                                                       this.onOptionClick(index, {text, value, color: label.color})
-                                                   }
-                                    />
-                                    <Dropdown.Item label={{color: 'green', empty: true, circular: true}}
-                                                   text='Experto' value={6}
-                                                   onClick={(e, {text, value, label}) =>
-                                                       this.onOptionClick(index, {text, value, color: label.color})
-                                                   }
-                                    />
+                                    {this.levelOfKnowledgeItems(index)}
                                 </Dropdown.Menu>
                             </Dropdown>
                             }
