@@ -65,7 +65,7 @@ class EmployeesData extends Component {
                             trigger={
                                 <Label as='a' color={index % 2 ? 'orange' : 'teal'} image key={item + index}>
                                     <img src={item.photoURL}/>
-                                    {item.displayName}
+                                    {item.displayName || item.email}
                                     <Label.Detail>{item.position}</Label.Detail>
                                 </Label>
                             }
