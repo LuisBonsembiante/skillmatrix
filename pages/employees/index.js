@@ -7,7 +7,6 @@ import EmployeesData from "../../components/admin/EmployeesData";
 import {Dimmer, Divider, Loader, Search, Segment, Menu, Label, Button, Grid} from "semantic-ui-react";
 import _ from "lodash";
 import {skillsFetch, userDataFetch} from "../../redux/actions";
-import Cards from "../../components/dash/Cards";
 import MenuItems from "../../components/dash/MenuItems";
 import TechnologiesCards from "../../components/admin/TechnologiesCards";
 
@@ -49,19 +48,20 @@ class EmployeesIndex extends Component {
         }, 300)
     };
 
-    onSelectTech(techUID){
-        this.setState((state, props) => {
-            return {selectedTechs: [...state.selectedTechs, techUID ]};
-        });
+    /*onSelectTech(techUID) {
+        const {selectedTechs} = this.state;
+        let newSelectedTechs = [...selectedTechs, techUID];
+        console.log('rompio');
+        console.log(this.props)
+        this.setState({selectedTechs: newSelectedTechs});
     }
 
     onRemoveTech(techUID) {
         const {selectedTechs} = this.state;
         let newSelectedTechs = [...selectedTechs];
-        newSelectedTechs.splice(selectedTechs.findIndex( (uid) => uid === techUID), 1);
-
+        newSelectedTechs.splice(selectedTechs.findIndex((uid) => uid === techUID), 1);
         this.setState({selectedTechs: newSelectedTechs});
-    }
+    }*/
 
     searchEmployees() {
         const {selectedTechs} = this.state;
@@ -71,7 +71,7 @@ class EmployeesIndex extends Component {
 
     render() {
 
-        const {isLoading, results, value, activeItem, loading} = this.state;
+        const {isLoading, results, value, activeItem, loading, selectedTechs} = this.state;
         const resultRenderer = ({name}) => <Label content={name} color='blue' onClick={this.handleItemClick}/>;
 
         return (
@@ -109,9 +109,8 @@ class EmployeesIndex extends Component {
                         </Dimmer>
                         {!this.props.loading &&
                         <TechnologiesCards
-                            onSelectTech={(techUID) => this.onSelectTech(techUID)}
-                            onRemoveTech={(techUId) => this.onRemoveTech(techUId)}
-                            skillSelected={activeItem}/>
+                            skillSelected={activeItem}
+                        />
                         }
                     </Segment>
 

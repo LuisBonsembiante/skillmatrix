@@ -2,12 +2,12 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Card} from 'semantic-ui-react';
 import _ from "lodash";
-import {userTechnologyUpdate} from "../../redux/actions";
+import {onRemoveTechToSearch, onSelectTechToSearch, userTechnologyUpdate} from "../../redux/actions";
 
 class TechnologiesCards extends Component {
 
     state = {
-        technologies: []
+        technologies: [],
     };
 
     componentDidMount() {
@@ -16,7 +16,7 @@ class TechnologiesCards extends Component {
 
     }
 
-    getSkillTechnologies = (skillSelected) => {
+    getSkillTechnologies = (skillSelected, selectedTechs) => {
         const {skills, userTechnologyData} = this.props;
 
         const _skillSelected = _.find(skills, ['name', skillSelected]);
@@ -29,19 +29,26 @@ class TechnologiesCards extends Component {
                 })
             : [{name: '', meta: '', description: 'Technologies not found'}];
 
+        if (selectedTechs)
+            selectedTechs.forEach((selectedTech) => {
+                _technologies.forEach((_tech) => {
+                    if (_tech.uid === selectedTech) _tech.cardProps = {'color': 'blue'};
+                })
+            });
+
         this.setState({technologies: _technologies})
     };
 
     componentWillReceiveProps(nextProps, nextContext) {
         const {skillSelected} = this.props;
         if (skillSelected !== nextProps.skillSelected) {
-            this.getSkillTechnologies(nextProps.skillSelected);
+            this.getSkillTechnologies(nextProps.skillSelected, nextProps.selectedTechs);
         }
     }
 
     onClickCard(index) {
         const {technologies} = this.state;
-        const {onSelectTech, onRemoveTech} = this.props;
+        const {onRemoveTechToSearch, onSelectTechToSearch} = this.props;
         const flag = !!technologies[index].cardProps; // If have the prop, is a removeClick
         const newtechs = technologies.map((t, i) => {
             return (i === index)
@@ -50,12 +57,14 @@ class TechnologiesCards extends Component {
         });
         this.setState({technologies: newtechs});
         // flag = true is remove action - flag = false is addAction
-        flag ? onRemoveTech(technologies[index].uid) : onSelectTech(technologies[index].uid)
+        flag
+            ? onRemoveTechToSearch(technologies[index].uid) :
+            onSelectTechToSearch(technologies[index].uid)
     }
 
 
     render() {
-        const {technologies, onSelectTech} = this.state;
+        const {technologies} = this.state;
 
         return (
             <Card.Group itemsPerRow={3} stackable>
@@ -87,8 +96,15 @@ function mapStateToProps(state) {
     return {
         skills,
         loading: state.fireBase.loading,
-        userTechnologyData: state.fireBase.userData ? state.fireBase.userData.technologies || {} : {}
+        userTechnologyData: state.fireBase.userData ? state.fireBase.userData.technologies || {} : {},
+        selectedTechs: state.fireBase.selectTechToSearch
     };
 }
 
-export default connect(mapStateToProps, {userTechnologyUpdate: userTechnologyUpdate})(TechnologiesCards);
+export default connect(mapStateToProps,
+    {
+        userTechnologyUpdate: userTechnologyUpdate,
+        onSelectTechToSearch,
+        onRemoveTechToSearch,
+    }
+)(TechnologiesCards);

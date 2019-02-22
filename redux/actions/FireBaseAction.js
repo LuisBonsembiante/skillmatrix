@@ -5,7 +5,13 @@ import {
     START_TRANSACTION,
     SKILL_UPDATE,
     FETCH_USERS,
-    FETCH_USER_DATA, UPDATE_USER_DATA, EMPTY_ACTION, END_TRANSACTION, CLEAN_DATA
+    FETCH_USER_DATA,
+    UPDATE_USER_DATA,
+    EMPTY_ACTION,
+    END_TRANSACTION,
+    CLEAN_DATA,
+    SELECT_TECH_TO_SEARCH,
+    REMOVE_TECH_TO_SEARCH, RESET_TECH_TO_SEARCH
 } from "./types";
 import firebase from '../../firebase'
 import "firebase/auth"
@@ -145,5 +151,22 @@ export const usersFetch = () => {
                 dispatch({type: END_TRANSACTION})
             });
 
+    }
+};
+
+export const onSelectTechToSearch = (uid) => {
+    return (dispatch) => {
+        dispatch({type: SELECT_TECH_TO_SEARCH, payload: uid })
+    }
+};
+
+export const onRemoveTechToSearch = (uid) => {
+    return (dispatch) => {
+        dispatch({type: REMOVE_TECH_TO_SEARCH, payload: uid })
+    }
+};
+export const onResetTechToSearch = () => {
+    return (dispatch) => {
+        dispatch({type: RESET_TECH_TO_SEARCH})
     }
 };

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Divider, Dropdown, Label, Popup, Rating, Segment} from "semantic-ui-react";
-import {usersFetch} from "../../redux/actions";
+import {onResetTechToSearch, usersFetch} from "../../redux/actions";
 import {Accordion} from "semantic-ui-react/dist/commonjs/modules/Accordion";
 import {Table} from "semantic-ui-react/dist/commonjs/collections/Table";
 import _ from 'lodash';
@@ -17,15 +17,15 @@ class EmployeesData extends Component {
 
     componentWillMount() {
         this.props.usersFetch();
+        this.props.onResetTechToSearch()
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        this.setState({selectedTechs: nextProps.selectedTechs});
-
         let result = [];
 
         if (nextProps.users)
-            result = Object.values(nextProps.users).filter(user => (!user.technologies ? null : Object.keys(user.technologies).find(tech => nextProps.selectedTechs.includes(tech))));
+            result = Object.values(nextProps.users).filter(user => (!user.technologies ? null : Object.keys(user.technologies).find(tech => nextProps.selectTechToSearch.includes(tech))));
+        result = _.orderBy(result, ['displayName', 'position'], 'asc');
 
         this.setState({usersFilter: result});
     }
@@ -47,7 +47,8 @@ class EmployeesData extends Component {
     }
 
     render() {
-        const {usersFilter, selectedTechs} = this.state;
+        const {usersFilter} = this.state;
+        const {selectTechToSearch} = this.props;
 
         return (
             <>
@@ -64,10 +65,11 @@ class EmployeesData extends Component {
                                     <Label.Detail>{item.position}</Label.Detail>
                                 </Label>
                             }
+                            key={item + index}
                         >
                             <Popup.Header>Details</Popup.Header>
                             <Popup.Content>
-                                {selectedTechs.map((uid) => {
+                                {selectTechToSearch.map((uid) => {
                                     return this.techLabel(uid, item);
                                 })}
                             </Popup.Content>
@@ -85,9 +87,9 @@ const mapStateToProps = state => {
         ...state.auth,
         users: state.fireBase.users,
         loading: state.auth.loading || !!state.fireBase.loading,
-        technologies: !state.fireBase.skills ? [] : _.compact(Object.values(state.fireBase.skills).map((skill) => skill.technologies))
-
+        technologies: !state.fireBase.skills ? [] : _.compact(Object.values(state.fireBase.skills).map((skill) => skill.technologies)),
+        selectTechToSearch: state.fireBase.selectTechToSearch
     }
 };
 
-export default connect(mapStateToProps, {usersFetch})(EmployeesData);
+export default connect(mapStateToProps, {usersFetch, onResetTechToSearch})(EmployeesData);
