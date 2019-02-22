@@ -57,7 +57,7 @@ class EmployeesData extends Component {
                 <br/>
 
                 <Segment>
-                    {usersFilter.map((item, index) => <Popup
+                    {usersFilter.map((item, index) => <Popup key={item + index}
                             trigger={
                                 <Label as='a' color={index % 2 ? 'orange' : 'teal'} image key={item + index}>
                                     <img src={item.photoURL}/>
