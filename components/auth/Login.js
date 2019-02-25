@@ -10,13 +10,15 @@ const _login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alert, showAlert] = useState(false);
-    const [error, setError] = useState({errorCode: 'init', errorMessage: 'init'});
+    const [error, setError] = useState({errorCode: 0, errorMessage: 'init'});
+
 
     const handlerGitHubLogin = () => {
         const provider = new firebase.auth.GithubAuthProvider();
 
         loginWithFirebasePopup(provider, props.loginWithGitHub);
     };
+
 
     const handlerGoogleLogin = () => {
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -25,6 +27,8 @@ const _login = (props) => {
     };
 
     const loginWithFirebasePopup = (provider, loginSuccess) => {
+
+
         firebase.auth().signInWithPopup(provider).then(function (result) {
             // This gives you a Google Access Token. You can use it to access the Google API.
             const token = result.credential.accessToken;
@@ -44,6 +48,20 @@ const _login = (props) => {
         });
     };
 
+
+    const login = () => {
+
+        if (email.length === 0 || password.length === 0) {
+            setError({errorCode: 1, errorMessage: 'Complete the fields'});
+            return;
+        }
+
+        props.loginUser(email, password);
+    }
+
+    const resetError = () => {
+        setError({errorCode: 0, errorMessage: ''})
+    }
 
     return (
         <Grid centered columns={2}>
@@ -68,7 +86,7 @@ const _login = (props) => {
                 </TransitionablePortal>
 
                 <Segment>
-                    <Form size="large">
+                    <Form size="large" error={error.errorCode > 0}>
                         <Form.Field>
                             <Input
                                 fluid
@@ -76,7 +94,7 @@ const _login = (props) => {
                                 iconPosition='left'
                                 labelPosition='right'
                                 placeholder="Email address"
-                                onChange={(event) => setEmail(event.target.value)}
+                                onChange={(event) =>{ resetError(); setEmail(event.target.value)}}
                                 label={{content: '@folderit.net'}}
                             />
                         </Form.Field>
@@ -87,31 +105,21 @@ const _login = (props) => {
                             iconPosition="left"
                             placeholder="Password"
                             type="password"
-                            onChange={(event) => setPassword(event.target.value)}
+                            onChange={(event) => {resetError(); setPassword(event.target.value)}}
                         />
 
                         <Button color="blue" fluid size="large" loading={props.auth.loading}
-                                onClick={() => props.loginUser(email, password)}>
+                                onClick={() => login()}>
                             Login
                         </Button>
 
 
-                        {/*<br/>
+                        <Message error>
+                            <Message.Header>We're sorry we can't do that</Message.Header>
+                            <p>{error.errorMessage}</p>
+                        </Message>
 
-                        <Grid centered columns={3}>
-                            <Grid.Column>
-                                <Button disabled={true}
-                                    icon='github' labelPosition='left' color='black' onClick={handlerGitHubLogin}
-                                    label={{as: 'button', basic: true, content: 'Login with'}}
-                                />
-                            </Grid.Column>
-                            <Grid.Column>
-                                <Button disabled={true}
-                                    icon='google' labelPosition='left' color='red' onClick={handlerGoogleLogin}
-                                    label={{as: 'button', basic: true, content: 'Login with'}}
-                                />
-                            </Grid.Column>
-                        </Grid>*/}
+
                     </Form>
                 </Segment>
             </Grid.Column>
