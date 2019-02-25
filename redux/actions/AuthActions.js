@@ -10,7 +10,7 @@ import {Router} from "../../routes";
 import {cleanData, userDataUpdate} from "./FireBaseAction";
 import axios from "axios";
 import {getUserByEmail} from "../../env";
-import {getLargeImage} from "../../components/utils/imagesManager";
+import services from '../../services';
 
 
 export const loginUser = (email, password) => {
@@ -28,21 +28,33 @@ export const loginUser = (email, password) => {
                             folderHRMID: r.data.user_id,
                             photoURL: ''
                         };
+                        sessionStorage.setItem('tokenJWT', r.data.token);
                         const headers = {
                             'Access-Control-Allow-Origin': '*',
-                            'Access-Control-Allow-Methods': 'POST',
+                            'Access-Control-Allow-Methods': 'POST, GET',
                             'Content-Type': 'application/json',
                         };
-                        axios.post(getUserByEmail, userResult, {headers: headers}).then((response) => {
+                        axios.post(getUserByEmail, userResult, {headers: headers}).then(async (response) => {
                                 const data = response.data;
                                 userResult.position = data.user.position;
                                 userResult.photoURL = data.user.photoURL;
-                                if (!data.user.photoURL) userResult.photoURL = getLargeImage();
+
+                                if (!data.user.photoURL) {
+
+                                    const employee =   axios.get(`https://hrm.folderit.net/wp-json/erp/v1/hrm/employees/${userResult.folderHRMID}?include=avatar`).then(
+                                        (response) => {
+                                            userResult.photoURL = response.avatar_url;
+                                        }
+                                    );
+
+                                }
+
                                 userResult.uid = data.uid;
                                 dispatch(loginWithIntranet(r.data.token, userResult));
                                 dispatch({type: FETCH_USER_DATA, payload: data.user});
                                 Router.pushRoute('/')
                             }
+
                         ).catch(e => {
                             dispatch({type: LOGIN_USER_FAILED});
                             console.log(e)
