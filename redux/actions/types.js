@@ -8,6 +8,7 @@ export const LOGIN_USER = 'login_user';
 export const LOGOUT_USER = 'logout_user';
 export const LOGIN_WITH_GITHUB = 'login_with_github';
 export const LOGIN_WITH_GOOGLE = 'login_with_google';
+export const LOGIN_WITH_INTRANET = 'login_with_intranet';
 
 /** ------------------- Fire BASE Actions --------------------**/
 export const FETCH_TECHNOLOGIES = 'fetch_technologies';

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {Button, Form, Grid, Header, Message, Segment, TransitionablePortal} from "semantic-ui-react";
+import {Button, Form, Grid, Header, Input, Message, Segment, TransitionablePortal} from "semantic-ui-react";
 import {Link} from '../../routes';
 import {connect} from "react-redux";
 import {loginUser, loginWithGitHub, loginWithGoogle} from "../../redux/actions";
-import { firebase } from '@firebase/app';
+import {firebase} from '@firebase/app';
 
 const _login = (props) => {
 
@@ -69,13 +69,18 @@ const _login = (props) => {
 
                 <Segment>
                     <Form size="large">
-                        <Form.Input
-                            fluid
-                            icon="user"
-                            iconPosition="left"
-                            placeholder="Email address"
-                            onChange={(event) => setEmail(event.target.value)}
-                        />
+                        <Form.Field>
+                            <Input
+                                fluid
+                                icon='users'
+                                iconPosition='left'
+                                labelPosition='right'
+                                placeholder="Email address"
+                                onChange={(event) => setEmail(event.target.value)}
+                                label={{content: '@folderit.net'}}
+                            />
+                        </Form.Field>
+
                         <Form.Input
                             fluid
                             icon="lock"
@@ -85,27 +90,28 @@ const _login = (props) => {
                             onChange={(event) => setPassword(event.target.value)}
                         />
 
-                        <Button color="blue" fluid size="large"
+                        <Button color="blue" fluid size="large" loading={props.auth.loading}
                                 onClick={() => props.loginUser(email, password)}>
                             Login
                         </Button>
 
-                        <br/>
+
+                        {/*<br/>
 
                         <Grid centered columns={3}>
                             <Grid.Column>
-                                <Button
+                                <Button disabled={true}
                                     icon='github' labelPosition='left' color='black' onClick={handlerGitHubLogin}
                                     label={{as: 'button', basic: true, content: 'Login with'}}
                                 />
                             </Grid.Column>
                             <Grid.Column>
-                                <Button
+                                <Button disabled={true}
                                     icon='google' labelPosition='left' color='red' onClick={handlerGoogleLogin}
                                     label={{as: 'button', basic: true, content: 'Login with'}}
                                 />
                             </Grid.Column>
-                        </Grid>
+                        </Grid>*/}
                     </Form>
                 </Segment>
             </Grid.Column>

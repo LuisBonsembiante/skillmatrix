@@ -11,21 +11,23 @@ class _profileInfo extends Component {
         position: this.props.userData ? this.props.userData.position : '',
         yearsOfExperience: this.props.userData ? this.props.userData.yearsOfExperience : '',
         email: this.props.user.email,
+        photoURL: this.props.user.photoURL
     };
 
     componentWillReceiveProps(nextProps, nextContext) {
         const {userData} = this.props;
-        if(nextProps.userData && (!userData || userData.position !== nextProps.userData.position)) {
+        if (nextProps.userData && (!userData || userData.position !== nextProps.userData.position)) {
             this.setState({
                 displayName: nextProps.userData ? nextProps.userData.displayName || undefined : nextProps.user.displayName || undefined,
                 position: nextProps.userData ? nextProps.userData.position : '',
                 yearsOfExperience: nextProps.userData ? nextProps.userData.yearsOfExperience : undefined,
                 email: nextProps.user.email,
+                photoURL: nextProps.user.photoURL
             })
         }
     }
 
-    updateUserData  = () =>  {
+    updateUserData = () => {
         const {displayName, position, yearsOfExperience, email} = this.state;
         const {photoURL} = this.props.user;
         this.props.userDataUpdate({displayName, position, yearsOfExperience, email, photoURL});
@@ -39,13 +41,30 @@ class _profileInfo extends Component {
     };
 
 
+    setDisplayName(value) {
+        this.setState({displayName: value});
+    }
 
-    setDisplayName(value) {this.setState({displayName: value});}
-    setPosition(value) {this.setState({position: value});}
-    setYearsOfExperience(value) {this.setState({yearsOfExperience: value});}
+    setPosition(value) {
+        this.setState({position: value});
+    }
+
+    setYearsOfExperience(value) {
+        this.setState({yearsOfExperience: value});
+    }
+
+    getLargeImageForUser() {
+        const {email, photoURL} = this.state;
+        if (photoURL === '' && !!email) {
+            const newPhotoURL = getLargeImage();
+            this.setState({newPhotoURL});
+            return newPhotoURL;
+        }
+        return photoURL;
+    };
 
     render() {
-        const {displayName, position, yearsOfExperience } = this.state;
+        const {displayName, position, yearsOfExperience, photoURL} = this.state;
         return (
             <>
                 <h1>Profile Info</h1>
@@ -55,7 +74,8 @@ class _profileInfo extends Component {
                     <Grid columns={2}>
                         <Grid.Row stretched>
                             <Grid.Column width={6}>
-                                <Image src={this.props.user.photoURL || getLargeImage()} size='medium' circular/>
+                                <Image src={photoURL} size='medium'
+                                       circular/>
                             </Grid.Column>
                             <Grid.Column width={9}>
                                 <Form.Field disabled={true}>
