@@ -9,7 +9,7 @@ const _header = (props) => {
     //state = {}
 
     const ROUTES = {
-        home: '/index',
+        home: '/',
         employees: '/employees'
     };
 
