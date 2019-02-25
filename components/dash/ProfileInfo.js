@@ -7,9 +7,9 @@ import {userDataUpdate} from "../../redux/actions";
 class _profileInfo extends Component {
 
     state = {
-        displayName: this.props.userData ? this.props.userData.displayName || '' : this.props.user.displayName || '',
-        position: this.props.userData ? this.props.userData.position : '',
-        yearsOfExperience: this.props.userData ? this.props.userData.yearsOfExperience : '',
+        displayName: this.props.user.displayName,
+        position: this.props.user.position,
+        yearsOfExperience: this.props.user.yearsOfExperience,
         email: this.props.user.email,
         photoURL: this.props.user.photoURL
     };
@@ -52,16 +52,6 @@ class _profileInfo extends Component {
     setYearsOfExperience(value) {
         this.setState({yearsOfExperience: value});
     }
-
-    getLargeImageForUser() {
-        const {email, photoURL} = this.state;
-        if (photoURL === '' && !!email) {
-            const newPhotoURL = getLargeImage();
-            this.setState({newPhotoURL});
-            return newPhotoURL;
-        }
-        return photoURL;
-    };
 
     render() {
         const {displayName, position, yearsOfExperience, photoURL} = this.state;

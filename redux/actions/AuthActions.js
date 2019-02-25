@@ -25,6 +25,7 @@ export const loginUser = (email, password) => {
                         const userResult = {
                             email: r.data.user_email,
                             displayName: r.data.user_display_name,
+                            folderHRMID: r.data.user_id,
                             photoURL: ''
                         };
                         const headers = {
@@ -36,7 +37,7 @@ export const loginUser = (email, password) => {
                                 const data = response.data;
                                 userResult.position = data.user.position;
                                 userResult.photoURL = data.user.photoURL;
-                                if(!data.user.photoURL) userResult.photoURL = getLargeImage();
+                                if (!data.user.photoURL) userResult.photoURL = getLargeImage();
                                 userResult.uid = data.uid;
                                 dispatch(loginWithIntranet(r.data.token, userResult));
                                 dispatch({type: FETCH_USER_DATA, payload: data.user});
@@ -48,7 +49,10 @@ export const loginUser = (email, password) => {
                         });
                     }
                 }
-            )
+            ).catch(e => {
+            dispatch({type: LOGIN_USER_FAILED});
+            console.log(e)
+        })
         ;
     };
 };
