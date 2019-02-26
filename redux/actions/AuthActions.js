@@ -12,6 +12,7 @@ import axios from "axios";
 import {getUserByEmail} from "../../env";
 import services from '../../services';
 import http from 'http';
+import {getLargeImage} from "../../components/utils/imagesManager";
 
 export const loginUser = (email, password) => {
     return (dispatch) => {
@@ -60,16 +61,22 @@ export const loginUser = (email, password) => {
 
 
 
-                                    return axios.get(`https://hrm.folderit.net/wp-json/erp/v1/hrm/employees/${userResult.folderHRMID}`, config).then(
-                                        (response) => {
-                                            console.log('RESPONSE');
-                                            userResult.photoURL = response.avatar_url;
-                                            userResult.uid = data.uid;
-                                            dispatch(loginWithIntranet(r.data.token, userResult));
-                                            dispatch({type: FETCH_USER_DATA, payload: data.user});
-                                            Router.pushRoute('/')
-                                        }
-                                    );
+                                    // return axios.get(`https://hrm.folderit.net/wp-json/erp/v1/hrm/employees/${userResult.folderHRMID}`, config).then(
+                                    //     (response) => {
+                                    //         console.log('RESPONSE');
+                                    //         userResult.photoURL = response.avatar_url;
+                                    //         userResult.uid = data.uid;
+                                    //         dispatch(loginWithIntranet(r.data.token, userResult));
+                                    //         dispatch({type: FETCH_USER_DATA, payload: data.user});
+                                    //         Router.pushRoute('/')
+                                    //     }
+                                    // );
+
+                                    userResult.photoURL = getLargeImage();
+                                    userResult.uid = data.uid;
+                                    dispatch(loginWithIntranet(r.data.token, userResult));
+                                    dispatch({type: FETCH_USER_DATA, payload: data.user});
+                                    Router.pushRoute('/')
 
 
                                 }
