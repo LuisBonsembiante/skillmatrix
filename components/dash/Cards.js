@@ -76,12 +76,12 @@ class Cards extends Component {
     levelOfKnowledgeItems(technologyIndex) {
         const items = [
             {text: 'Level of knowledge', value: -1, color: 'grey'},
-            {text: 'No conoce', value: 0, color: 'red'},
-            {text: 'Escuchó nombrar', value: 1, color: 'teal'},
-            {text: 'Lo ha visto', value: 2, color: 'blue'},
-            {text: 'Lo usó', value: 3, color: 'violet'},
-            {text: 'Lo conoce bien', value: 4, color: 'orange'},
-            {text: 'Experto', value: 5, color: 'green'}
+            {text: '< 6 meses', value: 0, color: 'red'},
+            {text: '6 meses a 1 año', value: 1, color: 'teal'},
+            {text: '1 año a 3 años', value: 2, color: 'blue'},
+            {text: '> 3 años', value: 3, color: 'violet'},
+            /*{text: 'Lo conoce bien', value: 4, color: 'orange'},
+            {text: 'Experto', value: 5, color: 'green'}*/
         ];
         return items.map((item, index) =>
             <Dropdown.Item label={{color: item.color, empty: true, circular: true}}
