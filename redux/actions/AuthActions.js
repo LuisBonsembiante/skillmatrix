@@ -39,47 +39,34 @@ export const loginUser = (email, password) => {
                                 const data = response.data;
                                 userResult.position = data.user.position;
                                 userResult.photoURL = data.user.photoURL;
+                                userResult.uid = data.uid;
 
                                 if (!data.user.photoURL) {
 
                                     let config = {
                                         headers: {
-                                            'Access-Control-Allow-Origin': '*',
                                             'Content-Type': 'application/json',
-                                            'X-Requested-With': 'XMLHttpRequest',
-                                            'X-Auth': r.data.token,
                                             'Accept': 'application/json',
                                             'Authorization': `Bearer ${r.data.token}`,
-                                            'Access-Control-Allow-Credentials': true
                                         },
                                         params: {
                                             include: 'avatar'
                                         }
-                                    }
+                                    };
 
-
-
-                                    // return axios.get(`https://hrm.folderit.net/wp-json/erp/v1/hrm/employees/${userResult.folderHRMID}`, config).then(
-                                    //     (response) => {
-                                    //         console.log('RESPONSE');
-                                    //         userResult.photoURL = response.avatar_url;
-                                    //         userResult.uid = data.uid;
-                                    //         dispatch(loginWithIntranet(r.data.token, userResult));
-                                    //         dispatch({type: FETCH_USER_DATA, payload: data.user});
-                                    //         Router.pushRoute('/')
-                                    //     }
-                                    // );
-
-                                    userResult.photoURL = getLargeImage();
-                                    userResult.uid = data.uid;
+                                    return axios.get(`https://hrm.folderit.net/wp-json/erp/v1/hrm/employees/${userResult.folderHRMID}`, config).then(
+                                        (response) => {
+                                            userResult.photoURL = response.data.avatar_url;
+                                            dispatch(loginWithIntranet(r.data.token, userResult));
+                                            dispatch({type: FETCH_USER_DATA, payload: data.user});
+                                            Router.pushRoute('/')
+                                        }
+                                    );
+                                } else {
                                     dispatch(loginWithIntranet(r.data.token, userResult));
                                     dispatch({type: FETCH_USER_DATA, payload: data.user});
                                     Router.pushRoute('/')
-
-
                                 }
-
-
                             }
                         ).catch(e => {
                             dispatch({type: LOGIN_USER_FAILED});
@@ -99,7 +86,7 @@ export const loginUser = (email, password) => {
 export const loginWithGitHub = (token, user) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_GITHUB, payload: {token, user}});
-        userDataUpdate({email: user.email, photoURL: user.photoURL});
+        dispatch(userDataUpdate({email: user.email, photoURL: user.photoURL}));
         Router.pushRoute('/')
     };
 };
@@ -107,7 +94,7 @@ export const loginWithGitHub = (token, user) => {
 export const loginWithGoogle = (token, user) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_GOOGLE, payload: {token, user}});
-        userDataUpdate({email: user.email, photoURL: user.photoURL});
+        dispatch(userDataUpdate({email: user.email, photoURL: user.photoURL}));
         Router.pushRoute('/')
     };
 };
@@ -123,7 +110,7 @@ export const logoutUser = () => {
 const loginWithIntranet = (token, user) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_INTRANET, payload: {token, user,}});
-        userDataUpdate({email: user.email, photoURL: user.photoURL});
+        dispatch(userDataUpdate({email: user.email, photoURL: user.photoURL}));
         Router.pushRoute('/')
     };
 };
