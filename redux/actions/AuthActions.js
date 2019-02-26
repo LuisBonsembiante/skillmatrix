@@ -50,7 +50,7 @@ export const loginUser = (email, password) => {
                                             'X-Requested-With': 'XMLHttpRequest',
                                             'X-Auth': r.data.token,
                                             'Accept': 'application/json',
-                                            'Authorization': `Bearer ${JSON.stringify(r.data.token)}`,
+                                            'Authorization': `Bearer ${r.data.token}`,
                                             'Access-Control-Allow-Credentials': true
                                         },
                                         params: {
