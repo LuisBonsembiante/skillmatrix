@@ -15,6 +15,7 @@ import {
 } from "./types";
 import firebase from '../../firebase'
 import "firebase/auth"
+import _ from "lodash";
 
 
 export const skillUpdates = ({prop, value}) => {
@@ -85,7 +86,10 @@ export const skillsFetch = () => {
         dispatch({type: START_TRANSACTION});
         firebase.database().ref(`/skills`)
             .on('value', snapshot => {
-                dispatch({type: FETCH_SKILLS, payload: snapshot.val()});
+                const skills = _.map(snapshot.val(), (val, uid) => {
+                    return {...val, key: uid, title: ''}; // {shift: 'Monday', name:'s', id:'1j2j34'};
+                });
+                dispatch({type: FETCH_SKILLS, payload: skills});
                 dispatch({type: END_TRANSACTION})
             });
     };

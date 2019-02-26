@@ -15,7 +15,7 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-    skills: null,
+    skills: [],
     error: '',
     loading: 0,
     instance: null,

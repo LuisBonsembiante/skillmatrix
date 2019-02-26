@@ -91,7 +91,7 @@ const mapStateToProps = state => {
         ...state.auth,
         users: state.fireBase.users,
         loading: state.auth.loading || !!state.fireBase.loading,
-        technologies: !state.fireBase.skills ? [] : _.compact(Object.values(state.fireBase.skills).map((skill) => skill.technologies)),
+        technologies: !state.fireBase.skills ? [] : _.compact(state.fireBase.skills.map((skill) => skill.technologies)),
         selectTechToSearch: state.fireBase.selectTechToSearch
     }
 };

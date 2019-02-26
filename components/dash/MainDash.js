@@ -55,6 +55,7 @@ class MainDash extends Component {
 
     render() {
         const {isLoading, results, value, activeItem} = this.state;
+        const {skills} = this.props;
         const resultRenderer = ({name}) => <Label content={name} color='blue' onClick={this.handleItemClick}/>;
 
         return (
@@ -63,7 +64,7 @@ class MainDash extends Component {
                 <Divider/>
                 <Menu attached='top' pointing secondary pagination>
                     <MenuItems
-                        items={this.props.skills}
+                        items={skills}
                         activeItem={activeItem}
                         handleItemClick={this.handleItemClick}
                     />
@@ -95,12 +96,8 @@ class MainDash extends Component {
 
 const mapStateToProps = state => {
 
-    const skills = _.map(state.fireBase.skills, (val, uid) => {
-        return {...val, key: uid, title: ''}; // {shift: 'Monday', name:'s', id:'1j2j34'};
-    });
-
     return {
-        skills,
+        skills: state.fireBase.skills,
         loading: !!state.fireBase.loading
     };
 };

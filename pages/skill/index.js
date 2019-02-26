@@ -77,13 +77,9 @@ class SkillsIndex extends Component {
 
 const mapStateToProps = state => {
 
-    const skills = _.map(state.fireBase.skills, (val, uid) => {
-        return {...val, key: uid}; // {shift: 'Monday', name:'s', id:'1j2j34'};
-    });
-
     return {
         ...state,
-        skills,
+        skills: state.fireBase.skills,
         loading: state.fireBase.loading
     };
 };

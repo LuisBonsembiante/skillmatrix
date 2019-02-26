@@ -139,12 +139,9 @@ class Cards extends Component {
 };
 
 function mapStateToProps(state) {
-    const skills = _.map(state.fireBase.skills, (val, uid) => {
-        return {...val, key: uid, title: ''}; // {shift: 'Monday', name:'s', id:'1j2j34'};
-    });
 
     return {
-        skills,
+        skills: state.fireBase.skills,
         loading: state.fireBase.loading,
         userTechnologyData: state.fireBase.userData ? state.fireBase.userData.technologies || {} : {}
     };
