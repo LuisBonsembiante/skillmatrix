@@ -27,9 +27,13 @@ class MainDash extends Component {
 
     componentWillReceiveProps(nextProps, nextContext) {
         const {skills} = this.props;
+        const {activeItem} = this.state;
 
-        if(skills.length === 0 && nextProps.skills.length > 0) {
+        if (skills.length === 0 && nextProps.skills.length > 0) {
             this.setState({activeItem: nextProps.skills[0].name})
+        }
+        if (skills.length > 0 && activeItem === '') {
+            this.setState({activeItem: skills[0].name})
         }
     }
 
