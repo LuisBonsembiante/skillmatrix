@@ -10,8 +10,6 @@ import {Router} from "../../routes";
 import {cleanData, userDataUpdate} from "./FireBaseAction";
 import axios from "axios";
 import {getUserByEmail} from "../../env";
-import services from '../../services';
-import http from 'http';
 import {getLargeImage} from "../../components/utils/imagesManager";
 
 export const loginUser = (email, password) => {
