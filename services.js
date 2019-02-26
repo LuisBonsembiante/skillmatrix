@@ -7,11 +7,14 @@ service.register({
 
     onRequest(config) {
 
-        if(sessionStorage.getItem('tokenJWT'))
-            config.headers = {
-                Authorization:'Bearer ' + sessionStorage.getItem('tokenJWT'),
-                ...config.headers
-            };
+        // if(sessionStorage.getItem('tokenJWT')){
+        //     config.headers = {
+        //         ...config.headers,
+        //         Authorization:'Bearer ' + sessionStorage.getItem('tokenJWT')
+        //
+        //     };
+        // }
+
         return config;
     },
     onSync(promise) {

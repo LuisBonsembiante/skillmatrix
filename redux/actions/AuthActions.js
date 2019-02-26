@@ -11,7 +11,7 @@ import {cleanData, userDataUpdate} from "./FireBaseAction";
 import axios from "axios";
 import {getUserByEmail} from "../../env";
 import services from '../../services';
-
+import http from 'http';
 
 export const loginUser = (email, password) => {
     return (dispatch) => {
@@ -30,10 +30,12 @@ export const loginUser = (email, password) => {
                         };
                         sessionStorage.setItem('tokenJWT', r.data.token);
                         const headers = {
-                            'Access-Control-Allow-Origin': '*',
-                            'Access-Control-Allow-Methods': 'POST, GET',
                             'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
                         };
+
+
                         axios.post(getUserByEmail, userResult, {headers: headers}).then(async (response) => {
                                 const data = response.data;
                                 userResult.position = data.user.position;
@@ -41,20 +43,39 @@ export const loginUser = (email, password) => {
 
                                 if (!data.user.photoURL) {
 
-                                    const employee =   axios.get(`https://hrm.folderit.net/wp-json/erp/v1/hrm/employees/${userResult.folderHRMID}?include=avatar`).then(
+                                    let config = {
+                                        headers: {
+                                            'Access-Control-Allow-Origin': '*',
+                                            'Content-Type': 'application/json',
+                                            'X-Requested-With': 'XMLHttpRequest',
+                                            'X-Auth': r.data.token,
+                                            'Accept': 'application/json',
+                                            'Authorization': `Bearer ${JSON.stringify(r.data.token)}`,
+                                            'Access-Control-Allow-Credentials': true
+                                        },
+                                        params: {
+                                            include: 'avatar'
+                                        }
+                                    }
+
+
+
+                                    return axios.get(`https://hrm.folderit.net/wp-json/erp/v1/hrm/employees/${userResult.folderHRMID}`, config).then(
                                         (response) => {
+                                            console.log('RESPONSE');
                                             userResult.photoURL = response.avatar_url;
+                                            userResult.uid = data.uid;
+                                            dispatch(loginWithIntranet(r.data.token, userResult));
+                                            dispatch({type: FETCH_USER_DATA, payload: data.user});
+                                            Router.pushRoute('/')
                                         }
                                     );
 
+
                                 }
 
-                                userResult.uid = data.uid;
-                                dispatch(loginWithIntranet(r.data.token, userResult));
-                                dispatch({type: FETCH_USER_DATA, payload: data.user});
-                                Router.pushRoute('/')
-                            }
 
+                            }
                         ).catch(e => {
                             dispatch({type: LOGIN_USER_FAILED});
                             console.log(e)
