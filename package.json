@@ -13,6 +13,10 @@
     "deploy": "now -e NODE_ENV=development",
     "heroku-postbuild": "next build"
   },
+  "proxy": {
+    "target": "https://hrm.folderit.net",
+    "changeOrigin": true
+  },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.55",
     "axios": "^0.18.0",
