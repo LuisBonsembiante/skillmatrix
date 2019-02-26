@@ -11,7 +11,7 @@ import ProfileInfo from "./ProfileInfo";
 class MainDash extends Component {
 
     state = {
-        activeItem: 'JavaScript', // TODO Set the first one for default
+        activeItem: '',
         isLoading: false,
         value: '' // Value of the search Field
     };
@@ -23,6 +23,14 @@ class MainDash extends Component {
     componentDidMount() {
         this.props.userDataFetch();
         this.props.skillsFetch();
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        const {skills} = this.props;
+
+        if(skills.length === 0 && nextProps.skills.length > 0) {
+            this.setState({activeItem: nextProps.skills[0].name})
+        }
     }
 
 
