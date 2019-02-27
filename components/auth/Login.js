@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, Form, Grid, Header, Input, Message, Segment, TransitionablePortal} from "semantic-ui-react";
 import {Link} from '../../routes';
 import {connect} from "react-redux";
-import {loginUser, loginWithGitHub, loginWithGoogle} from "../../redux/actions";
+import {loginUser, loginWithGitHub, loginWithGoogle, cleanError} from "../../redux/actions";
 import {firebase} from '@firebase/app';
 
 const _login = (props) => {
@@ -62,6 +62,7 @@ const _login = (props) => {
     }
 
     const resetError = () => {
+        props.cleanError();
         setError({errorCode: 0, errorMessage: ''})
     }
 
@@ -111,7 +112,7 @@ const _login = (props) => {
                         />
 
                         <Button color="blue" fluid size="large" loading={props.auth.loading}
-                                onClick={() => login()}>
+                                onClick={() => {resetError(); login(); }}>
                             Login
                         </Button>
 
@@ -133,9 +134,8 @@ const _login = (props) => {
 function mapStateToProps(state) {
     return {
         ...state,
-
         errorLogin: state.auth.error
     }
 }
 
-export default connect(mapStateToProps, {loginUser, loginWithGitHub, loginWithGoogle})(_login);
+export default connect(mapStateToProps, {loginUser, loginWithGitHub, loginWithGoogle, cleanError})(_login);
