@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Accordion, Button, Form, Icon, Input, Table, Modal, Message} from 'semantic-ui-react';
+import {Accordion, Button, Form, Icon, Input, Table, Modal, Message, TextArea} from 'semantic-ui-react';
 import {Router} from "../../../routes";
 import {skillCreate, skillUpdate} from "../../../redux/actions";
 import {connect} from "react-redux";
@@ -92,7 +92,7 @@ class SkillModal extends Component {
                             </Form.Field>
                             <Form.Field required>
                                 <label>Description</label>
-                                <Input
+                                <TextArea
                                     value={this.state.description}
                                     onChange={event => this.setState({description: event.target.value})}
                                 />

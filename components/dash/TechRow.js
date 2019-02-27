@@ -18,22 +18,39 @@ class TechRow extends Component {
         name: '',
         meta: '',
         openModalUpdateSkill: false,
-        openModalTechnology: false
+        openModalTechnology: false,
+        openModalUpdateTechnology: false,
+        uidTech: '',
+        val: null
     }
 
 
     delete = (key) => {
 
-        this.setState({loading: true,openModalUpdateSkill: false, openModalTechnology: false});
+        this.setState({loading: true, openModalUpdateSkill: false, openModalTechnology: false});
 
         this.props.technologiesDelete({
             uid: this.props.skill.key,
             tuid: key
         })
 
-        this.setState({loading: false,openModalUpdateSkill: false, openModalTechnology: false});
+        this.setState({loading: false, openModalUpdateSkill: false, openModalTechnology: false});
     };
 
+    renderModalUpdateTech = () => {
+
+        return (
+            <TechnologyModal openForUpdate={this.state.openModalUpdateTechnology} uid={this.state.uidTech}
+                             name={this.state.val.name}
+                             skillKey={this.props.skill.key}
+                             description={this.state.val.description} meta={this.state.val.meta}
+                             onClose={() => this.setState({
+                                 openModalUpdateSkill: false,
+                                 openModalTechnology: false,
+                                 openModalUpdateTechnology: false
+                             })}/>
+        );
+    }
 
 
     onClickHandler = (event) => {
@@ -70,7 +87,14 @@ class TechRow extends Component {
                                                     <Table.Cell textAlign='right'>
                                                         <Button.Group>
                                                             <Button color='blue' icon="edit"
-                                                                    loading={this.state.loading}/>
+                                                                    loading={this.state.loading}
+                                                                    onClick={() => this.setState({
+                                                                        val: val,
+                                                                        uidTech: uid,
+                                                                        openModalTechnology: false,
+                                                                        openModalUpdateSkill: false,
+                                                                        openModalUpdateTechnology: true
+                                                                    })}/>
                                                             <Button.Or/>
                                                             <Button color='red' icon="trash alternate outline"
                                                                     loading={this.state.loading}
@@ -80,6 +104,8 @@ class TechRow extends Component {
                                                 </Table.Row>
 
                                             );
+
+
                                         })
                                     }
 
@@ -98,15 +124,17 @@ class TechRow extends Component {
             <SkillModal openForUpdate={this.state.openModalUpdateSkill} uid={this.props.skill.key}
                         name={this.props.skill.name}
                         description={this.props.skill.description} technologies={this.props.skill.technologies}
-                        onClose={() => this.setState({ openModalUpdateSkill: false, openModalTechnology: false})}/>
+                        onClose={() => this.setState({openModalUpdateSkill: false, openModalTechnology: false})}/>
         );
     }
+
 
     modalNewTechnology = () => {
 
         return (
-            <TechnologyModal open={this.state.openModalTechnology} skillKey={this.props.skill.key} skillName={this.props.skill.name}
-                             onClose={() => this.setState({ openModalUpdateSkill: false, openModalTechnology: false})}/>
+            <TechnologyModal open={this.state.openModalTechnology} skillKey={this.props.skill.key}
+                             skillName={this.props.skill.name}
+                             onClose={() => this.setState({openModalUpdateSkill: false, openModalTechnology: false})}/>
         );
     }
 
@@ -120,7 +148,7 @@ class TechRow extends Component {
                 <Grid.Row columns='equal' stretched>
                     <Grid.Column width={1}>
                         <p
-                           onClick={(event) => this.onClickHandler(event)}>
+                            onClick={(event) => this.onClickHandler(event)}>
                             {this.props.skill.technologies ? '+' : '-'}
                         </p>
                     </Grid.Column>
@@ -135,13 +163,21 @@ class TechRow extends Component {
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <Button loading={this.state.loading} color="green" basic
-                                onClick={(() => this.setState({openModalTechnology: true, openModalUpdateSkill: false}))}>
+                                onClick={(() => this.setState({
+                                    openModalTechnology: true,
+                                    openModalUpdateSkill: false,
+                                    openModalUpdateTechnology: false
+                                }))}>
                             Add
                         </Button>
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <Button loading={this.state.loading} color="teal" basic
-                                onClick={() => this.setState({openModalUpdateSkill: true, openModalTechnology: false})}>
+                                onClick={() => this.setState({
+                                    openModalUpdateSkill: true,
+                                    openModalTechnology: false,
+                                    openModalUpdateTechnology: false
+                                })}>
                             Edit
                         </Button>
                     </Grid.Column>
@@ -149,6 +185,9 @@ class TechRow extends Component {
                 {this.state.expand && this.props.skill.technologies && this.renderTech()}
                 {this.state.openModalUpdateSkill && this.renderModalUpdateSkill()}
                 {this.state.openModalTechnology && this.modalNewTechnology()}
+                {this.state.openModalUpdateTechnology && this.renderModalUpdateTech()}
+
+
             </>
         );
     }

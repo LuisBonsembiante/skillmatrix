@@ -70,6 +70,17 @@ export const technologiesCreate = ({name, description, meta, uid}) => {
 
 };
 
+export const technologiesUpdate = ({name, description, meta, uidSkill, uid}) => {
+    return (dispatch) => {
+        firebase.database().ref(`/skills/${uidSkill}/technologies/${uid}`)
+            .update({name, description, meta})
+            .then(() => {
+                dispatch({type: TECHNOLOGIES_CREATE});
+            });
+    }
+
+};
+
 export const technologiesDelete = ({uid, tuid}) => {
     return () => {
         firebase.database().ref(`/skills/${uid}/technologies/${tuid}`)
