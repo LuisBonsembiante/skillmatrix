@@ -44,7 +44,10 @@ class SkillsIndex extends Component {
 
 
                 <Grid centered celled columns='equal'>
-                    <Grid.Row color='grey' columns={5}>
+                    <Grid.Row color='grey' columns={6}>
+                        <Grid.Column textAlign='center'  width={1}>
+                            <h3>+/-</h3>
+                        </Grid.Column>
                         <Grid.Column textAlign='center'  width={2}>
                             <h3>ID</h3>
                         </Grid.Column>

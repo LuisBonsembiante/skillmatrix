@@ -101,20 +101,22 @@ class TechnologyModal extends Component {
                                 />
                             </Form.Field>
                             <Form.Field required>
+                                <label>Meta</label>
+                                <Input ty
+                                       value={this.state.meta}
+                                       onChange={event => this.setState({meta: event.target.value})}
+                                />{this.state.openModalUpdateTechnology && this.renderModalUpdateTech(uid, val)}
+                            </Form.Field>
+
+                        </Form.Group>
+                        <Form.Group widths={2}>
+
+                            <Form.Field required>
                                 <label>Description</label>
                                 <TextArea
                                     value={this.state.description}
                                     onChange={event => this.setState({description: event.target.value})}
                                 />
-                            </Form.Field>
-                        </Form.Group>
-                        <Form.Group widths={2}>
-                            <Form.Field required>
-                                <label>Meta</label>
-                                <Input ty
-                                    value={this.state.meta}
-                                    onChange={event => this.setState({meta: event.target.value})}
-                                />{this.state.openModalUpdateTechnology && this.renderModalUpdateTech(uid, val)}
                             </Form.Field>
                         </Form.Group>
                         <Message error header="Oops!" content={this.state.errorMessage}/>
