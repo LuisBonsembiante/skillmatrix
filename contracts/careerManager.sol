@@ -1,17 +1,25 @@
 pragma solidity ^0.4.25;
 
-contract StageInterface {
+import "./Ownable.sol";
 
+contract StageInterface {
+    function getStateOfToken(uint _tokeId, uint _hitoType) external onlyOwner returns (Hito);
+
+    struct Hito {
+        uint tipo; // Referencia a un usuario
+        bool aprovado; // Referencia a una tecnologia
+    }
 }
 
-contract CareerManager {
+
+contract CareerManager is Ownable {
 
 
-    StageInterface stage1; // Cada stage es un nivel de conocimiento de X tecnologia - Representado con un contrato que valida ese conocimiento
-    StageInterface stage2;
-    StageInterface stage3;
-    StageInterface stage4;
-    StageInterface stage5;
+    StageInterface internal stage1; // Cada stage es un nivel de conocimiento de X tecnologia - Representado con un contrato que valida ese conocimiento
+    StageInterface internal stage2;
+    StageInterface internal stage3;
+    StageInterface internal stage4;
+    StageInterface internal stage5;
 
 
     struct Token {
@@ -19,39 +27,72 @@ contract CareerManager {
         string tecnoliga_uid; // Referencia a una tecnologia
     }
 
-    Token[] token_list;
+    struct Hito {
+        uint tipo; // Referencia a un usuario
+        bool aprovado; // Referencia a una tecnologia
+    }
+
+    Token[] public token_list;
 
     mapping(uint => string) public tokenToEmployee;
-    mapping(bytes32  => uint) public ownerTokenCount;
+    mapping(bytes32 => uint) public ownerTokenCount;
 
-    function addToken(string _empleado_uid, string _tecnologia_uid) external {
+    // Crea un nuevo token, para un empleado y una tecnologia determinada
+    function addToken(string _empleadoUid, string _tecnologiaUid) external onlyOwner {
         // TODO Validar no duplicar tokens
-        bytes32 _empleado_keccak256_uid = keccak256(_empleado_uid);
-        uint token_id = token_list.push(Token(_empleado_uid, _tecnologia_uid)) - 1;
-        tokenToEmployee[token_id] = _empleado_uid;
+        bytes32 _empleado_keccak256_uid = keccak256(abi.encodePacked(_empleadoUid));
+        uint token_id = token_list.push(Token(_empleadoUid, _tecnologiaUid)) - 1;
+        tokenToEmployee[token_id] = _empleadoUid;
         ownerTokenCount[_empleado_keccak256_uid]++;
     }
 
+    // Setea una nueva adrress perteneciente a una nueva instancia de un Stage determinado
     function setStageAddress(address _stageAddress, uint index) external {
-        // TODO switch entre stages
+        if (index == 1) {
+            stage1 = StageInterface(_stageAddress);
+        } else if (index == 2) {
+            stage2 = StageInterface(_stageAddress);
+        } else if (index == 3) {
+            stage3 = StageInterface(_stageAddress);
+        } else if (index == 4) {
+            stage4 = StageInterface(_stageAddress);
+        } else if (index == 5) {
+            stage5 = StageInterface(_stageAddress);
+        }
     }
 
-    function getTokenByEmployee(string _owner) external view returns(uint[]) {
-        bytes32 _empleado_keccak256_uid = keccak256(_owner);
+    // Retorna la lista de IDs de tokens, pertenecientes a un empleado
+    function getTokenByEmployee(string _empleadoUid) external view onlyOwner returns (uint[]) {
+        bytes32 _empleado_keccak256_uid = keccak256(abi.encodePacked(_empleadoUid));
         uint[] memory result = new uint[](ownerTokenCount[_empleado_keccak256_uid]);
         uint counter = 0;
         for (uint i = 0; i < token_list.length; i++) {
-            if (keccak256(tokenToEmployee[i]) == keccak256(_owner)) {
+            if (keccak256(abi.encodePacked(tokenToEmployee[i])) == _empleado_keccak256_uid) {
                 result[counter] = i;
                 counter++;
             }
         }
         return result;
     }
+
+    // Retorna el hito relacionado a X Stage de un token
+    function getStateOfToken(uint _tokeId, uint _stage, uint _hitoType) external returns (Hito) {
+        if (_stage == 1) {
+            return stage1.getStateOfToken(_tokeId, _hitoType);
+        } else if (_stage == 2) {
+            return stage2.getStateOfToken(_tokeId, _hitoType);
+        } else if (_stage == 3) {
+            return stage3.getStateOfToken(_tokeId, _hitoType);
+        } else if (_stage == 4) {
+            return stage4.getStateOfToken(_tokeId, _hitoType);
+        } else if (_stage == 5) {
+            return stage5.getStateOfToken(_tokeId, _hitoType);
+        }
+    }
 }
 
 
-contract Stage {
+contract Stage is Ownable {
 
     mapping(uint => uint[]) public tokenToHitos;
     mapping(uint => string) public hitoType;
@@ -63,39 +104,51 @@ contract Stage {
 
     uint hitosCount = 0;
 
-    Hito[] public hito_list;
+    Hito[] public hitoList;
 
-    function registerToken(uint _toke_id) external {
+    // Registra un nuevo token, y le asigna todos los hitos como no aprovados
+    function registerToken(uint _tokeId) internal {
         for (uint i = 1; i <= hitosCount; i++) {
-            uint hito_id = hito_list.push(Hito(i, false)) - 1;
-            tokenToHitos[_toke_id].push(hito_id);
+            uint hitoId = hitoList.push(Hito(i, false)) - 1;
+            tokenToHitos[_tokeId].push(hitoId);
         }
     }
 
-    function addHito(string _tipo) external {
+    // Retorna el estado de un tipo de hito, relacionado al token
+    function getStateOfToken(uint _tokeId, uint _hitoType) external onlyOwner returns (Hito) {
+        if(getTokenToHitosLength(_toke_id) == 0 ) {
+            registerToken(_toke_id);
+        }
+        uint hitoId = tokenToHitos[_tokeId][_hitoType];
+        return hitoList[hitoId];
+    }
+
+    // Agrega un nuevo hito al stage
+    function addHito(string _tipo) external onlyOwner {
         hitosCount++;
         hitoType[hitosCount] = _tipo;
     }
 
-    function changeHitoState(uint _token_id, uint hito_type, bool _state) external {
-        uint hito_id = tokenToHitos[_token_id][hito_type];
-        hito_list[hito_id].aprovado = _state;
+    // Cambia el estado de un hito, relacionado a un token
+    function changeHitoState(uint _tokeId, uint _hitoType, bool _state) external onlyOwner {
+        uint hitoId = tokenToHitos[_tokeId][_hitoType];
+        hitoList[hitoId].aprovado = _state;
     }
 
-    function getTokenToHitos(uint _token_id) public view returns (uint[]) {
-        return tokenToHitos[_token_id];
+    // Retorna la lista de ID de los hitos relacionados al token
+    function getTokenToHitos(uint _tokeId) public view onlyOwner returns (uint[]) {
+        return tokenToHitos[_tokeId];
     }
 
-    function getTokenToHitosLength(uint _token_id) public view returns (uint) {
-        return tokenToHitos[_token_id].length;
+    // Retorna el largo de la lista de ID de los hitos relacionados al token
+    function getTokenToHitosLength(uint _tokeId) public view onlyOwner returns (uint) {
+        return tokenToHitos[_tokeId].length;
     }
 
-    function getTokenToHitosValue(uint _token_id, uint index) public view returns (uint) {
-        return tokenToHitos[_token_id][index];
+    // Retorna un tipo de hito relacionado al token
+    function getTokenToHitosValue(uint _tokeId, uint _hitoType) public view onlyOwner returns (uint) {
+        return tokenToHitos[_tokeId][_hitoType];
     }
-
-
-
 
 
 }
