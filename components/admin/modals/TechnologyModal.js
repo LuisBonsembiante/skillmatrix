@@ -111,7 +111,7 @@ class TechnologyModal extends Component {
                         </Form.Group>
                         <Form.Group widths={2}>
 
-                            <Form.Field required>
+                            <Form.Field required style={{width:'100%'}}>
                                 <label>Description</label>
                                 <TextArea
                                     value={this.state.description}

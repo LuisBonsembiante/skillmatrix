@@ -82,7 +82,7 @@ class TechRow extends Component {
 
                                                 <Table.Row key={uid}>
                                                     <Table.Cell>{val.name}</Table.Cell>
-                                                    <Table.Cell>{val.description}</Table.Cell>
+                                                    <Table.Cell>{val.description.slice(0, 80) + '...'}</Table.Cell>
                                                     <Table.Cell>{val.meta}</Table.Cell>
                                                     <Table.Cell textAlign='right'>
                                                         <Button.Group>
@@ -159,7 +159,7 @@ class TechRow extends Component {
                         <p>{skill.name}</p>
                     </Grid.Column>
                     <Grid.Column>
-                        <p>{skill.description}</p>
+                        <p>{skill.description.slice(0, 80) + '...'}</p>
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <Button loading={this.state.loading} color="green" basic
