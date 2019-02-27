@@ -4,7 +4,8 @@ import {
     LOGIN_WITH_GITHUB,
     LOGIN_WITH_GOOGLE,
     LOGIN_WITH_INTRANET,
-    LOGOUT_USER
+    LOGOUT_USER,
+    LOGIN_CLEAN_ERROR
 } from "./types";
 import {Router} from "../../routes";
 import {cleanData, userDataUpdate} from "./FireBaseAction";
@@ -107,6 +108,14 @@ export const logoutUser = () => {
     }
 
 };
+
+export const cleanError = () => {
+    return (dispatch) => {
+        dispatch({type: LOGIN_CLEAN_ERROR});
+    };
+};
+
+
 const loginWithIntranet = (token, user) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_INTRANET, payload: {token, user,}});
@@ -114,5 +123,6 @@ const loginWithIntranet = (token, user) => {
         Router.pushRoute('/')
     };
 };
+
 
 

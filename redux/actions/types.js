@@ -27,4 +27,6 @@ export const CLEAN_DATA = 'clean_data';
 export const SELECT_TECH_TO_SEARCH = 'select_tech_to_search';
 export const REMOVE_TECH_TO_SEARCH = 'remove_tech_to_search';
 export const RESET_TECH_TO_SEARCH = 'reset_tech_to_search';
+export const LOGIN_CLEAN_ERROR = 'login_clean_error';
+
 

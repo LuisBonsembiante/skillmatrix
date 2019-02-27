@@ -4,6 +4,7 @@ import {
     PASSWORD_CHANGED,
     LOGIN_USER_FAILED,
     LOGIN_USER,
+    LOGIN_CLEAN_ERROR,
     LOGOUT_USER, LOGIN_WITH_GITHUB, LOGIN_WITH_GOOGLE, LOGIN_WITH_INTRANET
 } from '../actions/types'
 
@@ -35,6 +36,8 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, loading: false, error: '', user: action.payload.user, intranetToken: action.payload.token};
         case LOGIN_USER_FAILED:
             return {...state, error: 'Authentication Failed.', loading: false};
+        case LOGIN_CLEAN_ERROR:
+            return {...state, error: '', loading: false};
         case LOGOUT_USER:
             return INITIAL_STATE;
 
