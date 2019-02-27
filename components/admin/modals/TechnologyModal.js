@@ -26,15 +26,13 @@ class TechnologyModal extends Component {
 
 
     componentWillMount() {
-        debugger
-        this.setState({open: this.props.open, skillName:this.props.skillName, skillKey: this.props.skillKey, name: this.props.name, description: this.props.description, meta: this.props.meta,  openForUpdate: this.props.openForUpdate, uid: this.props.uid})
+         this.setState({open: this.props.open, skillName:this.props.skillName, skillKey: this.props.skillKey, name: this.props.name || '', description: this.props.description || '', meta: this.props.meta || '',  openForUpdate: this.props.openForUpdate, uid: this.props.uid})
     }
 
 
 
     componentWillReceiveProps(){
-        debugger
-        this.setState({open: this.props.open, skillName:this.props.skillName, skillKey: this.props.skillKey, name: this.props.name, description: this.props.description, meta: this.props.meta, openForUpdate: this.props.openForUpdate, uid: this.props.uid})
+         this.setState({open: this.props.open, skillName:this.props.skillName, skillKey: this.props.skillKey, name: this.props.name || '', description: this.props.description || '', meta: this.props.meta || '',  openForUpdate: this.props.openForUpdate, uid: this.props.uid})
     }
 
     onAdd = () => {
@@ -90,9 +88,7 @@ class TechnologyModal extends Component {
                 <Modal.Content>
                     <Form onSubmit={this.onAdd} error={!!this.state.errorMessage}>
                         <Form.Group widths={3}>
-
                             {this.state.uid && this.renderUI() }
-
                             <Form.Field required>
                                 <label>Name</label>
                                 <Input
@@ -121,6 +117,7 @@ class TechnologyModal extends Component {
                         </Form.Group>
                         <Message error header="Oops!" content={this.state.errorMessage}/>
                     </Form>
+                    
                 </Modal.Content>
                 <Modal.Actions>
                     <Button loading={this.state.loading} color="teal" primary onClick={() => this.onAdd()}>

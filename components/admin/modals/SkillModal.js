@@ -118,6 +118,7 @@ class SkillModal extends Component {
                         </Form.Group>
                         <Message error header="Oops!" content={this.state.errorMessage}/>
                     </Form>
+
                 </Modal.Content>
 
                 <Modal.Actions>
