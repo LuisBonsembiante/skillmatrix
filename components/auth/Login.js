@@ -10,8 +10,10 @@ const _login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alert, showAlert] = useState(false);
-    const [error, setError] = useState({errorCode: 0, errorMessage: 'init'});
+    const [error, setError] = useState({errorCode: 0, errorMessage: ''});
 
+    if(error.errorMessage === '' && error.errorMessage !== props.errorLogin)
+        setError({errorCode: 403, errorMessage: props.errorLogin});
 
     const handlerGitHubLogin = () => {
         const provider = new firebase.auth.GithubAuthProvider();
@@ -129,7 +131,11 @@ const _login = (props) => {
 };
 
 function mapStateToProps(state) {
-    return {...state}
+    return {
+        ...state,
+
+        errorLogin: state.auth.error
+    }
 }
 
 export default connect(mapStateToProps, {loginUser, loginWithGitHub, loginWithGoogle})(_login);
