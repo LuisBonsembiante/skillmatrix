@@ -106,7 +106,7 @@ class Cards extends Component {
         });
         this.props.userTechnologyUpdate({
             validated: technologies[index].validated || false,
-            validator: technologies[index].validator,
+            validator: technologies[index].validator || null,
             levelOfKnowledge: value,
             wantToLearn: value
         }, technologies[index].uid)
@@ -125,8 +125,8 @@ class Cards extends Component {
                                 <span className='date'>{item.meta}</span>
                             </Card.Meta>
                             <Card.Description style={{minHeight: '75px'}}>
-                                {item.description.slice(0, 190)}
-                                {(item.description.length > 190) ? ' ...' : '' }
+                                {item.description.slice(0, 185)}
+                                {(item.description.length > 185) ? ' ...' : '' }
                             </Card.Description>
                             <br/>
                             {item.levelOfKnowledge &&
