@@ -13,6 +13,6 @@ const handler = routes.getRequestHandler(app);
 app.prepare().then(() => {
     createServer(handler).listen(process.env.PORT || 5000 , (err) => {
        if(err) throw err;
-       console.log(`Ready on ${process.env.PORT}`);
+       console.log(`Ready on ${process.env.PORT || 5000}`);
     });
 })
