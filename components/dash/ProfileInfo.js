@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Button, Form, Grid, Image} from "semantic-ui-react";
-import {getLargeImage} from "../utils/imagesManager";
 import {userDataUpdate} from "../../redux/actions";
 
 class _profileInfo extends Component {
