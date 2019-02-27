@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Accordion, Button, Form, Grid, Table} from 'semantic-ui-react';
+import {Accordion, Button, Form, Grid, Icon, Table} from 'semantic-ui-react';
 import {Router} from "../../routes";
 import {technologiesCreate, technologiesDelete} from "../../redux/actions";
 import {connect} from "react-redux";
@@ -140,17 +140,18 @@ class TechRow extends Component {
 
 
     render() {
-        const {Row, Cell} = Table;
         const {id, skill} = this.props;
-
+        const {expand} = this.state;
         return (
             <>
                 <Grid.Row columns='equal' stretched>
-                    <Grid.Column width={1}>
-                        <p
-                            onClick={(event) => this.onClickHandler(event)}>
-                            {this.props.skill.technologies ? '+' : '-'}
-                        </p>
+                    <Grid.Column width={1} style={{margin: 'auto'}}>
+                        {expand ?
+                            (<Icon size={'large'} onClick={(event) => this.onClickHandler(event)}
+                                  name={'arrow up'}/>) :
+                            (<Icon size={'large'} onClick={(event) => this.onClickHandler(event)}
+                                  name={'arrow down'}/>)
+                        }
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <p>{id}</p>
@@ -199,7 +200,6 @@ const mapStateToProps = state => {
 
     return {
         ...state
-
     };
 };
 

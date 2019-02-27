@@ -124,8 +124,10 @@ class Cards extends Component {
                             <Card.Meta>
                                 <span className='date'>{item.meta}</span>
                             </Card.Meta>
-                            <Card.Description style={{minHeight: '75px'}}>{item.description}</Card.Description>
-
+                            <Card.Description style={{minHeight: '75px'}}>
+                                {item.description.slice(0, 190)}
+                                {(item.description.length > 190) ? ' ...' : '' }
+                            </Card.Description>
                             <br/>
                             {item.levelOfKnowledge &&
                             <Dropdown text={item.levelOfKnowledge.text || 'Level of knowledge'}
