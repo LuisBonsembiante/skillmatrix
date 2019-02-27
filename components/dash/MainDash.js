@@ -48,7 +48,7 @@ class MainDash extends Component {
             if (this.state.value.length < 1) return this.resetComponent();
 
             const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
-            const isMatch = result => re.test(result.name);
+            const isMatch = result => re.test(result.name) || Object.values(result.technologies).some( (tech) => re.test(tech.name))
 
             this.setState({
                 isLoading: false,

@@ -97,7 +97,19 @@ class Cards extends Component {
 
     onClickWantToLearn(index, value) {
         const {technologies} = this.state;
-        this.props.userTechnologyUpdate({wantToLearn: value}, technologies[index].uid)
+        this.setState((state) => {
+            return {
+                ...state,
+                technologies: state.technologies.map(
+                    (content, i) => i === index ? {...content, wantToLearn: value} : content)
+            }
+        });
+        this.props.userTechnologyUpdate({
+            validated: technologies[index].validated || false,
+            validator: technologies[index].validator,
+            levelOfKnowledge: value,
+            wantToLearn: value
+        }, technologies[index].uid)
     }
 
     render() {
@@ -112,7 +124,7 @@ class Cards extends Component {
                             <Card.Meta>
                                 <span className='date'>{item.meta}</span>
                             </Card.Meta>
-                            <Card.Description>{item.description}</Card.Description>
+                            <Card.Description style={{minHeight: '75px'}}>{item.description}</Card.Description>
 
                             <br/>
                             {item.levelOfKnowledge &&
@@ -126,8 +138,8 @@ class Cards extends Component {
                             </Dropdown>
                             }
 
-                            <Checkbox style={{marginLeft: '3rem', color: 'green'}}
-                                      label={<label>I want to learn it</label>}
+                            <Checkbox style={{marginLeft: '1.5rem'}}
+                                      label={<label>Interested?</label>}
                                       onChange={(e, {checked}) => this.onClickWantToLearn(index, checked)}
                                       checked={item.wantToLearn}
                             />
