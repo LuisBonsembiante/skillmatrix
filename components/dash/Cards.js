@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Card, Dropdown, Icon, Label, Popup} from 'semantic-ui-react';
+import {Card, Checkbox, Dropdown, Icon, Label, Popup} from 'semantic-ui-react';
 import {getSmallImage} from "../utils/imagesManager";
 import _ from "lodash";
 import {userTechnologyUpdate} from "../../redux/actions";
@@ -25,7 +25,7 @@ class Cards extends Component {
             ? _.map(_skillSelected.technologies,
                 (item, uid) => {
                     if (userTechnologyData[uid]) return {...item, uid, ...userTechnologyData[uid]};
-                    return {...item, uid, levelOfKnowledge: {}}
+                    return {...item, uid, levelOfKnowledge: {}, wantToLearn: false}
                 })
             : [{name: '', meta: '', description: 'Technologies not found'}];
 
@@ -50,6 +50,7 @@ class Cards extends Component {
                             ...content,
                             levelOfKnowledge: value,
                             validated: technologies[index].validated || false,
+                            wantToLearn: technologies[index].wantToLearn || false,
                             validator:
                             //If value is -1, no validator needed - Else assign a validator of that tech or 'Not assigned'
                                 value.value === -1
@@ -67,7 +68,8 @@ class Cards extends Component {
                     value.value === -1
                         ? null
                         : technologies[index].validator || {name: 'Not assigned', position: '', uid: ''},
-                levelOfKnowledge: value
+                levelOfKnowledge: value,
+                wantToLearn: technologies[index].wantToLearn || false
             }
             , technologies[index].uid
         )
@@ -93,6 +95,23 @@ class Cards extends Component {
         )
     }
 
+    onClickWantToLearn(index, value) {
+        const {technologies} = this.state;
+        this.setState((state) => {
+            return {
+                ...state,
+                technologies: state.technologies.map(
+                    (content, i) => i === index ? {...content, wantToLearn: value} : content)
+            }
+        });
+        this.props.userTechnologyUpdate({
+            validated: technologies[index].validated || false,
+            validator: technologies[index].validator,
+            levelOfKnowledge: value,
+            wantToLearn: value
+        }, technologies[index].uid)
+    }
+
     render() {
         const {technologies} = this.state;
 
@@ -105,7 +124,7 @@ class Cards extends Component {
                             <Card.Meta>
                                 <span className='date'>{item.meta}</span>
                             </Card.Meta>
-                            <Card.Description>{item.description}</Card.Description>
+                            <Card.Description style={{minHeight: '75px'}}>{item.description}</Card.Description>
 
                             <br/>
                             {item.levelOfKnowledge &&
@@ -118,6 +137,12 @@ class Cards extends Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                             }
+
+                            <Checkbox style={{marginLeft: '1.5rem'}}
+                                      label={<label>Interested?</label>}
+                                      onChange={(e, {checked}) => this.onClickWantToLearn(index, checked)}
+                                      checked={item.wantToLearn}
+                            />
 
                         </Card.Content>
                         {item.validator &&

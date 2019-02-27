@@ -24,7 +24,14 @@ class EmployeesData extends Component {
         let result = [];
 
         if (nextProps.users)
-            result = Object.values(nextProps.users).filter(user => (!user.technologies ? null : Object.keys(user.technologies).find(tech => nextProps.selectTechToSearch.includes(tech))));
+            result = Object.values(nextProps.users).filter(user => (
+                !user.technologies
+                    ? null
+                    : Object.keys(user.technologies).find(tech => (
+                        // Returns true if the user have one o many selectTechToSearch in your technologies and have a levelOfKnowledge != -1
+                        nextProps.selectTechToSearch.includes(tech) && user.technologies[tech].levelOfKnowledge.value !== -1)
+                    )
+            ));
         result = _.orderBy(result, ['displayName', 'position'], 'asc');
 
         this.setState({usersFilter: result});
@@ -32,7 +39,6 @@ class EmployeesData extends Component {
 
     techLabel(uid, user) {
         const {technologies} = this.props;
-        let techCopy = Object.assign({},technologies)
         let techs = {};
         technologies.map((val, index) => {
             techs = {...techs, ...val};
@@ -62,14 +68,15 @@ class EmployeesData extends Component {
 
                 <Segment>
                     {usersFilter.map((item, index) => <Popup key={item + index}
-                            trigger={
-                                <Label as='a' color={index % 2 ? 'orange' : 'teal'} image key={item + index}>
-                                    <img src={item.photoURL}/>
-                                    {item.displayName || item.email}
-                                    <Label.Detail>{item.position}</Label.Detail>
-                                </Label>
-                            }
-                            key={item + index}
+                                                             trigger={
+                                                                 <Label as='a' color={index % 2 ? 'orange' : 'teal'}
+                                                                        image key={item + index}>
+                                                                     <img src={item.photoURL}/>
+                                                                     {item.displayName || item.email}
+                                                                     <Label.Detail>{item.position}</Label.Detail>
+                                                                 </Label>
+                                                             }
+                                                             key={item + index}
                         >
                             <Popup.Header>Details</Popup.Header>
                             <Popup.Content>
