@@ -29,7 +29,7 @@ class EmployeesData extends Component {
                     ? null
                     : Object.keys(user.technologies).find(tech => (
                         // Returns true if the user have one o many selectTechToSearch in your technologies and have a levelOfKnowledge != -1
-                        nextProps.selectTechToSearch.includes(tech) && user.technologies[tech].levelOfKnowledge.value !== -1)
+                        nextProps.selectTechToSearch.includes(tech) && user.technologies[tech].levelOfKnowledge && user.technologies[tech].levelOfKnowledge.value !== -1)
                     )
             ));
         result = _.orderBy(result, ['displayName', 'position'], 'asc');
