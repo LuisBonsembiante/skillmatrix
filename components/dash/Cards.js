@@ -11,6 +11,13 @@ class Cards extends Component {
         technologies: []
     };
 
+    style = {
+        borderRadius: 0,
+        opacity: 0.7,
+        padding: '2em',
+    }
+
+
     componentDidMount() {
         const {skillSelected} = this.props;
         this.getSkillTechnologies(skillSelected)
@@ -124,9 +131,17 @@ class Cards extends Component {
                             <Card.Meta>
                                 <span className='date'>{item.meta}</span>
                             </Card.Meta>
-                            <Card.Description style={{minHeight: '75px'}}>
+                            <Card.Description style={{minHeight: '90px'}}>
                                 {item.description.slice(0, 185)}
-                                {(item.description.length > 185) ? ' ...' : '' }
+                                {(item.description.length > 185) ?
+                                    <Popup style={this.style}
+                                           inverted
+                                           trigger={
+                                               <p style={{color: 'blue'}}>
+                                                   ...Ver mas
+                                               </p>
+                                           } content={item.description}/>
+                                    : ''}
                             </Card.Description>
                             <br/>
                             {item.levelOfKnowledge &&

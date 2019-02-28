@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Accordion, Button, Form, Grid, Icon, Table} from 'semantic-ui-react';
+import {Accordion, Button, Form, Grid, Icon, Popup, Table} from 'semantic-ui-react';
 import {Router} from "../../routes";
 import {technologiesCreate, technologiesDelete} from "../../redux/actions";
 import {connect} from "react-redux";
@@ -22,6 +22,12 @@ class TechRow extends Component {
         openModalUpdateTechnology: false,
         uidTech: '',
         val: null
+    }
+
+    style = {
+        borderRadius: 0,
+        opacity: 0.7,
+        padding: '2em',
     }
 
 
@@ -82,7 +88,18 @@ class TechRow extends Component {
 
                                                 <Table.Row key={uid}>
                                                     <Table.Cell>{val.name}</Table.Cell>
-                                                    <Table.Cell>{val.description.slice(0, 80) + '...'}</Table.Cell>
+                                                    <Table.Cell>
+                                                        {val.description.slice(0, 80)}
+                                                        {(val.description.length > 80) ?
+                                                            <Popup style={this.style}
+                                                                   inverted
+                                                                   trigger={
+                                                                       <p style={{color: 'blue'}}>
+                                                                           ...Ver mas
+                                                                       </p>
+                                                                   } content={val.description}/>
+                                                            :''}
+                                                    </Table.Cell>
                                                     <Table.Cell>{val.meta}</Table.Cell>
                                                     <Table.Cell textAlign='right'>
                                                         <Button.Group>
@@ -160,7 +177,16 @@ class TechRow extends Component {
                         <p>{skill.name}</p>
                     </Grid.Column>
                     <Grid.Column>
-                        <p>{skill.description.slice(0, 80) + '...'}</p>
+                        {skill.description.slice(0, 80)}
+                        {(skill.description.length > 80) ?
+                        <Popup style={this.style}
+                               inverted
+                               trigger={
+                                   <p style={{color: 'blue'}}>
+                                       ...Ver mas
+                                   </p>
+                               } content={skill.description}/>
+                        :''}
                     </Grid.Column>
                     <Grid.Column width={2}>
                         <Button loading={this.state.loading} color="green" basic

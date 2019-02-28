@@ -117,7 +117,7 @@ class TechnologyModal extends Component {
                         </Form.Group>
                         <Message error header="Oops!" content={this.state.errorMessage}/>
                     </Form>
-                    
+
                 </Modal.Content>
                 <Modal.Actions>
                     <Button loading={this.state.loading} color="teal" primary onClick={() => this.onAdd()}>

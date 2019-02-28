@@ -8,7 +8,7 @@ class _profileInfo extends Component {
     state = {
         displayName: this.props.user.displayName,
         position: this.props.user.position,
-        yearsOfExperience: this.props.user.yearsOfExperience,
+        yearsOfExperience: this.props.userData.yearsOfExperience || '',
         email: this.props.user.email,
         photoURL: this.props.user.photoURL
     };
@@ -19,7 +19,7 @@ class _profileInfo extends Component {
             this.setState({
                 displayName: nextProps.userData ? nextProps.userData.displayName || undefined : nextProps.user.displayName || undefined,
                 position: nextProps.user ? nextProps.user.position : '',
-                yearsOfExperience: nextProps.user ? nextProps.user.yearsOfExperience : undefined,
+                yearsOfExperience: nextProps.userData ? nextProps.userData.yearsOfExperience : '',
                 email: nextProps.user.email,
                 photoURL: nextProps.user.photoURL
             })
@@ -99,10 +99,18 @@ class _profileInfo extends Component {
                                     </datalist>
                                     <Form.Input
                                         label='Experience'
+                                        list='experience'
                                         placeholder='Years of experience...'
                                         value={yearsOfExperience}
                                         onChange={(e, {value}) => this.setYearsOfExperience(value)}
                                     />
+                                    <datalist id='experience'>
+                                        <option value='<1 Year'/>
+                                        <option value='1+ Year'/>
+                                        <option value='3+ Years'/>
+                                        <option value='5+ Years'/>
+                                        <option value='10+ Years'/>
+                                    </datalist>
                                 </Form.Group>
 
                                 <Button color='blue' basic loading={this.props.loading}
