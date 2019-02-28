@@ -99,18 +99,10 @@ class _profileInfo extends Component {
                                     </datalist>
                                     <Form.Input
                                         label='Experience'
-                                        list='experience'
                                         placeholder='Years of experience...'
                                         value={yearsOfExperience}
                                         onChange={(e, {value}) => this.setYearsOfExperience(value)}
                                     />
-                                    <datalist id='experience'>
-                                        <option value='<1 Year'/>
-                                        <option value='1+ Year'/>
-                                        <option value='3+ Years'/>
-                                        <option value='5+ Years'/>
-                                        <option value='10+ Years'/>
-                                    </datalist>
                                 </Form.Group>
 
                                 <Button color='blue' basic loading={this.props.loading}
