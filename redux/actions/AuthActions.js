@@ -28,7 +28,6 @@ export const loginUser = (email, password) => {
                             folderHRMID: r.data.user_id,
                             photoURL: ''
                         };
-                        sessionStorage.setItem('tokenJWT', r.data.token);
                         const headers = {
                             'Content-Type': 'application/json',
                             'X-Requested-With': 'XMLHttpRequest',
@@ -104,6 +103,7 @@ export const logoutUser = () => {
     return (dispatch) => {
         dispatch({type: LOGOUT_USER});
         dispatch({type: CLEAN_DATA});
+        sessionStorage.clear();
         Router.pushRoute('/login')
     }
 
@@ -116,10 +116,12 @@ export const cleanError = () => {
 };
 
 
-const loginWithIntranet = (token, user) => {
+export const loginWithIntranet = (token, user) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_INTRANET, payload: {token, user,}});
         dispatch(userDataUpdate({email: user.email, photoURL: user.photoURL}));
+        sessionStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('token', token);
         Router.pushRoute('/')
     };
 };
