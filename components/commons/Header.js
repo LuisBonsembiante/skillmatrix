@@ -10,11 +10,17 @@ const _header = (props) => {
 
     const ROUTES = {
         home: '/',
-        employees: '/employees'
+        employees: '/employees',
+        ethereum: '/ethereum'
     };
 
 
     const handleItemClick = (e, {name}) => Router.pushRoute(ROUTES[name.toLowerCase()]);
+
+    const enabled = () => {
+
+        return props.user.roles.includes('ethereum');
+    }
 
 
     return (
@@ -23,6 +29,11 @@ const _header = (props) => {
                        onClick={handleItemClick} name='Home' />
 
             <Menu.Menu position="right">
+                {
+                    props.user.roles && enabled() ?
+                    <Menu.Item active={ROUTES.ethereum === props.router.asPath}
+                           onClick={handleItemClick} name='Ethereum' /> : ''
+                }
                 <Menu.Item active={ROUTES.employees === props.router.asPath}
                            onClick={handleItemClick} name='Employees' />
 
@@ -43,7 +54,11 @@ const _header = (props) => {
 
 
 const mapStateToProps = (state) => {
-    return {...state.router}
+
+    return {
+        ...state.router,
+        user: state.auth.user
+    }
 }
 
 export default withRouter(connect(mapStateToProps, {skillCreate, logoutUser})(_header));

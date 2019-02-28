@@ -27,6 +27,7 @@ export const loginUser = (email, password) => {
                             displayName: r.data.user_display_name,
                             folderHRMID: r.data.user_id,
                             photoURL: ''
+
                         };
                         const headers = {
                             'Content-Type': 'application/json',
@@ -36,10 +37,12 @@ export const loginUser = (email, password) => {
 
 
                         axios.post(getUserByEmail, userResult, {headers: headers}).then(async (response) => {
+
                                 const data = response.data;
                                 userResult.position = data.user.position;
                                 userResult.photoURL = data.user.photoURL;
                                 userResult.uid = data.uid;
+                                userResult.roles = response.data.user.roles;
 
                                 if (!data.user.photoURL) {
 
