@@ -17,7 +17,7 @@ class EthereumIndex extends Component {
     }
 
     renderEmployees() {
-        debugger
+
         return (
             <Card.Group itemsPerRow={3} stackable>
                 {

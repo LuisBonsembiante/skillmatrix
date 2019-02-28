@@ -49,7 +49,7 @@ class MainDash extends Component {
 
             const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
             const isMatch = result => re.test(result.name) || Object.values(result.technologies).some( (tech) => re.test(tech.name))
-
+skillsFetch,
             this.setState({
                 isLoading: false,
                 results: _.filter(skills, isMatch),
