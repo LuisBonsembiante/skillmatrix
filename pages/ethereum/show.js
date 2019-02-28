@@ -3,16 +3,21 @@ import Layout from '../../components/commons/Layout'
 import {Link, Router} from '../../routes';
 import _ from "lodash";
 import {Card, Feed, Icon} from "semantic-ui-react";
+import career from '../../ethereum/career'
 
 export default class TechnoShow extends Component {
 
     static async getInitialProps(props) {
+
         const uid = props.query.key;
         const {fireBase} = props.reduxStore.getState();
+
+        const career = await career.methods.getTokenByEmployee(uid).call();
 
         return {
             uid: uid,
             users: fireBase.users,
+            career: career,
             technologies: !fireBase.skills ? [] : _.compact(fireBase.skills.map((skill) => skill.technologies)),
         };
     }
