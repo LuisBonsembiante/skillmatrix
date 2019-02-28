@@ -4,26 +4,40 @@ import {Link, Router} from '../../routes';
 import _ from "lodash";
 import {Card, Feed, Icon} from "semantic-ui-react";
 import career from '../../ethereum/career'
+import web3 from "../../ethereum/web3";
+import CareerManager from "../../ethereum/build/Stage.solCareerManager";
 
 export default class TechnoShow extends Component {
 
     static async getInitialProps(props) {
-        debugger
+
         const uid = props.query.key;
         const {fireBase} = props.reduxStore.getState();
 
-        const career = await career.methods.getTokenByEmployee(uid).call();
-
-        return {
+       return {
             uid: uid,
             users: fireBase.users,
-            career: career,
             technologies: !fireBase.skills ? [] : _.compact(fireBase.skills.map((skill) => skill.technologies)),
         };
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
 
+    }
+
+    async componentDidMount() {
+        debugger
+        const instance = new web3.eth.Contract(
+            JSON.parse(CareerManager.interface),
+            '0xDeE6464FE58DbEd8244d991eFB69AF549E503Dd6'
+        );
+
+        debugger
+        const accounts = await web3.eth.getAccounts();
+        const career = await instance.methods.getTokenByEmployee(this.props.uid.toString()).call()
+
+        console.log(career);
+        debugger
     }
 
     renderCards() {
