@@ -1,3 +1,7 @@
+pragma solidity ^0.4.25;
+
+import "./Ownable.sol";
+
 contract Stage is Ownable {
 
     mapping(uint => uint[]) public tokenToHitos;
@@ -21,12 +25,12 @@ contract Stage is Ownable {
     }
 
     // Retorna el estado de un tipo de hito, relacionado al token
-    function getStateOfToken(uint _tokeId, uint _hitoType) external onlyOwner returns (Hito) {
+    function getStateOfToken(uint _tokeId, uint _hitoType) external onlyOwner returns (uint, bool) {
         if(getTokenToHitosLength(_toke_id) == 0 ) {
             registerToken(_toke_id);
         }
         uint hitoId = tokenToHitos[_tokeId][_hitoType];
-        return hitoList[hitoId];
+        return (hitoList[hitoId].tipo, hitoList[hitoId].aprovado) ;
     }
 
     // Agrega un nuevo hito al stage

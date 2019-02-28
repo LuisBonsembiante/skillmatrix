@@ -3,12 +3,7 @@ pragma solidity ^0.4.25;
 import "./Ownable.sol";
 
 contract StageInterface {
-    function getStateOfToken(uint _tokeId, uint _hitoType) external onlyOwner returns (Hito);
-
-    struct Hito {
-        uint tipo; // Referencia a un usuario
-        bool aprovado; // Referencia a una tecnologia
-    }
+    function getStateOfToken(uint _tokeId, uint _hitoType) external returns (uint, bool);
 }
 
 
@@ -76,7 +71,7 @@ contract CareerManager is Ownable {
     }
 
     // Retorna el hito relacionado a X Stage de un token
-    function getStateOfToken(uint _tokeId, uint _stage, uint _hitoType) external returns (Hito) {
+    function getStateOfToken(uint _tokeId, uint _stage, uint _hitoType) external returns (uint, bool) {
         if (_stage == 1) {
             return stage1.getStateOfToken(_tokeId, _hitoType);
         } else if (_stage == 2) {
