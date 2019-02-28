@@ -137,9 +137,9 @@ class Cards extends Component {
                                     <Popup style={this.style}
                                            inverted
                                            trigger={
-                                               <p style={{color: 'blue'}}>
+                                               <span style={{color: 'blue'}}>
                                                    ...Ver mas
-                                               </p>
+                                               </span>
                                            } content={item.description}/>
                                     : ''}
                             </Card.Description>

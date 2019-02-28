@@ -94,9 +94,9 @@ class TechRow extends Component {
                                                             <Popup style={this.style}
                                                                    inverted
                                                                    trigger={
-                                                                       <p style={{color: 'blue'}}>
+                                                                       <span style={{color: 'blue'}}>
                                                                            ...Ver mas
-                                                                       </p>
+                                                                       </span>
                                                                    } content={val.description}/>
                                                             :''}
                                                     </Table.Cell>
@@ -182,9 +182,9 @@ class TechRow extends Component {
                         <Popup style={this.style}
                                inverted
                                trigger={
-                                   <p style={{color: 'blue'}}>
+                                   <span style={{color: 'blue'}}>
                                        ...Ver mas
-                                   </p>
+                                   </span>
                                } content={skill.description}/>
                         :''}
                     </Grid.Column>
