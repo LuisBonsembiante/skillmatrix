@@ -1,9 +1,9 @@
 import web3 from './web3';
-import CareerManager from  './build/CareerManager.json';
+import CareerManager from  './build/CareerManager.solStage.json';
 
 const instance = new web3.eth.Contract(
     JSON.parse(CareerManager.interface),
-    '0x61680702afd82C2AcC60FD468ea78C351D807960'
+    '0xDeE6464FE58DbEd8244d991eFB69AF549E503Dd6'
 );
 
 export default instance;

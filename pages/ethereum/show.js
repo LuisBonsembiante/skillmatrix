@@ -8,7 +8,7 @@ import career from '../../ethereum/career'
 export default class TechnoShow extends Component {
 
     static async getInitialProps(props) {
-
+        debugger
         const uid = props.query.key;
         const {fireBase} = props.reduxStore.getState();
 
