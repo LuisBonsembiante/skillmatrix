@@ -44,7 +44,7 @@ class EmployeesData extends Component {
             techs = {...techs, ...val};
         });
         const tech = user.technologies[uid];
-        if (!tech) return null;
+        if (!tech || !tech.levelOfKnowledge) return null;
         return (
             <>
                 <Divider/>
