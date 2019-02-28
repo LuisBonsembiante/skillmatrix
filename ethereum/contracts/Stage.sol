@@ -26,8 +26,8 @@ contract Stage is Ownable {
 
     // Retorna el estado de un tipo de hito, relacionado al token
     function getStateOfToken(uint _tokeId, uint _hitoType) external onlyOwner returns (uint, bool) {
-        if(getTokenToHitosLength(_toke_id) == 0 ) {
-            registerToken(_toke_id);
+        if(getTokenToHitosLength(_tokeId) == 0 ) {
+            registerToken(_tokeId);
         }
         uint hitoId = tokenToHitos[_tokeId][_hitoType];
         return (hitoList[hitoId].tipo, hitoList[hitoId].aprovado) ;
