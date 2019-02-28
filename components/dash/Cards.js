@@ -113,7 +113,7 @@ class Cards extends Component {
         });
         this.props.userTechnologyUpdate({
             validated: technologies[index].validated || false,
-            validator: technologies[index].validator || null,
+            validator: technologies[index].validator || {text: 'Level of knowledge', value: -1, color: 'grey'},
             levelOfKnowledge: technologies[index].levelOfKnowledge || null,
             wantToLearn: value
         }, technologies[index].uid)

@@ -1,6 +1,7 @@
 import {Router} from "../../../routes";
 import {Modal} from 'semantic-ui-react'
 import {Component} from "react";
+import React from "react";
 
 class ModalDefault extends Component {
 
