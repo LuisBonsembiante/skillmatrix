@@ -124,8 +124,16 @@ const _login = (props) => {
 
 
                     </Form>
+
+
                 </Segment>
+
+                <div width="100%" textAlign="center" align="center" >
+                    <span style={{color: 'blue',paddingLeft:'10px'}}>Powered by Blockchain</span>
+                </div>
+
             </Grid.Column>
+
 
         </Grid>
     );

@@ -43,8 +43,11 @@ export default (props) => {
             </Container>
             {!hideHeader &&
             <Container onMouseEnter={() => onShowConffeti()}>
+
                 <div style={{float: 'right', marginTop: '2vh'}}>
+
                     <Confetti style={{zIndex: '100'}} active={ showConffeti } config={ config }/>
+
                     <Label color='teal'> Created by: </Label>
                     <Label as='a' target="_blank" href='https://github.com/FedeMadoery' basic image>
                         <img src='https://avatars0.githubusercontent.com/u/21246763?s=460&v=4'/>
