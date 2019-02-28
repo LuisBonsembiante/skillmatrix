@@ -18,8 +18,8 @@ class _profileInfo extends Component {
         if (nextProps.userData && (!userData || userData.position !== nextProps.userData.position)) {
             this.setState({
                 displayName: nextProps.userData ? nextProps.userData.displayName || undefined : nextProps.user.displayName || undefined,
-                position: nextProps.userData ? nextProps.userData.position : '',
-                yearsOfExperience: nextProps.userData ? nextProps.userData.yearsOfExperience : undefined,
+                position: nextProps.user ? nextProps.user.position : '',
+                yearsOfExperience: nextProps.user ? nextProps.user.yearsOfExperience : undefined,
                 email: nextProps.user.email,
                 photoURL: nextProps.user.photoURL
             })
@@ -29,7 +29,7 @@ class _profileInfo extends Component {
     updateUserData = () => {
         const {displayName, position, yearsOfExperience, email} = this.state;
         const {photoURL} = this.props.user;
-        this.props.userDataUpdate({displayName, position, yearsOfExperience, email, photoURL});
+        this.props.userDataUpdate({displayName: displayName || null, position: position || null, yearsOfExperience: yearsOfExperience || null, email, photoURL});
     };
 
     positionItems() {
@@ -105,7 +105,9 @@ class _profileInfo extends Component {
                                         onChange={(e, {value}) => this.setYearsOfExperience(value)}
                                     />
                                     <datalist id='experience'>
-                                        <option value='1 Year'/>
+                                        <option value='<1 Year'/>
+                                        <option value='1+ Year'/>
+                                        <option value='3+ Years'/>
                                         <option value='5+ Years'/>
                                         <option value='10+ Years'/>
                                     </datalist>
