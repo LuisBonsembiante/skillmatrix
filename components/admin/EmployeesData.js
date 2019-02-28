@@ -7,7 +7,7 @@ import {Table} from "semantic-ui-react/dist/commonjs/collections/Table";
 import _ from 'lodash';
 import {Card} from "semantic-ui-react/dist/commonjs/views/Card";
 
-
+Card
 class EmployeesData extends Component {
 
     state = {

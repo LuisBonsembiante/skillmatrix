@@ -6,6 +6,7 @@ routes
     .add('/skill/index', '/skill/index')
     .add('/employess/index', '/employess/index')
     .add('/ethereum/index', '/ethereum/index')
+    .add('/ethereum/:key', '/ethereum/show')
 // .add('/root/:dimaic', '/root/view')
 
 
