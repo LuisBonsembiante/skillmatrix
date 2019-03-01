@@ -57,7 +57,7 @@ contract CareerManager is Ownable {
     }
 
     // Retorna la lista de IDs de tokens, pertenecientes a un empleado
-    function getTokenByEmployee(string _empleadoUid) external view onlyOwner returns (uint[]) {
+    function getTokenByEmployee(string _empleadoUid) external view returns (uint[]) {
         bytes32 _empleado_keccak256_uid = keccak256(abi.encodePacked(_empleadoUid));
         uint[] memory result = new uint[](ownerTokenCount[_empleado_keccak256_uid]);
         uint counter = 0;

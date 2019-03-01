@@ -5,7 +5,7 @@ import _ from "lodash";
 import {Card, Feed, Icon} from "semantic-ui-react";
 import career from '../../ethereum/career'
 import web3 from "../../ethereum/web3";
-import CareerManager from "../../ethereum/build/Stage.solCareerManager";
+import CareerManager from "../../ethereum/build/CareerManager.solCareerManager.json";
 
 export default class TechnoShow extends Component {
 
@@ -13,6 +13,21 @@ export default class TechnoShow extends Component {
 
         const uid = props.query.key;
         const {fireBase} = props.reduxStore.getState();
+
+        const instance = new web3.eth.Contract(
+            JSON.parse(CareerManager.interface),
+            '0x89f2347f605E1850a6131c308A678ae611004Fb1'
+        );
+
+
+        const accounts = await web3.eth.getAccounts();
+
+        const career = await instance.methods.getTokenByEmployee(uid.toString()).call()
+
+        console.log(career);
+
+
+
 
        return {
             uid: uid,
@@ -26,18 +41,8 @@ export default class TechnoShow extends Component {
     }
 
     async componentDidMount() {
-        debugger
-        const instance = new web3.eth.Contract(
-            JSON.parse(CareerManager.interface),
-            '0xDeE6464FE58DbEd8244d991eFB69AF549E503Dd6'
-        );
 
-        debugger
-        const accounts = await web3.eth.getAccounts();
-        const career = await instance.methods.getTokenByEmployee(this.props.uid.toString()).call()
 
-        console.log(career);
-        debugger
     }
 
     renderCards() {

@@ -15,8 +15,8 @@ const contractPath3 = path.resolve(basePath, 'contracts', 'Ownable.sol');
 
 var input = {
     'Ownable.sol': fs.readFileSync(contractPath3, 'utf8'),
-    'CareerManager.sol': fs.readFileSync(contractPath2, 'utf8'),
-    'Stage.sol': fs.readFileSync(contractPath1, 'utf8')
+    'CareerManager.sol': fs.readFileSync(contractPath1, 'utf8'),
+    'Stage.sol': fs.readFileSync(contractPath2, 'utf8')
 };
 
 const output = solc.compile({sources: input}, 1).contracts;
