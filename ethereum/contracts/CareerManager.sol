@@ -3,12 +3,7 @@ pragma solidity ^0.4.25;
 import "./Ownable.sol";
 
 contract StageInterface {
-    function getStateOfToken(uint _tokeId, uint _hitoType) external onlyOwner returns (Hito);
-
-    struct Hito {
-        uint tipo; // Referencia a un usuario
-        bool aprovado; // Referencia a una tecnologia
-    }
+    function getStateOfToken(uint _tokeId, uint _hitoType) external returns (uint, bool);
 }
 
 
@@ -62,7 +57,7 @@ contract CareerManager is Ownable {
     }
 
     // Retorna la lista de IDs de tokens, pertenecientes a un empleado
-    function getTokenByEmployee(string _empleadoUid) external view onlyOwner returns (uint[]) {
+    function getTokenByEmployee(string _empleadoUid) external view returns (uint[]) {
         bytes32 _empleado_keccak256_uid = keccak256(abi.encodePacked(_empleadoUid));
         uint[] memory result = new uint[](ownerTokenCount[_empleado_keccak256_uid]);
         uint counter = 0;
@@ -76,7 +71,7 @@ contract CareerManager is Ownable {
     }
 
     // Retorna el hito relacionado a X Stage de un token
-    function getStateOfToken(uint _tokeId, uint _stage, uint _hitoType) external returns (Hito) {
+    function getStateOfToken(uint _tokeId, uint _stage, uint _hitoType) external returns (uint, bool) {
         if (_stage == 1) {
             return stage1.getStateOfToken(_tokeId, _hitoType);
         } else if (_stage == 2) {
@@ -92,63 +87,4 @@ contract CareerManager is Ownable {
 }
 
 
-contract Stage is Ownable {
 
-    mapping(uint => uint[]) public tokenToHitos;
-    mapping(uint => string) public hitoType;
-
-    struct Hito {
-        uint tipo; // Referencia a un usuario
-        bool aprovado; // Referencia a una tecnologia
-    }
-
-    uint hitosCount = 0;
-
-    Hito[] public hitoList;
-
-    // Registra un nuevo token, y le asigna todos los hitos como no aprovados
-    function registerToken(uint _tokeId) internal {
-        for (uint i = 1; i <= hitosCount; i++) {
-            uint hitoId = hitoList.push(Hito(i, false)) - 1;
-            tokenToHitos[_tokeId].push(hitoId);
-        }
-    }
-
-    // Retorna el estado de un tipo de hito, relacionado al token
-    function getStateOfToken(uint _tokeId, uint _hitoType) external onlyOwner returns (Hito) {
-        if(getTokenToHitosLength(_toke_id) == 0 ) {
-            registerToken(_toke_id);
-        }
-        uint hitoId = tokenToHitos[_tokeId][_hitoType];
-        return hitoList[hitoId];
-    }
-
-    // Agrega un nuevo hito al stage
-    function addHito(string _tipo) external onlyOwner {
-        hitosCount++;
-        hitoType[hitosCount] = _tipo;
-    }
-
-    // Cambia el estado de un hito, relacionado a un token
-    function changeHitoState(uint _tokeId, uint _hitoType, bool _state) external onlyOwner {
-        uint hitoId = tokenToHitos[_tokeId][_hitoType];
-        hitoList[hitoId].aprovado = _state;
-    }
-
-    // Retorna la lista de ID de los hitos relacionados al token
-    function getTokenToHitos(uint _tokeId) public view onlyOwner returns (uint[]) {
-        return tokenToHitos[_tokeId];
-    }
-
-    // Retorna el largo de la lista de ID de los hitos relacionados al token
-    function getTokenToHitosLength(uint _tokeId) public view onlyOwner returns (uint) {
-        return tokenToHitos[_tokeId].length;
-    }
-
-    // Retorna un tipo de hito relacionado al token
-    function getTokenToHitosValue(uint _tokeId, uint _hitoType) public view onlyOwner returns (uint) {
-        return tokenToHitos[_tokeId][_hitoType];
-    }
-
-
-}

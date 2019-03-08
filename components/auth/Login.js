@@ -128,7 +128,7 @@ const _login = (props) => {
 
                 </Segment>
 
-                <div width="100%" textAlign="center" align="center" >
+                <div width="100%"  align="center" >
                     <span style={{color: 'blue',paddingLeft:'10px'}}>Powered by Blockchain</span>
                 </div>
 
