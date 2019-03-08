@@ -32,7 +32,7 @@ class Cards extends Component {
             ? _.map(_skillSelected.technologies,
                 (item, uid) => {
                     if (userTechnologyData[uid]) return {...item, uid, ...userTechnologyData[uid]};
-                    return {...item, uid, levelOfKnowledge: {}, wantToLearn: false}
+                    return {...item, uid, levelOfKnowledge: {text: 'Level of knowledge', value: -1, color: 'grey'}, wantToLearn: false}
                 })
             : [{name: '', meta: '', description: 'Technologies not found'}];
 
@@ -114,7 +114,7 @@ class Cards extends Component {
         this.props.userTechnologyUpdate({
             validated: technologies[index].validated || false,
             validator: technologies[index].validator || null,
-            levelOfKnowledge: technologies[index].levelOfKnowledge || null,
+            levelOfKnowledge: technologies[index].levelOfKnowledge || {text: 'Level of knowledge', value: -1, color: 'grey'},
             wantToLearn: value
         }, technologies[index].uid)
     }
