@@ -38,7 +38,7 @@ const _header = (props) => {
                            onClick={handleItemClick} name='Employees' />
 
                 <Link route="/skill/index">
-                    <a className="item">+</a>
+                    <a className="item">Administration</a>
                 </Link>
 
                 <Menu.Item active={ROUTES.employess === props.router.asPath}
