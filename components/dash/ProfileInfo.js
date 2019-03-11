@@ -7,7 +7,7 @@ class _profileInfo extends Component {
 
     state = {
         displayName: this.props.user.displayName,
-        position: this.props.user.position,
+        position: this.props.userData.position,
         yearsOfExperience:this.props.userData && this.props.userData.yearsOfExperience || '',
         email: this.props.user.email,
         photoURL: this.props.user.photoURL
@@ -18,7 +18,7 @@ class _profileInfo extends Component {
         if (nextProps.userData && (!userData || userData.position !== nextProps.userData.position)) {
             this.setState({
                 displayName: nextProps.userData ? nextProps.userData.displayName || undefined : nextProps.user.displayName || undefined,
-                position: nextProps.user ? nextProps.user.position : '',
+                position: nextProps.user ? nextProps.userData.position : '',
                 yearsOfExperience: nextProps.userData ? nextProps.userData.yearsOfExperience : '',
                 email: nextProps.user.email,
                 photoURL: nextProps.user.photoURL
