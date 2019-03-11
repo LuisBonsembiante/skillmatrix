@@ -5,7 +5,7 @@ import _ from "lodash";
 import {Card, Feed, Icon} from "semantic-ui-react";
 import career from '../../ethereum/career'
 import web3 from "../../ethereum/web3";
-import CareerManager from "../../ethereum/build/CareerManager.solCareerManager.json";
+//import CareerManager from "../../ethereum/build/CareerManager.solCareerManager.json";
 
 export default class TechnoShow extends Component {
 
