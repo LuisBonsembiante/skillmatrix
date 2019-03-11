@@ -18,7 +18,7 @@ class _profileInfo extends Component {
         if (nextProps.userData && (!userData || userData.position !== nextProps.userData.position)) {
             this.setState({
                 displayName: nextProps.userData ? nextProps.userData.displayName || undefined : nextProps.user.displayName || undefined,
-                position: nextProps.user ? nextProps.userData.position : '',
+                position: nextProps.userData ? nextProps.userData.position : '',
                 yearsOfExperience: nextProps.userData ? nextProps.userData.yearsOfExperience : '',
                 email: nextProps.user.email,
                 photoURL: nextProps.user.photoURL
