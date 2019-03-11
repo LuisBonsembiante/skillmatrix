@@ -7,7 +7,7 @@ class _profileInfo extends Component {
 
     state = {
         displayName: this.props.user.displayName,
-        position: this.props.userData.position,
+        position: this.props.user.position,
         yearsOfExperience:this.props.userData && this.props.userData.yearsOfExperience || '',
         email: this.props.user.email,
         photoURL: this.props.user.photoURL
