@@ -12,7 +12,7 @@ const _login = (props) => {
     const [alert, showAlert] = useState(false);
     const [error, setError] = useState({errorCode: 0, errorMessage: ''});
 
-    if(error.errorMessage === '' && error.errorMessage !== props.errorLogin)
+    if (error.errorMessage === '' && error.errorMessage !== props.errorLogin)
         setError({errorCode: 403, errorMessage: props.errorLogin});
 
     const handlerGitHubLogin = () => {
@@ -36,6 +36,8 @@ const _login = (props) => {
             const token = result.credential.accessToken;
             // The signed-in user info.
             const user = result.user;
+            const isNew = result.additionalUserInfo.isNewUser;
+
             loginSuccess(token, user);
         }).catch(function (error) {
             // Handle Errors here.
@@ -89,7 +91,7 @@ const _login = (props) => {
                 </TransitionablePortal>
 
                 <Segment>
-                    <Form size="large" error={error.errorCode > 0}>
+                    {/*<Form size="large" error={error.errorCode > 0}>
                         <Form.Field>
                             <Input
                                 fluid
@@ -124,16 +126,42 @@ const _login = (props) => {
 
 
                     </Form>
+*/}
 
+                    <Grid centered columns={1}>
+                        <Grid.Column>
+                            <Message warning style={{textAlign: 'center'}}>
+                                <Message.Header >You must use GitHub or Google to login!</Message.Header>
+                                <p >Sorry, but in order to use the app you must login, with one of the two available
+                                    methods.</p>
+                            </Message>
+                        </Grid.Column>
+                    </Grid>
+
+                    <br/>
+
+                    <Grid centered columns={3}>
+                        <Grid.Column>
+                            <Button
+                                icon='github' labelPosition='left' color='black' onClick={handlerGitHubLogin}
+                                label={{as: 'button', basic: true, content: 'Login with'}}
+                            />
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Button
+                                icon='google' labelPosition='left' color='red' onClick={handlerGoogleLogin}
+                                label={{as: 'button', basic: true, content: 'Login with'}}
+                            />
+                        </Grid.Column>
+                    </Grid>
 
                 </Segment>
 
-                <div width="100%"  align="center" >
-                    <span style={{color: 'blue',paddingLeft:'10px'}}>Powered by Blockchain</span>
+                <div width="100%" align="center">
+                    <span style={{color: 'purple', paddingLeft: '10px'}}>Powered by Folder IT</span>
                 </div>
 
             </Grid.Column>
-
 
         </Grid>
     );
