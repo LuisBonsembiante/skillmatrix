@@ -26,23 +26,28 @@ const _header = (props) => {
     return (
         <Menu style={{marginTop: '10px'}} size='small'>
             <Menu.Item active={ROUTES.home === props.router.asPath}
-                       onClick={handleItemClick} name='Home' />
+                       onClick={handleItemClick} name='Home'/>
 
             <Menu.Menu position="right">
                 {
                     props.user.roles && enabled() ?
-                    <Menu.Item active={ROUTES.ethereum === props.router.asPath}
-                           onClick={handleItemClick} name='Ethereum' /> : ''
+                        <Menu.Item active={ROUTES.ethereum === props.router.asPath}
+                                   onClick={handleItemClick} name='Ethereum'/> : ''
                 }
-                <Menu.Item active={ROUTES.employees === props.router.asPath}
-                           onClick={handleItemClick} name='Employees' />
-
-                <Link route="/skill/index">
-                    <a className="item">Administration</a>
-                </Link>
+                {
+                    (props.user.roles && enabled()) && (
+                        <>
+                            <Menu.Item active={ROUTES.employees === props.router.asPath}
+                                       onClick={handleItemClick} name='Employees'/>
+                            < Link route="/skill/index">
+                                <a className="item">Administration</a>
+                            </Link>
+                        </>
+                    )
+                }
 
                 <Menu.Item active={ROUTES.employess === props.router.asPath}
-                           onClick={props.logoutUser} >
+                           onClick={props.logoutUser}>
                     Logout
                     <Icon name='user secret'></Icon>
                 </Menu.Item>
