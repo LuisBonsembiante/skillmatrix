@@ -90,6 +90,8 @@ export const loginWithGitHub = (token, user) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_GITHUB, payload: {token, user}});
         dispatch(userDataUpdate({email: user.email, photoURL: user.photoURL}));
+        sessionStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('tokenGitHub', token);
         Router.pushRoute('/')
     };
 };
@@ -98,6 +100,8 @@ export const loginWithGoogle = (token, user) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_GOOGLE, payload: {token, user}});
         dispatch(userDataUpdate({email: user.email, photoURL: user.photoURL}));
+        sessionStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('tokenGoogle', token);
         Router.pushRoute('/')
     };
 };
