@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Button, Form, Grid, Image} from "semantic-ui-react";
+import {Button, Form, Grid, Image, Message} from "semantic-ui-react";
 import {userDataUpdate} from "../../redux/actions";
 
 class _profileInfo extends Component {
@@ -8,9 +8,10 @@ class _profileInfo extends Component {
     state = {
         displayName: this.props.user.displayName,
         position: this.props.user.position,
-        yearsOfExperience:this.props.userData && this.props.userData.yearsOfExperience || '',
+        yearsOfExperience: this.props.userData && this.props.userData.yearsOfExperience || '',
         email: this.props.user.email,
-        photoURL: this.props.user.photoURL
+        photoURL: this.props.user.photoURL,
+        errorDisplayName: false
     };
 
     componentWillReceiveProps(nextProps, nextContext) {
@@ -29,7 +30,19 @@ class _profileInfo extends Component {
     updateUserData = () => {
         const {displayName, position, yearsOfExperience, email} = this.state;
         const {photoURL} = this.props.user;
-        this.props.userDataUpdate({displayName: displayName || null, position: position || null, yearsOfExperience: yearsOfExperience || null, email, photoURL});
+        if (displayName && email) {
+            this.props.userDataUpdate(
+                {
+                    displayName: displayName,
+                    position: position || null,
+                    yearsOfExperience: yearsOfExperience || null,
+                    email,
+                    photoURL
+                }
+            );
+        } else {
+            this.setState({errorDisplayName: true})
+        }
     };
 
     positionItems() {
@@ -42,6 +55,7 @@ class _profileInfo extends Component {
 
     setDisplayName(value) {
         this.setState({displayName: value});
+        this.setState({errorDisplayName: false})
     }
 
     setPosition(value) {
@@ -80,10 +94,16 @@ class _profileInfo extends Component {
                                         fluid label='Display Name'
                                         placeholder='First & Last Name'
                                         type='text'
+                                        error={this.state.errorDisplayName}
                                         value={displayName}
                                         onChange={(e, {value}) => this.setDisplayName(value)}
                                     />
                                 </Form.Group>
+
+                                {
+                                    this.state.errorDisplayName &&
+                                    <p style={{color:'#9f3a38', marginTop: '-1rem'}}>Please complete your name</p>
+                                }
 
                                 <Form.Group widths='equal'>
                                     <Form.Input

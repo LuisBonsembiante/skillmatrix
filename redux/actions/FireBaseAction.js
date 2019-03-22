@@ -11,7 +11,7 @@ import {
     END_TRANSACTION,
     CLEAN_DATA,
     SELECT_TECH_TO_SEARCH,
-    REMOVE_TECH_TO_SEARCH, RESET_TECH_TO_SEARCH
+    REMOVE_TECH_TO_SEARCH, RESET_TECH_TO_SEARCH, NOT_NEW_USER
 } from "./types";
 import firebase from '../../firebase'
 import "firebase/auth"
@@ -137,6 +137,7 @@ export const userDataUpdate = (data) => {
     return (dispatch, getState) => {
         const currentUser = getState().auth.user;
         dispatch({type: START_TRANSACTION});
+        dispatch({type: NOT_NEW_USER});
         firebase.database().ref(`/users/${currentUser.uid}`)
             .update(data)
             .then(() => {

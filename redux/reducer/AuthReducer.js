@@ -5,7 +5,7 @@ import {
     LOGIN_USER_FAILED,
     LOGIN_USER,
     LOGIN_CLEAN_ERROR,
-    LOGOUT_USER, LOGIN_WITH_GITHUB, LOGIN_WITH_GOOGLE, LOGIN_WITH_INTRANET
+    LOGOUT_USER, LOGIN_WITH_GITHUB, LOGIN_WITH_GOOGLE, LOGIN_WITH_INTRANET, NOT_NEW_USER
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -57,6 +57,8 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, error: 'Authentication Failed.', loading: false};
         case LOGIN_CLEAN_ERROR:
             return {...state, error: '', loading: false};
+        case NOT_NEW_USER:
+            return {...state, isNew: false};
         case LOGOUT_USER:
             return INITIAL_STATE;
 

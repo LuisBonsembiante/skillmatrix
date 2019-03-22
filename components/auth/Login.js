@@ -77,7 +77,7 @@ const _login = (props) => {
 
                 <TransitionablePortal onClose={() => showAlert(false)} open={alert}
                                       transition={{animation: 'fly up', duration: 500}}>
-                    <Grid centered columns={1} style={{position: 'absolute', top: '50%', left: '26.5%'}}>
+                    <Grid centered columns={1} style={{width: 600, height: 450, position: 'absolute', top: '65%', left: '29.5%'}}>
                         <Grid.Column>
                             <Segment color='red'>
                                 <Message warning>

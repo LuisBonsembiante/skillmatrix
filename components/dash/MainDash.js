@@ -7,6 +7,7 @@ import MenuItems from "./MenuItems";
 import {connect} from 'react-redux';
 import {skillsFetch, userDataFetch} from "../../redux/actions";
 import ProfileInfo from "./ProfileInfo";
+import NewUserModal from "./NewUserModal";
 
 class MainDash extends Component {
 
@@ -93,6 +94,7 @@ skillsFetch,
                     {!this.props.loading && <Cards skillSelected={activeItem}/>}
                 </Segment>
 
+                <NewUserModal isNew={this.props.isNewUser}/>
             </div>
         );
     }
@@ -102,7 +104,7 @@ skillsFetch,
 const mapStateToProps = state => {
 
     return {
-        newUser: state.auth.user.isNew,
+        isNewUser: state.auth.isNew,
         skills: state.fireBase.skills,
         loading: !!state.fireBase.loading
     };
