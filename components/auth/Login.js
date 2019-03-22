@@ -131,7 +131,7 @@ const _login = (props) => {
                     <Grid centered columns={1}>
                         <Grid.Column>
                             <Message warning style={{textAlign: 'center'}}>
-                                <Message.Header >For now, you must use GitHub or Google to login!</Message.Header>
+                                <Message.Header >You must use GitHub or Google to login!</Message.Header>
                                 <p >Sorry, but in order to use the app you must login, with one of the two available
                                     methods.</p>
                             </Message>
