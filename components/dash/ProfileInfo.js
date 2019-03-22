@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Button, Form, Grid, Image, Message} from "semantic-ui-react";
-import {userDataUpdate} from "../../redux/actions";
+import {setNotNewUser, userDataUpdate} from "../../redux/actions";
 
 class _profileInfo extends Component {
 
@@ -40,6 +40,7 @@ class _profileInfo extends Component {
                     photoURL
                 }
             );
+            this.props.setNotNewUser();
         } else {
             this.setState({errorDisplayName: true})
         }
@@ -155,4 +156,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, {userDataUpdate})(_profileInfo);
+export default connect(mapStateToProps, {userDataUpdate, setNotNewUser})(_profileInfo);

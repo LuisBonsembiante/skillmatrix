@@ -5,7 +5,7 @@ import {
     LOGIN_WITH_GOOGLE,
     LOGIN_WITH_INTRANET,
     LOGOUT_USER,
-    LOGIN_CLEAN_ERROR
+    LOGIN_CLEAN_ERROR, NOT_NEW_USER
 } from "./types";
 import {Router} from "../../routes";
 import {cleanData, userDataUpdate} from "./FireBaseAction";
@@ -85,8 +85,12 @@ export const loginUser = (email, password) => {
     };
 };
 
-
-export const loginWithGitHub = (token, user, isNew = false) => {
+export const setNotNewUser = () => {
+    return (dispatch) => {
+        dispatch({type: NOT_NEW_USER});
+    }
+};
+export const loginWithGitHub = (token, user, isNew) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_GITHUB, payload: {token, user, isNew}});
         dispatch(userDataUpdate({email: user.email, photoURL: user.photoURL}));
@@ -96,7 +100,7 @@ export const loginWithGitHub = (token, user, isNew = false) => {
     };
 };
 
-export const loginWithGoogle = (token, user, isNew = false) => {
+export const loginWithGoogle = (token, user, isNew) => {
     return (dispatch) => {
         dispatch({type: LOGIN_WITH_GOOGLE, payload: {token, user, isNew}});
         dispatch(userDataUpdate({email: user.email, photoURL: user.photoURL}));

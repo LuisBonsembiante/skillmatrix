@@ -137,7 +137,6 @@ export const userDataUpdate = (data) => {
     return (dispatch, getState) => {
         const currentUser = getState().auth.user;
         dispatch({type: START_TRANSACTION});
-        dispatch({type: NOT_NEW_USER});
         firebase.database().ref(`/users/${currentUser.uid}`)
             .update(data)
             .then(() => {
