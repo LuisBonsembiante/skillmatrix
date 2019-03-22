@@ -9,7 +9,7 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-    user: {email: '', displayName: '', photoURL: '', roles:[]},
+    user: {email: '', displayName: '', photoURL: '', roles:[], isNew: false},
     error: '',
     loading: false,
     gitHubToken: null,

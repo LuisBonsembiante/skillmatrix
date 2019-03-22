@@ -36,8 +36,7 @@ const _login = (props) => {
             const token = result.credential.accessToken;
             // The signed-in user info.
             const user = result.user;
-            const isNew = result.additionalUserInfo.isNewUser;
-
+            user.isNew  = result.additionalUserInfo.isNewUser;
             loginSuccess(token, user);
         }).catch(function (error) {
             // Handle Errors here.
