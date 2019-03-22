@@ -86,9 +86,9 @@ export const loginUser = (email, password) => {
 };
 
 
-export const loginWithGitHub = (token, user) => {
+export const loginWithGitHub = (token, user, isNew = false) => {
     return (dispatch) => {
-        dispatch({type: LOGIN_WITH_GITHUB, payload: {token, user}});
+        dispatch({type: LOGIN_WITH_GITHUB, payload: {token, user, isNew}});
         dispatch(userDataUpdate({email: user.email, photoURL: user.photoURL}));
         sessionStorage.setItem('user', JSON.stringify(user));
         sessionStorage.setItem('tokenGitHub', token);
@@ -96,9 +96,9 @@ export const loginWithGitHub = (token, user) => {
     };
 };
 
-export const loginWithGoogle = (token, user) => {
+export const loginWithGoogle = (token, user, isNew = false) => {
     return (dispatch) => {
-        dispatch({type: LOGIN_WITH_GOOGLE, payload: {token, user}});
+        dispatch({type: LOGIN_WITH_GOOGLE, payload: {token, user, isNew}});
         dispatch(userDataUpdate({email: user.email, photoURL: user.photoURL}));
         sessionStorage.setItem('user', JSON.stringify(user));
         sessionStorage.setItem('tokenGoogle', token);

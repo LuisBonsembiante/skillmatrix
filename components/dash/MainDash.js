@@ -92,6 +92,7 @@ skillsFetch,
                     </Dimmer>
                     {!this.props.loading && <Cards skillSelected={activeItem}/>}
                 </Segment>
+
             </div>
         );
     }
@@ -101,6 +102,7 @@ skillsFetch,
 const mapStateToProps = state => {
 
     return {
+        newUser: state.auth.user.isNew,
         skills: state.fireBase.skills,
         loading: !!state.fireBase.loading
     };
