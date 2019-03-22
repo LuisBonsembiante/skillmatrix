@@ -18,7 +18,7 @@ const _header = (props) => {
     const handleItemClick = (e, {name}) => Router.pushRoute(ROUTES[name.toLowerCase()]);
 
     const enabled = () => {
-        return props.userData.roles.includes('ethereum');
+        return props.userData.roles && props.userData.roles.includes('ethereum');
     }
 
 
