@@ -58,12 +58,10 @@ class EmployeesIndex extends Component {
         return (
 
             <Layout>
-                <div>
-                    <link
-                        rel="stylesheet"
-                        href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
-                    />
-
+                <link
+                    rel="stylesheet"
+                    href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+                />
                     <Menu attached='top' pointing secondary pagination>
                         <MenuItems
                             items={this.props.skills}
@@ -98,9 +96,6 @@ class EmployeesIndex extends Component {
 
                     <Divider/>
                     <EmployeesData selectedTechs={this.state.selectedTechs}/>
-
-                </div>
-
             </Layout>
         );
     }

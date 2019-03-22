@@ -18,8 +18,7 @@ const _header = (props) => {
     const handleItemClick = (e, {name}) => Router.pushRoute(ROUTES[name.toLowerCase()]);
 
     const enabled = () => {
-
-        return props.user.roles.includes('ethereum');
+        return props.userData.roles.includes('ethereum');
     }
 
 
@@ -30,12 +29,12 @@ const _header = (props) => {
 
             <Menu.Menu position="right">
                 {
-                    props.user.roles && enabled() ?
+                    props.userData && enabled() ?
                         <Menu.Item active={ROUTES.ethereum === props.router.asPath}
                                    onClick={handleItemClick} name='Ethereum'/> : ''
                 }
                 {
-                    (props.user.roles && enabled()) && (
+                    (props.userData && enabled()) && (
                         <>
                             <Menu.Item active={ROUTES.employees === props.router.asPath}
                                        onClick={handleItemClick} name='Employees'/>
@@ -62,7 +61,7 @@ const mapStateToProps = (state) => {
 
     return {
         ...state.router,
-        user: state.auth.user
+        userData: state.fireBase.userData
     }
 }
 

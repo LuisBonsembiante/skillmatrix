@@ -3,6 +3,7 @@ import {Container, Label} from 'semantic-ui-react';
 import Header from './Header';
 import Head from 'next/head';
 import Confetti from 'react-dom-confetti';
+import Layout from "../../pages/ethereum";
 
 
 export default (props) => {
