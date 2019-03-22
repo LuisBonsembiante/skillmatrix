@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Form, Grid, Header, Input, Message, Segment, TransitionablePortal} from "semantic-ui-react";
+import {Button, Form, Grid, Header, Image, Input, Message, Segment, TransitionablePortal} from "semantic-ui-react";
 import {Link} from '../../routes';
 import {connect} from "react-redux";
 import {loginUser, loginWithGitHub, loginWithGoogle, cleanError} from "../../redux/actions";
@@ -36,7 +36,7 @@ const _login = (props) => {
             const token = result.credential.accessToken;
             // The signed-in user info.
             const user = result.user;
-            const isNew  = result.additionalUserInfo.isNewUser;
+            const isNew = result.additionalUserInfo.isNewUser;
             loginSuccess(token, user, isNew);
         }).catch(function (error) {
             // Handle Errors here.
@@ -68,11 +68,12 @@ const _login = (props) => {
     }
 
     return (
-        <Grid centered columns={2}>
+        <Grid centered columns={2} style={{marginTop: '20%'}}>
             <Grid.Column>
-                <Header as="h2" textAlign="center">
-                    Login
+                <Header as="h1" textAlign="center">
+                    Skill Matrix
                 </Header>
+
 
                 <TransitionablePortal onClose={() => showAlert(false)} open={alert}
                                       transition={{animation: 'fly up', duration: 500}}>
@@ -130,8 +131,8 @@ const _login = (props) => {
                     <Grid centered columns={1}>
                         <Grid.Column>
                             <Message warning style={{textAlign: 'center'}}>
-                                <Message.Header >You must use GitHub or Google to login!</Message.Header>
-                                <p >Sorry, but in order to use the app you must login, with one of the two available
+                                <Message.Header>You should use GitHub or Google to login.</Message.Header>
+                                <p>Sorry, but in order to use the app you must login, with one of the two available
                                     methods.</p>
                             </Message>
                         </Grid.Column>
@@ -156,10 +157,14 @@ const _login = (props) => {
 
                 </Segment>
 
-                <div width="100%" align="center">
-                    <span style={{color: 'purple', paddingLeft: '10px'}}>Powered by Folder IT</span>
-                </div>
-
+                <Grid centered columns={2}>
+                    <Grid.Column>
+                        <div width="100%" align="center">
+                            <span style={{color: 'purple', paddingLeft: '10px'}}>Powered by</span>
+                        </div>
+                        <Image src='../../static/images/logo.png' size='medium'/>
+                    </Grid.Column>
+                </Grid>
             </Grid.Column>
 
         </Grid>
