@@ -9,8 +9,9 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-    user: {email: '', displayName: '', photoURL: '', roles:[], isNew: false},
+    user: {email: '', displayName: '', photoURL: '', roles: []},
     error: '',
+    isNew: false,
     loading: false,
     gitHubToken: null,
     googleToken: null,
@@ -29,11 +30,29 @@ export default (state = INITIAL_STATE, action) => {
         case LOGIN_USER_SUCCESS:
             return {...state, ...INITIAL_STATE, user: action.payload};
         case LOGIN_WITH_GITHUB:
-            return {...state, error: '', user: {...action.payload.user, isNew: action.payload.isNew }, gitHubToken: action.payload.token};
+            return {
+                ...state,
+                error: '',
+                user: action.payload.user,
+                isNew: action.payload.isNew,
+                gitHubToken: action.payload.token
+            };
         case LOGIN_WITH_GOOGLE:
-            return {...state, error: '', user: {...action.payload.user, isNew: action.payload.isNew }, googleToken: action.payload.token};
+            return {
+                ...state,
+                error: '',
+                user: action.payload.user,
+                isNew: action.payload.isNew,
+                googleToken: action.payload.token
+            };
         case LOGIN_WITH_INTRANET:
-            return {...state, loading: false, error: '', user: action.payload.user, intranetToken: action.payload.token};
+            return {
+                ...state,
+                loading: false,
+                error: '',
+                user: action.payload.user,
+                intranetToken: action.payload.token
+            };
         case LOGIN_USER_FAILED:
             return {...state, error: 'Authentication Failed.', loading: false};
         case LOGIN_CLEAN_ERROR:
