@@ -18,7 +18,7 @@ class _profileInfo extends Component {
         const {userData} = this.props;
         if (nextProps.userData && (!userData || userData.position !== nextProps.userData.position)) {
             this.setState({
-                displayName: nextProps.userData ? nextProps.userData.displayName || undefined : nextProps.user.displayName || undefined,
+                displayName: nextProps.userData ? nextProps.userData.displayName || nextProps.user.displayName || undefined : nextProps.user.displayName || undefined,
                 position: nextProps.userData ? nextProps.userData.position : '',
                 yearsOfExperience: nextProps.userData ? nextProps.userData.yearsOfExperience : '',
                 email: nextProps.user.email,
@@ -30,7 +30,7 @@ class _profileInfo extends Component {
     updateUserData = () => {
         const {displayName, position, yearsOfExperience, email} = this.state;
         const {photoURL} = this.props.user;
-        if (displayName && email) {
+        if (displayName && displayName.trim() && email) {
             this.props.userDataUpdate(
                 {
                     displayName: displayName,

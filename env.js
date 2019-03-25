@@ -4,4 +4,4 @@ export const databaseURL = "https://skillmatrix-public.firebaseio.com";
 export const projectId = "skillmatrix-public";
 export const storageBucket = "skillmatrix-public.appspot.com";
 export const messagingSenderId = "953235239147";
-export const getUserByEmail = "https://us-central1-skill-matrix-b30f5.cloudfunctions.net/getUserByEmail";
+export const getUserByEmail = "https://us-central1-skillmatrix-public.cloudfunctions.net/getUserByEmail";
