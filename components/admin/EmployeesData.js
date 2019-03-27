@@ -8,6 +8,7 @@ import _ from 'lodash';
 import {Card} from "semantic-ui-react/dist/commonjs/views/Card";
 
 Card
+
 class EmployeesData extends Component {
 
     state = {
@@ -29,7 +30,7 @@ class EmployeesData extends Component {
                     ? null
                     : Object.keys(user.technologies).find(tech => (
                         // Returns true if the user have one o many selectTechToSearch in your technologies and have a levelOfKnowledge != -1
-                        nextProps.selectTechToSearch.includes(tech) && user.technologies[tech].levelOfKnowledge && user.technologies[tech].levelOfKnowledge.value !== -1)
+                    nextProps.selectTechToSearch.includes(tech) && user.technologies[tech].levelOfKnowledge && user.technologies[tech].levelOfKnowledge.value !== -1)
                     )
             ));
         result = _.orderBy(result, ['displayName', 'position'], 'asc');
@@ -67,16 +68,20 @@ class EmployeesData extends Component {
                 <br/>
 
                 <Segment>
-                    {usersFilter.map((item, index) => <Popup key={item + index}
-                                                             trigger={
-                                                                 <Label as='a' color={index % 2 ? 'orange' : 'teal'}
-                                                                        image key={item + index}>
-                                                                     <img src={item.photoURL}/>
-                                                                     {item.displayName || item.email}
-                                                                     <Label.Detail>{item.position}</Label.Detail>
-                                                                 </Label>
-                                                             }
-                                                             key={item + index}
+                    {usersFilter.map((item, index) =>
+                        <Popup key={item + index}
+                               trigger={
+                                   <Label
+                                       as='a'
+                                       color={index % 2 ? 'orange' : 'teal'}
+                                       style={{margin: '0.5rem'}}
+                                       image key={item + index}>
+                                       <img src={item.photoURL}/>
+                                       {item.displayName || item.email}
+                                       <Label.Detail>{item.position}</Label.Detail>
+                                   </Label>
+                               }
+                               key={item + index}
                         >
                             <Popup.Header>Details</Popup.Header>
                             <Popup.Content>

@@ -27,7 +27,7 @@ class EthereumIndex extends Component {
                                 <Card key={item + uid}>
                                     <Card.Content>
                                         <Feed>
-                                            <Feed.Event>
+                                            <Feed.Evepnt>
                                                 <Feed.Label image={item.photoURL}/>
                                                 <Feed.Content>
                                                     <Feed.Date content={item.displayName}/>
@@ -35,7 +35,7 @@ class EthereumIndex extends Component {
                                                         {item.email}
                                                     </Feed.Summary>
                                                 </Feed.Content>
-                                            </Feed.Event>
+                                            </Feed.Evepnt>
                                         </Feed>
                                     </Card.Content>
                                     <Card.Content extra>

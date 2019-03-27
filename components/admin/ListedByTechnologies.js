@@ -1,44 +1,27 @@
+import {Dimmer, Divider, Label, Loader, Menu, Search, Segment} from "semantic-ui-react";
+import MenuItems from "../dash/MenuItems";
+import _ from "lodash";
+import TechnologiesCards from "./TechnologiesCards";
+import EmployeesData from "./EmployeesData";
 import React, {Component} from 'react';
-import {Menu, Segment, Label, Search, Divider, Dimmer, Loader} from 'semantic-ui-react';
-import {Link} from '../../routes';
-import _ from 'lodash'
-import Cards from "./Cards";
-import MenuItems from "./MenuItems";
-import {connect} from 'react-redux';
-import {skillsFetch, userDataFetch} from "../../redux/actions";
-import ProfileInfo from "./ProfileInfo";
+import {connect} from "react-redux";
+import withAuth from "../utils/withAuth";
 
-class MainDash extends Component {
+
+class ListedByTechnologies extends Component {
 
     state = {
-        activeItem: '',
+        activeSkill: 'JavaScript', // TODO Set the first one for default
         isLoading: false,
-        value: '' // Value of the search Field
+        value: '', // Value of the search Field
+        selectedTechs: []
     };
 
-    handleItemClick = (e, {name}) => {
-        this.setState({activeItem: name})
+
+    handleSkillItemClick = (e, {name}) => {
+        this.setState({activeSkill: name})
     };
-
-    componentDidMount() {
-        this.props.userDataFetch();
-        this.props.skillsFetch();
-    }
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        const {skills} = this.props;
-        const {activeItem} = this.state;
-
-        if (skills.length === 0 && nextProps.skills.length > 0) {
-            this.setState({activeItem: nextProps.skills[0].name})
-        }
-        if (skills.length > 0 && activeItem === '') {
-            this.setState({activeItem: skills[0].name})
-        }
-    }
-
-
-    handleResultSelect = (e, {result}) => this.setState({activeItem: result.name, value: result.name});
+    handleResultSelect = (e, {result}) => this.setState({activeSkill: result.name, value: result.name});
     resetComponent = () => this.setState({isLoading: false, results: [], value: ''});
     handleSearchChange = (e, {value}) => {
         const {skills} = this.props;
@@ -59,19 +42,17 @@ class MainDash extends Component {
     };
 
     render() {
-        const {isLoading, results, value, activeItem} = this.state;
-        const {skills} = this.props;
-        const resultRenderer = ({name}) => <Label content={name} color='blue' onClick={this.handleItemClick}/>;
+        const {isLoading, results, value, activeSkill} = this.state;
+
+        const resultRenderer = ({name}) => <Label content={name} color='blue' onClick={this.handleSkillItemClick}/>;
 
         return (
-            <div>
-                <ProfileInfo/>
-                <Divider/>
+            <>
                 <Menu attached='top' pointing secondary pagination>
                     <MenuItems
-                        items={skills}
-                        activeItem={activeItem}
-                        handleItemClick={this.handleItemClick}
+                        items={this.props.skills}
+                        activeItem={activeSkill}
+                        handleItemClick={this.handleSkillItemClick}
                     />
                     <Menu.Menu position='right'>
                         <Menu.Item>
@@ -91,23 +72,29 @@ class MainDash extends Component {
                     <Dimmer active={this.props.loading}>
                         <Loader/>
                     </Dimmer>
-                    {!this.props.loading && <Cards skillSelected={activeItem}/>}
+                    {!this.props.loading &&
+                    <TechnologiesCards
+                        skills={this.props.skills}
+                        skillSelected={activeSkill}
+                    />
+                    }
                 </Segment>
-            </div>
-        );
-    }
 
+                <Divider/>
+                <EmployeesData selectedTechs={this.state.selectedTechs}/>
+            </>
+        )
+    }
 }
 
 const mapStateToProps = state => {
 
     return {
+        ...state,
         skills: state.fireBase.skills,
         loading: !!state.fireBase.loading
     };
 };
 
-export default connect(mapStateToProps, {skillsFetch, userDataFetch})(MainDash);
 
-
-
+export default connect(mapStateToProps, {})(withAuth(ListedByTechnologies))
