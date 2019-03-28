@@ -74,8 +74,14 @@ class EmployeesSkills extends React.Component {
     render() {
         const {isLoading, results, value} = this.state;
 
-        const resultRenderer = ({displayName}) => <Label content={displayName} color='blue'
-                                                         onClick={this.handleSkillItemClick}/>;
+        const resultRenderer = ({displayName, position}) => <Label
+            content={
+                (<>
+                    {displayName}
+                    <Label.Detail>{position}</Label.Detail>
+                </>)}
+            color='grey'
+            onClick={this.handleSkillItemClick}/>;
 
         return (
             <>
