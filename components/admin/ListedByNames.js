@@ -30,7 +30,10 @@ class EmployeesSkills extends React.Component {
         this.setState({selectedEmployee: name})
     };
 
-    handleResultSelect = (e, {result}) => this.setState({selectedEmployee: result.displayName, value: result.displayName});
+    handleResultSelect = (e, {result}) => this.setState({
+        selectedEmployee: result.displayName,
+        value: result.displayName
+    });
 
     resetComponent = () => this.setState({isLoading: false, results: [], value: '', selectedEmployee: ''});
     handleSearchChange = (e, {value}) => {
@@ -46,7 +49,7 @@ class EmployeesSkills extends React.Component {
                 || Object.values(result.displayName ? result.displayName : {}).some((tech) => re.test(tech.displayName));
             this.setState({
                 isLoading: false,
-                results: _.filter(users, isMatch),
+                results: _.filter(users, isMatch).slice(0, 10),
             })
         }, 300)
     };
@@ -73,27 +76,34 @@ class EmployeesSkills extends React.Component {
 
     render() {
         const {isLoading, results, value, selectedEmployee} = this.state;
+        const {users} = this.props;
 
         const usersToRender = selectedEmployee.length > 2
-            ? _.filter(this.props.users, { 'displayName': selectedEmployee})
-            : this.props.users;
+            ? _.filter(users, {'displayName': selectedEmployee})
+            : users;
 
-        const resultRenderer = ({displayName, position}) => <Label
-            content={
-                (<>
-                    {displayName}
-                    <Label.Detail>{position}</Label.Detail>
-                </>)}
-            color='grey'
-            onClick={this.handleItemClick}/>;
+        const resultRenderer = ({displayName, position}) =>
+            <div key='content' className='content'>
+                <Label
+                    content={
+                        (<>
+                            {displayName}
+                            <Label.Detail>{position}</Label.Detail>
+                        </>)}
+                    color='grey'
+                    onClick={this.handleItemClick}/>
+            </div>
+        ;
 
         return (
             <>
                 <Menu attached='top' pointing secondary pagination>
+                    <Menu.Item style={{textAlign: 'centered'}}>
+                        {'Total Employees: ' + Object.keys(users).length}
+                    </Menu.Item>
 
                     <Menu.Menu position='right'>
                         <Menu.Item>
-
                             <Search
                                 loading={isLoading}
                                 onResultSelect={this.handleResultSelect}
@@ -157,13 +167,11 @@ class EmployeesSkills extends React.Component {
 
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
         skills: state.fireBase.skills,
         users: state.fireBase.users || [],
         selectedUser: state.fireBase.selectUserToSearch
     }
 }
-
 
 export default connect(mapStateToProps, {skillsFetch, usersFetch})(EmployeesSkills)
