@@ -29,7 +29,7 @@ class ListedByTechnologies extends Component {
 
         setTimeout(() => {
             if (this.state.value.length < 1) return this.resetComponent();
-
+            
             const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
             const isMatch = result =>
                 re.test(result.name)
@@ -45,9 +45,10 @@ class ListedByTechnologies extends Component {
         const {isLoading, results, value, activeSkill} = this.state;
 
         const resultRenderer = ({name}) => <Label content={name} color='blue' onClick={this.handleSkillItemClick}/>;
-
+        console.log(this.props)
         return (
             <>
+            
                 <Menu attached='top' pointing secondary pagination>
                     <MenuItems
                         items={this.props.skills}

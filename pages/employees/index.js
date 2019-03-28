@@ -6,6 +6,7 @@ import {Menu} from "semantic-ui-react";
 import _ from "lodash";
 import {skillsFetch, userDataFetch} from "../../redux/actions"
 import ListedByTechnologies from "../../components/admin/ListedByTechnologies";
+import ListedByNames from "../../components/admin/ListedByNames";
 
 class EmployeesIndex extends Component {
 
@@ -45,7 +46,9 @@ class EmployeesIndex extends Component {
                     {activeItem === 'Listed by Technologies' &&
                     <ListedByTechnologies/>
                     }
-
+                    {activeItem === 'Listed by Names' &&
+                    <ListedByNames/>
+                    }
 
                 </div>
 
