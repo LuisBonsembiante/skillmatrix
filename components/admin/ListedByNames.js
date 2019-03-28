@@ -15,7 +15,7 @@ import _ from "lodash";
 class EmployeesSkills extends React.Component {
 
     state = {
-        activeName: '', // TODO Set the first one for default
+        selectedEmployee: '', // TODO Set the first one for default
         isLoading: false,
         value: '', // Value of the search Field
         selectedUser: []
@@ -26,13 +26,13 @@ class EmployeesSkills extends React.Component {
         this.props.skillsFetch();
     }
 
-    handleSkillItemClick = (e, {name}) => {
-
-        this.setState({activeName: name})
+    handleItemClick = (e, {name}) => {
+        this.setState({selectedEmployee: name})
     };
-    handleResultSelect = (e, {result}) => this.setState({activeName: result.displayName, value: result.displayName});
 
-    resetComponent = () => this.setState({isLoading: false, results: [], value: ''});
+    handleResultSelect = (e, {result}) => this.setState({selectedEmployee: result.displayName, value: result.displayName});
+
+    resetComponent = () => this.setState({isLoading: false, results: [], value: '', selectedEmployee: ''});
     handleSearchChange = (e, {value}) => {
         const {users} = this.props;
         this.setState({isLoading: true, value});
@@ -72,7 +72,11 @@ class EmployeesSkills extends React.Component {
 
 
     render() {
-        const {isLoading, results, value} = this.state;
+        const {isLoading, results, value, selectedEmployee} = this.state;
+
+        const usersToRender = selectedEmployee.length > 2
+            ? _.filter(this.props.users, { 'displayName': selectedEmployee})
+            : this.props.users;
 
         const resultRenderer = ({displayName, position}) => <Label
             content={
@@ -81,7 +85,7 @@ class EmployeesSkills extends React.Component {
                     <Label.Detail>{position}</Label.Detail>
                 </>)}
             color='grey'
-            onClick={this.handleSkillItemClick}/>;
+            onClick={this.handleItemClick}/>;
 
         return (
             <>
@@ -104,7 +108,7 @@ class EmployeesSkills extends React.Component {
                 <Segment attached='bottom' style={{marginLeft: 0}}>
                     <Card.Group itemsPerRow={3} stackable>
                         {!this.props.loading &&
-                        _.map(this.props.users,
+                        _.map(usersToRender,
                             (item, uid) => {
                                 return (
 
