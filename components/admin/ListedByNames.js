@@ -9,11 +9,11 @@ import {
     Search,
     Segment,
     Label,
-    Divider, Grid
+    Grid
 } from "semantic-ui-react";
 import _ from "lodash";
 
-class EmployeesSkills extends React.Component {
+class ListedByNames extends React.Component {
 
     state = {
         selectedEmployee: '', // TODO Set the first one for default
@@ -127,6 +127,7 @@ class EmployeesSkills extends React.Component {
                                            position='bottom center'
                                            flowing
                                            size='huge'
+                                           style={{maxWidth: 700}}
                                            trigger={
                                                <Card>
                                                    <Card.Content>
@@ -181,4 +182,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {skillsFetch, usersFetch})(EmployeesSkills)
+export default connect(mapStateToProps, {skillsFetch, usersFetch})(ListedByNames)

@@ -3,7 +3,6 @@ import Layout from '../../components/commons/Layout';
 import withAuth from "../../components/utils/withAuth";
 import {connect} from "react-redux";
 import {Menu} from "semantic-ui-react";
-import _ from "lodash";
 import {skillsFetch, userDataFetch} from "../../redux/actions"
 import ListedByTechnologies from "../../components/admin/ListedByTechnologies";
 import ListedByNames from "../../components/admin/ListedByNames";
@@ -11,7 +10,7 @@ import ListedByNames from "../../components/admin/ListedByNames";
 class EmployeesIndex extends Component {
 
     state = {
-        activeItem: 'Listed by Names',
+        activeItem: 'Listed by Technologies',
     };
 
     handleItemClick = (e, {name}) => {
