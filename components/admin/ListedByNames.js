@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { skillsFetch, usersFetch } from "../../redux/actions";
+import {connect} from 'react-redux';
+import {skillsFetch, usersFetch} from "../../redux/actions";
 import {
     Popup,
     Menu,
@@ -9,7 +9,7 @@ import {
     Search,
     Segment,
     Label,
-    Divider
+    Divider, Grid
 } from "semantic-ui-react";
 import _ from "lodash";
 
@@ -19,27 +19,28 @@ class EmployeesSkills extends React.Component {
         selectedEmployee: '', // TODO Set the first one for default
         isLoading: false,
         value: '', // Value of the search Field
-        selectedUser: []
+        selectedUser: [],
+        allTechnologiesFlatten: {}
     };
 
     componentDidMount() {
-        this.props.usersFetch();
         this.props.skillsFetch();
+        this.props.usersFetch();
     }
 
-    handleItemClick = (e, { name }) => {
-        this.setState({ selectedEmployee: name })
+    handleItemClick = (e, {name}) => {
+        this.setState({selectedEmployee: name})
     };
 
-    handleResultSelect = (e, { result }) => this.setState({
+    handleResultSelect = (e, {result}) => this.setState({
         selectedEmployee: result.displayName,
         value: result.displayName
     });
 
-    resetComponent = () => this.setState({ isLoading: false, results: [], value: '', selectedEmployee: '' });
-    handleSearchChange = (e, { value }) => {
-        const { users } = this.props;
-        this.setState({ isLoading: true, value });
+    resetComponent = () => this.setState({isLoading: false, results: [], value: '', selectedEmployee: ''});
+    handleSearchChange = (e, {value}) => {
+        const {users} = this.props;
+        this.setState({isLoading: true, value});
 
         setTimeout(() => {
             if (this.state.value.length < 1) return this.resetComponent();
@@ -47,7 +48,7 @@ class EmployeesSkills extends React.Component {
             const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
             const isMatch = result =>
                 re.test(result.displayName)
-                || Object.values(result.displayName ? result.displayName : {}).some((tech) => re.test(tech.displayName));
+                || re.test(result.email);
             this.setState({
                 isLoading: false,
                 results: _.filter(users, isMatch).slice(0, 10),
@@ -56,18 +57,18 @@ class EmployeesSkills extends React.Component {
     };
 
     techLabel(uid, user) {
-        const { technologies } = this.props;
+        const {technologies} = this.props;
         let techs = {};
         technologies.map((val, uid) => {
-            techs = { ...techs, ...val };
+            techs = {...techs, ...val};
         });
         const tech = user.technologies[uid];
-        if (!tech || !tech.levelOfKnowledge) return null;
+        if (!tech || !tech.levelOfKnowledge || tech.levelOfKnowledge.value < 0) return null;
         return (
             <>
-                <Divider />
-                <Label as='a' color={tech.levelOfKnowledge.color} key={uid}>
-                    {techs[uid] ? techs[uid].name : 'nullsss'}
+                <Label as='a' style={{marginTop: '0.25rem', marginBottom: '0.5rem'}}
+                       color={tech.levelOfKnowledge.color}>
+                    {techs[uid] ? techs[uid].name : null}
                     <Label.Detail>{tech.levelOfKnowledge.text}</Label.Detail>
                 </Label>
             </>
@@ -76,32 +77,30 @@ class EmployeesSkills extends React.Component {
 
 
     render() {
-        const { isLoading, results, value, selectedEmployee } = this.state;
-        const { users } = this.props;
+        const {isLoading, results, value, selectedEmployee} = this.state;
+        const {users} = this.props;
 
         const usersToRender = selectedEmployee.length > 2
-            ? _.filter(users, { 'displayName': selectedEmployee })
+            ? _.filter(users, {'displayName': selectedEmployee})
             : users;
 
-        const resultRenderer = ({ displayName, position }) =>
-            <div key='content' className='content'>
-                <Label
-                    content={
-                        (<>
-                            {displayName}
-                            <Label.Detail>{position}</Label.Detail>
-                        </>)}
-                    color='grey'
-                    onClick={this.handleItemClick} />
-            </div>
-            ;
+        const resultRenderer = ({displayName, position}) => {
+            if (!displayName) return null;
+            return <Label
+                        content={
+                            (<>
+                                {displayName}
+                                <Label.Detail>{position}</Label.Detail>
+                            </>)}
+                        color='grey'
+                        onClick={this.handleItemClick}/>
 
-        // console.log( Object.values(this.props))
+        };
 
         return (
             <>
                 <Menu attached='top' pointing secondary pagination>
-                    <Menu.Item style={{ textAlign: 'centered' }}>
+                    <Menu.Item style={{textAlign: 'centered'}}>
                         {'Total Employees: ' + Object.keys(users).length}
                     </Menu.Item>
 
@@ -110,7 +109,7 @@ class EmployeesSkills extends React.Component {
                             <Search
                                 loading={isLoading}
                                 onResultSelect={this.handleResultSelect}
-                                onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
+                                onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
                                 results={results}
                                 resultRenderer={resultRenderer}
                                 value={value}
@@ -118,52 +117,51 @@ class EmployeesSkills extends React.Component {
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu>
-                <Segment attached='bottom' style={{ marginLeft: 0 }}>
+                <Segment attached='bottom' style={{marginLeft: 0}}>
                     <Card.Group itemsPerRow={3} stackable>
                         {!this.props.loading &&
-                            _.map(usersToRender,
-                                (item, uid) => {
-                                    return (
+                        _.map(usersToRender,
+                            (item, uid) => {
+                                return (
+                                    <Popup key={item + uid}
+                                           position='bottom center'
+                                           flowing
+                                           size='huge'
+                                           trigger={
+                                               <Card>
+                                                   <Card.Content>
+                                                       <Feed>
+                                                           <Feed.Event>
+                                                               <Feed.Label image={item.photoURL}/>
+                                                               <Feed.Content>
+                                                                   <Feed.Date content={item.displayName}/>
+                                                                   <Feed.Summary>
+                                                                       {item.email}
+                                                                   </Feed.Summary>
+                                                               </Feed.Content>
+                                                           </Feed.Event>
+                                                       </Feed>
+                                                   </Card.Content>
+                                               </Card>
 
-                                        <Popup key={item + uid}
-                                            trigger={
-
-                                                <Card key={item + uid}>
-                                                    <Card.Content>
-                                                        <Feed>
-                                                            <Feed.Event>
-                                                                <Feed.Label image={item.photoURL} />
-                                                                <Feed.Content>
-                                                                    <Feed.Date content={item.displayName} />
-                                                                    <Feed.Summary>
-                                                                        {item.email}
-                                                                    </Feed.Summary>
-                                                                </Feed.Content>
-                                                            </Feed.Event>
-                                                        </Feed>
-                                                    </Card.Content>
-                                                </Card>
-
-                                            }
-                                            key={item + uid}
-                                        >
-
-                                            <Popup.Header>Details</Popup.Header>
-                                            <Popup.Content>
+                                           }
+                                    >
+                                        <Popup.Header>Details</Popup.Header>
+                                        <br/>
+                                        <Popup.Content>
+                                            <Grid centered columns={2}>
                                                 {
                                                     item.technologies
-                                                        ?
-                                                        Object.keys(item.technologies).map((uid) => {
-                                                            return this.techLabel(uid, item);
-                                                        })
+                                                        ? Object.keys(item.technologies).map(
+                                                        (uid) => this.techLabel(uid, item))
                                                         : null
                                                 }
-                                            </Popup.Content>
+                                            </Grid>
+                                        </Popup.Content>
 
-                                        </Popup>
-                                    );
-
-                                })
+                                    </Popup>
+                                );
+                            })
                         }
                     </Card.Group>
                 </Segment>
@@ -178,10 +176,9 @@ const mapStateToProps = state => {
     return {
         skills: state.fireBase.skills,
         users: state.fireBase.users || [],
-        selectedUser: state.fireBase.selectUserToSearch,
         technologies: !state.fireBase.skills ? [] : _.compact(state.fireBase.skills.map((skill) => skill.technologies))
 
     }
 }
 
-export default connect(mapStateToProps, { skillsFetch, usersFetch })(EmployeesSkills)
+export default connect(mapStateToProps, {skillsFetch, usersFetch})(EmployeesSkills)
